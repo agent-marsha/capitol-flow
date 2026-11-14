@@ -90,7 +90,10 @@ def fetch_news(tickers: list[str], limit_per: int = 6) -> dict:
                 c = a.get("content") or {}
                 url = (c.get("canonicalUrl") or c.get("clickThroughUrl") or {}).get("url")
                 title = c.get("title") or a.get("title")
-                pub = c.get("pubDate") or ""
+                pub = c.get("pubDate") or c.get("displayTime") or ""
+                if not pub and a.get("providerPublishTime"):
+                    # yf.Search returns flat items with an epoch publish time
+                    pub = datetime.utcfromtimestamp(int(a["providerPublishTime"])).date().isoformat()
                 prov = (c.get("provider") or {}).get("displayName") or a.get("publisher")
                 if title:
                     items.append({"title": title, "url": url or a.get("link"),
@@ -172,7 +175,19 @@ def main() -> int:
                     t.setdefault("cluster_ids", []).append(
                         f"{c['ticker']}:{c['n_politicians']}p")
 
-    tickers = sorted({t["ticker"] for t in txs if t.get("ticker")})[: a.max_tickers]
+    # Prioritise the tickers the UI leans on: cluster signals first (most politicians),
+    # then large trades, then most-traded — instead of alphabetical order.
+    score: dict[str, tuple] = {}
+    for t in txs:
+        tk = t.get("ticker")
+        if not tk:
+            continue
+        cl, lg, n = score.get(tk, (0, 0, 0))
+        score[tk] = (cl, lg + (1 if t["is_large"] else 0), n + 1)
+    for c in clusters:
+        cl, lg, n = score.get(c["ticker"], (0, 0, 0))
+        score[c["ticker"]] = (max(cl, c["n_politicians"]), lg, n)
+    tickers = sorted(score, key=lambda k: (-score[k][0], -score[k][1], -score[k][2], k))[: a.max_tickers]
     print(f"[enrich] {len(txs)} trades · {len(tickers)} tickers · {len(clusters)} clusters",
           file=sys.stderr)
 

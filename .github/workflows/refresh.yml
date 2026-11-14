@@ -1,0 +1,49 @@
+name: Refresh trade data
+
+# Rebuilds the politician-trade dataset daily and republishes the static site.
+on:
+  schedule:
+    - cron: "0 11 * * *"      # 11:00 UTC daily
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: pip install -r pipeline/requirements.txt
+
+      - name: Fetch latest House PTRs
+        run: python pipeline/fetch_house.py --days 150 --limit 70 --out data/house_trades.json
+
+      - name: Enrich (prices, news, clusters)
+        run: python pipeline/enrich.py --days 150 --max-tickers 60 --out data/app_data.json
+
+      - name: Generate inline data fallback for file:// preview
+        run: |
+          mkdir -p web/data
+          cp data/app_data.json web/data/app_data.json
+          { printf 'window.__CAPITOL_DATA__ = '; cat data/app_data.json; printf ';\n'; } > web/data/app_data.js
+
+      - name: Commit refreshed data
+        run: |
+          git config user.name  "capitol-flow-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data/app_data.json web/data/app_data.json web/data/app_data.js
+          git diff --quiet --cached || git commit -m "data: daily refresh $(date -u +%F)"
+          git push

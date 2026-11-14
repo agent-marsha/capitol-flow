@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0B0B0C">
+  <meta name="description" content="Capitol Flow — recent stock trades disclosed by members of Congress, with multi-politician cluster signals, candlestick charts and the news around each trade.">
+  <title>Capitol Flow — Politician Trade Signals</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="#/" aria-label="Capitol Flow home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+        <span class="brand-name display">Capitol Flow</span>
+      </a>
+      <div class="updated micro" id="updated"></div>
+    </div>
+  </header>
+
+  <main id="app" class="wrap" aria-live="polite">
+    <div class="loading"><span class="display">Loading flow…</span></div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p class="micro">Capitol Flow</p>
+      <p id="source-note"></p>
+      <p>Disclosures are filed up to 45 days after a trade, and amounts are reported as ranges. Informational only — not investment advice.</p>
+    </div>
+  </footer>
+
+  <!-- Charts. Loaded from CDN; the app degrades to tables if it is unavailable. -->
+  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

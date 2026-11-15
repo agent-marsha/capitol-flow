@@ -390,3 +390,57 @@ footer p { margin: 6px 0; max-width: 72ch; }
 .brand-name { white-space: nowrap; }
 section[id] { scroll-margin-top: 64px; }
 @media (max-width: 480px) { .updated .utc { display: none; } }
+
+/* ---------- options: calls | puts, equal columns ---------- */
+/* Reading order is trades → options → news. On wide screens news keeps the right column
+   and options sits under the trades. */
+@media (min-width: 1100px) {
+  .d-cols { grid-template-areas: "trades news" "opt news"; grid-template-rows: auto 1fr; }
+  .d-cols > section:first-child { grid-area: trades; }
+  .d-cols > .opt-slot { grid-area: opt; }
+  .d-cols > .d-news { grid-area: news; }
+}
+.opt-slot:empty { display: none; }
+.opt-strip { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); border-left: 1px solid var(--line); margin-top: 4px; container-type: inline-size; }
+@media (min-width: 600px) { .opt-strip { grid-template-columns: 1fr 1.25fr .8fr; } }
+.opt-stat { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 14px 16px; min-width: 0; }
+.opt-stat .display { font-size: 28px; margin-top: 8px; white-space: nowrap; }
+@container (min-width: 760px) { .opt-stat .display { font-size: 34px; } }
+.opt-stat .sub { color: var(--muted); font-size: 13px; margin-top: 6px; }
+@media (max-width: 599px) { .opt-stat:nth-child(2) { grid-column: span 2; order: 3; } }
+.opt-vs { color: var(--muted); margin: 0 6px; font-weight: 400; }
+.opt-split { height: 6px; margin-top: 10px; }
+.opt-explain { margin: 16px 0 20px; color: var(--ink-2); font-size: 15px; max-width: 60ch; }
+.opt-under b { color: var(--ink); font-weight: 700; }
+.opt-cols { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 700px) { .opt-cols { grid-template-columns: 1fr 1fr; } }
+.opt-col { min-width: 0; container-type: inline-size; }
+@container (max-width: 380px) { .opt-extra { display: none; } }
+.opt-col-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding-bottom: 10px; border-bottom: 2px solid currentColor; margin-bottom: 8px; }
+.d-cols .opt-col-head h4, .opt-col-head h4 { margin: 0; font-size: 32px; }
+.opt-col-head .micro { color: inherit; font-size: 10px; }
+.opt-legend { display: flex; justify-content: space-between; padding: 0 14px 6px; font-size: 10px; }
+.opt-rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.opt-row { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 14px 10px 16px; }
+.opt-row::before { content: ""; position: absolute; left: -1px; top: -1px; bottom: -1px; width: 3px; border-radius: var(--radius) 0 0 var(--radius); }
+.opt-row.call::before, .opt-row.call .opt-track i { background: var(--buy); }
+.opt-row.put::before, .opt-row.put .opt-track i { background: var(--sell); }
+.opt-l1 { display: grid; grid-template-columns: 72px 1fr 56px; gap: 12px; align-items: center; }
+.opt-k { font-size: 24px; white-space: nowrap; }
+.opt-track { display: block; height: 12px; min-width: 0; }
+.opt-track i { display: block; height: 100%; border-radius: 2px; }
+.opt-oi { font-size: 22px; text-align: right; white-space: nowrap; }
+.opt-l2 { display: flex; align-items: baseline; gap: 6px 14px; margin-top: 8px; flex-wrap: wrap; }
+.opt-px { display: inline-flex; align-items: baseline; gap: 6px; }
+.opt-px b { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.opt-lab { font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.opt-extra { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.opt-link { margin-left: auto; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-decoration: none; padding: 4px 0; white-space: nowrap; }
+.opt-link:hover { color: var(--ink); }
+.opt-foot { margin: 12px 0 0; font-size: 12px; color: var(--muted); max-width: 72ch; }
+@media (max-width: 480px) {
+  .opt-l1 { grid-template-columns: 64px 1fr 52px; gap: 10px; }
+  .opt-k { font-size: 22px; }
+  .opt-oi { font-size: 20px; }
+  .opt-extra { display: none; }
+}

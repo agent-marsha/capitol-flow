@@ -49,6 +49,11 @@ jobs:
         continue-on-error: true
         run: python pipeline/fundamentals.py --max 60 --out data/fundamentals.json
 
+      # ---- Options: highest open-interest strikes + TradingView links -----------
+      - name: Options read (Yahoo chains)
+        continue-on-error: true
+        run: python pipeline/fetch_options.py --max 60 --top 4 --out data/options.json
+
       # ---- Publish the data into the static site --------------------------------
       - name: Copy data into the site (JSON + inline fallbacks)
         run: |
@@ -58,6 +63,10 @@ jobs:
           if [ -f data/fundamentals.json ]; then
             cp data/fundamentals.json web/data/fundamentals.json
             { printf 'window.__CAPITOL_FUNDAMENTALS__ = '; cat data/fundamentals.json; printf ';\n'; } > web/data/fundamentals.js
+          fi
+          if [ -f data/options.json ]; then
+            cp data/options.json web/data/options.json
+            { printf 'window.__CAPITOL_OPTIONS__ = '; cat data/options.json; printf ';\n'; } > web/data/options.js
           fi
 
       - name: Commit refreshed data

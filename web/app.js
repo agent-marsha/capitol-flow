@@ -50,6 +50,7 @@
   // ------------------------------------------------------------------ state
   var D = null;          // the bundle
   var F = null;          // fundamentals by ticker (null until loaded; {} if unavailable)
+  var O = null;          // options positioning by ticker (null until loaded; {} if unavailable)
   var TODAY = '';        // bundle generation date (YYYY-MM-DD)
   var byId = new Map();
   var byTicker = new Map();
@@ -103,6 +104,22 @@
       return loadScript('data/fundamentals.js').then(function () { return window.__CAPITOL_FUNDAMENTALS__; });
     }).then(function (f) {
       return f && typeof f === 'object' && !Array.isArray(f) ? f : {};
+    }).catch(function () { return {}; });
+  }
+
+  // Options are optional too: same fetch → inline-script → {} fallback chain.
+  function loadOptions() {
+    if (window.__CAPITOL_OPTIONS__) return Promise.resolve(window.__CAPITOL_OPTIONS__);
+    var viaFetch = location.protocol === 'file:'
+      ? Promise.reject(new Error('file://'))
+      : fetch('data/options.json', { cache: 'no-cache' }).then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        });
+    return viaFetch.catch(function () {
+      return loadScript('data/options.js').then(function () { return window.__CAPITOL_OPTIONS__; });
+    }).then(function (o) {
+      return o && typeof o === 'object' && !Array.isArray(o) ? o : {};
     }).catch(function () { return {}; });
   }
 
@@ -528,7 +545,8 @@
         '<section class="block" aria-labelledby="who-h"><div class="micro">Who traded ' + esc(tk) + '</div><h3 id="who-h" class="display">The trades</h3>' +
           (trades.length ? '<ul class="trades">' + trades.map(function (t) { return tradeRow(t, { since: true }); }).join('') + '</ul>' : '<p class="empty">No disclosed trades.</p>') +
         '</section>' +
-        '<section class="block" aria-labelledby="news-h"><div class="micro">Around the trades</div><h3 id="news-h" class="display">The news</h3>' + newsBlock(tk, trades) + '</section>' +
+        '<div id="opt-slot" class="opt-slot" data-opt-tk="' + esc(tk) + '"></div>' +
+        '<section class="block d-news" aria-labelledby="news-h"><div class="micro">Around the trades</div><h3 id="news-h" class="display">The news</h3>' + newsBlock(tk, trades) + '</section>' +
       '</div>' +
       '<div id="fund-slot" data-fund-tk="' + esc(tk) + '"></div>';
 
@@ -536,7 +554,122 @@
     document.title = tk + ' — Capitol Flow';
     window.scrollTo(0, 0);
     mountChart(tk);
+    fillOptions();
     fillFundamentals();
+  }
+
+  // ------------------------------------------------------------------ options ("Options")
+  // Same contract as fillFundamentals: a no-op until data lands, then fills the slot.
+  function fillOptions() {
+    var slot = $('#opt-slot');
+    if (!slot || O === null) return;
+    var html = '';
+    try { html = optionsBlock(slot.getAttribute('data-opt-tk')); } catch (e) { html = ''; }
+    slot.innerHTML = html;
+  }
+
+  function optCount(n) {
+    n = +n || 0;
+    if (n >= 1e6) return (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
+    if (n >= 1e4) return (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'K';
+    return Math.round(n).toLocaleString('en-US');
+  }
+  function optStrike(n) { return '$' + (+n % 1 ? (+n).toFixed(2).replace(/0$/, '') : String(+n)); }
+
+  // The price of one contract: last trade if there is one, else the bid/ask midpoint.
+  function optPrice(c) {
+    if (fnum(c.price) && c.price > 0) return { v: c.price, lab: 'last' };
+    if (fnum(c.bid) && fnum(c.ask) && c.ask > 0) return { v: (c.bid + c.ask) / 2, lab: 'mid' };
+    return null;
+  }
+
+  function optRows(list) {
+    return (Array.isArray(list) ? list : []).filter(function (c) {
+      return c && fnum(c.strike) && fnum(c.oi) && c.oi >= 0;
+    }).sort(function (a, b) { return a.strike - b.strike; });
+  }
+
+  function optRow(c, side, max, tk, expiry) {
+    var kind = side === 'call' ? 'call' : 'put';
+    var w = max > 0 ? Math.max(2, Math.round(c.oi / max * 100)) : 0;
+    var pr = optPrice(c);
+    var prTxt = pr ? '$' + pr.v.toFixed(2) : '—';
+    var phrase = optStrike(c.strike) + ' ' + kind + ', open interest ' + Math.round(c.oi).toLocaleString('en-US') +
+      (pr ? ', price ' + prTxt : '');
+    var extra = [];
+    if (fnum(c.volume)) extra.push('Vol ' + optCount(c.volume));
+    if (fnum(c.iv)) extra.push('IV ' + c.iv.toFixed(0) + '%');
+    var url = safeUrl(c.tv_url);
+    var exp = validDate(expiry) ? ' expiring ' + mdy(expiry) : '';
+    var link = url
+      ? '<a class="opt-link" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" aria-label="' +
+          esc('Open the ' + tk + ' ' + optStrike(c.strike) + ' ' + kind + exp + ' (' + (c.symbol || '') + ') on TradingView, new tab') +
+        '">TradingView ↗</a>'
+      : '';
+    return '<li class="opt-row ' + kind + '">' +
+      '<span class="sr-only">' + esc(phrase) + '.</span>' +
+      '<div class="opt-l1" aria-hidden="true">' +
+        '<span class="opt-k display">' + esc(optStrike(c.strike)) + '</span>' +
+        '<span class="opt-track"><i style="width:' + w + '%"></i></span>' +
+        '<span class="opt-oi display" title="' + esc(Math.round(c.oi).toLocaleString('en-US')) + ' open contracts">' + esc(optCount(c.oi)) + '</span>' +
+      '</div>' +
+      '<div class="opt-l2">' +
+        '<span class="opt-px" aria-hidden="true"><span class="opt-lab">' + (pr ? pr.lab : 'price') + '</span><b>' + esc(prTxt) + '</b></span>' +
+        (extra.length ? '<span class="opt-extra" aria-hidden="true">' + esc(extra.join(' · ')) + '</span>' : '') +
+        link +
+      '</div>' +
+    '</li>';
+  }
+
+  function optCol(side, list, tk, expiry) {
+    var isCall = side === 'call';
+    var max = list.reduce(function (m, c) { return Math.max(m, c.oi); }, 0);
+    var id = 'opt-' + side + '-h';
+    return '<div class="opt-col ' + side + '" role="group" aria-labelledby="' + id + '">' +
+      '<div class="opt-col-head ' + (isCall ? 'buy-ink' : 'sell-ink') + '">' +
+        '<h4 id="' + id + '" class="display">' + (isCall ? 'Calls' : 'Puts') + '</h4>' +
+        '<span class="micro">' + (isCall ? 'Bets it goes up' : 'Bets it goes down') + '</span>' +
+      '</div>' +
+      '<div class="opt-legend micro" aria-hidden="true"><span>Strike</span><span>Open interest</span></div>' +
+      (list.length
+        ? '<ul class="opt-rows">' + list.map(function (c) { return optRow(c, side, max, tk, expiry); }).join('') + '</ul>'
+        : '<p class="empty">No open ' + (isCall ? 'calls' : 'puts') + ' listed.</p>') +
+    '</div>';
+  }
+
+  function optionsBlock(tk) {
+    var o = O && Object.prototype.hasOwnProperty.call(O, tk) ? O[tk] : null;
+    if (!o || typeof o !== 'object') return '';
+    var calls = optRows(o.top_calls), puts = optRows(o.top_puts);
+    if (!calls.length && !puts.length) return '';
+    var exp = validDate(o.expiry) ? o.expiry : null;
+    var dte = fnum(o.dte) ? Math.round(o.dte) : (exp && D.generated ? days(String(D.generated).slice(0, 10), exp) : null);
+    var cOI = fnum(o.call_oi) ? o.call_oi : sum(calls, 'oi');
+    var pOI = fnum(o.put_oi) ? o.put_oi : sum(puts, 'oi');
+    var pc = fnum(o.pc_ratio) ? o.pc_ratio : (cOI ? pOI / cOI : null);
+    var pcRead = pc == null ? '' : pc > 1.2 ? 'More puts than calls' : pc < 0.8 ? 'More calls than puts' : 'Roughly balanced';
+    var expTxt = exp ? md(exp) : '—';
+    var dteTxt = dte != null ? (dte <= 0 ? 'Expires today' : plural(dte, 'day') + ' to go') : '';
+    var total = cOI + pOI;
+
+    return '<section class="block opt" aria-labelledby="opt-h">' +
+      '<div class="micro">Market positioning</div><h3 id="opt-h" class="display">Options</h3>' +
+      '<p class="note">Where traders have placed their bets on ' + esc(tk) + ', by strike price.</p>' +
+      '<div class="opt-strip" role="list">' +
+        '<div class="opt-stat" role="listitem"><div class="micro">Expires</div><div class="display">' + esc(expTxt) + '</div>' + (dteTxt ? '<div class="sub">' + dteTxt + '</div>' : '') + '</div>' +
+        '<div class="opt-stat" role="listitem"><div class="micro">Call vs put OI</div>' +
+          '<div class="display"><span class="buy-ink">' + esc(optCount(cOI)) + '</span><span class="opt-vs">/</span><span class="sell-ink">' + esc(optCount(pOI)) + '</span></div>' +
+          (total > 0 ? '<div class="split opt-split" aria-hidden="true"><i class="b" style="width:' + (cOI / total * 100).toFixed(1) + '%"></i><i class="s" style="width:' + (pOI / total * 100).toFixed(1) + '%"></i></div>' : '') +
+          '<span class="sr-only">' + Math.round(cOI).toLocaleString('en-US') + ' call contracts open, ' + Math.round(pOI).toLocaleString('en-US') + ' put contracts open.</span>' +
+        '</div>' +
+        '<div class="opt-stat" role="listitem"><div class="micro">Put/call ratio</div><div class="display">' + (pc == null ? '—' : pc.toFixed(2)) + '</div>' +
+          (pcRead ? '<div class="sub">' + pcRead + '</div>' : '') + '</div>' +
+      '</div>' +
+      '<p class="opt-explain">Open interest is how many contracts are still open at each strike. Big piles often act like walls — prices tend to stall there.' +
+        (fnum(o.underlying) ? ' <span class="opt-under">' + esc(tk) + ' is at <b>$' + px(o.underlying) + '</b>.</span>' : '') + '</p>' +
+      '<div class="opt-cols">' + optCol('call', calls, tk, exp) + optCol('put', puts, tk, exp) + '</div>' +
+      '<p class="opt-foot">Price is for one contract on the ' + (exp ? esc(mdy(exp)) + ' ' : '') + 'expiry, quoted per share (one contract covers 100 shares). Snapshot from the last data refresh.</p>' +
+    '</section>';
   }
 
   // ------------------------------------------------------------------ fundamentals ("The basics")
@@ -1027,6 +1160,10 @@
     loadFundamentals().then(function (f) {
       F = f;
       try { fillFundamentals(); } catch (e) { /* never break the page */ }
+    });
+    loadOptions().then(function (o) {
+      O = o;
+      try { fillOptions(); } catch (e) { /* never break the page */ }
     });
     loadData().then(function (d) {
       index(d);

@@ -252,6 +252,8 @@ section.block { padding: 40px 0 8px; }
 .oi-pol { grid-area: pol; display: flex; justify-content: flex-end; min-width: 0; }
 .oi-badge { background: var(--ink); color: var(--bg); white-space: normal; }
 .oi-pol-key { color: var(--ink); }
+.oi-pol .oi-none { display: block; margin: 0; white-space: normal; text-align: right; }
+@media (max-width: 1100px) { .oi-pol .oi-none { text-align: left; } }
 @media (max-width: 1100px) {
   .oi-row { grid-template-columns: 96px 76px minmax(0, 1fr) 96px 68px; grid-template-areas: "tk tot split pc days" "pol pol pol pol pol"; }
   .oi-pol { justify-content: flex-start; }

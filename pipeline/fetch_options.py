@@ -152,12 +152,41 @@ def build_side(chains, exp_list, side_idx, top_n):
     return out
 
 
+# Underlyings with the deepest option markets, INDEPENDENT of whether Congress traded
+# them.  Without these the OI board was bounded by the trade data, so it could never
+# show the market's actual biggest option piles (SPY/QQQ, TSLA, the retail favourites).
+EXTRA_HIGH_OI = [
+    # index / rate / commodity ETFs — the largest option markets there are
+    "SPY", "QQQ", "IWM", "DIA", "TLT", "GLD", "SLV", "USO", "HYG", "EEM", "FXI",
+    "VXX", "UVXY", "SOXL", "TQQQ", "SQQQ",
+    # mega / large caps not necessarily in the congressional set
+    "TSLA", "GOOGL", "JPM", "JNJ", "MA", "AVGO", "ORCL", "CRM", "ADBE", "AMD",
+    "INTC", "CSCO", "QCOM", "TXN", "IBM", "PFE", "MRK", "ABBV", "TMO", "PEP",
+    "KO", "MCD", "NKE", "DIS", "BA", "CAT", "GS", "MS", "AXP", "CMCSA", "ORCL",
+    # high-retail-option names
+    "PLTR", "SOFI", "F", "RIVN", "LCID", "NIO", "GME", "AMC", "MARA", "RIOT",
+    "COIN", "HOOD", "SNAP", "UBER", "AAL", "DAL", "CCL", "DKNG", "RBLX", "AI",
+    "IONQ", "RGTI", "QBTS", "PYPL", "SHOP", "CRWD", "SNOW", "MSTR", "SMCI", "ARM",
+]
+
+
+def _dedupe(seq) -> list[str]:
+    seen, out = set(), []
+    for x in seq:
+        if x not in seen:
+            seen.add(x)
+            out.append(x)
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--in", dest="inp", default="data/app_data.json")
     ap.add_argument("--out", default="data/options.json")
     ap.add_argument("--max", type=int, default=60)
     ap.add_argument("--top", type=int, default=10)
+    ap.add_argument("--no-extra", action="store_true",
+                    help="skip the high-open-interest universe (congressional tickers only)")
     a = ap.parse_args()
 
     try:
@@ -167,8 +196,11 @@ def main() -> int:
         return 2
 
     data = json.load(open(a.inp))
-    tickers = sorted((data.get("prices") or {}).keys())[: a.max]
-    print(f"[options] {len(tickers)} tickers, top {a.top} per side", file=sys.stderr)
+    base = sorted((data.get("prices") or {}).keys())[: a.max]
+    extras = [] if a.no_extra else [t for t in _dedupe(EXTRA_HIGH_OI) if t not in set(base)]
+    tickers = base + extras
+    print(f"[options] {len(tickers)} tickers ({len(base)} congressional + {len(extras)} "
+          f"high-OI), top {a.top} per side", file=sys.stderr)
 
     out, ok, skipped = {}, 0, []
     for i, t in enumerate(tickers, 1):
@@ -219,6 +251,25 @@ def main() -> int:
         except Exception as e:
             print(f"  ! {t}: {type(e).__name__} {e}", file=sys.stderr)
             skipped.append(t)
+
+    # Average daily SHARE volume, in ONE batched download.  Needed for the "loading"
+    # metric on every board row — including tickers we hold no price history for.
+    try:
+        import yfinance as yf
+        px = yf.download(list(out.keys()), period="1mo", interval="1d",
+                         progress=False, auto_adjust=False, threads=True)
+        vol = px["Volume"]
+        for t in list(out.keys()):
+            try:
+                s = vol[t].dropna()
+                if len(s):
+                    out[t]["adv"] = int(float(s.mean()))
+            except Exception:
+                pass
+        got = sum(1 for v in out.values() if v.get("adv"))
+        print(f"[options] ADV resolved for {got}/{len(out)} tickers", file=sys.stderr)
+    except Exception as e:
+        print(f"[options] ADV fetch failed: {type(e).__name__} {e}", file=sys.stderr)
 
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     json.dump(out, open(a.out, "w"))

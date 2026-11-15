@@ -762,7 +762,7 @@
     if (!rows.length) return '';
     return '<section class="block" id="oi" aria-labelledby="oi-h">' +
       '<div class="sec-head"><div><div class="micro">Option open interest</div><h2 id="oi-h" class="display">Where the options are.</h2></div>' +
-      '<p>How much is still riding on each stock in the options market. The biggest piles often act like price walls.</p></div>' +
+      '<p>How much is still riding on each stock in the options market — including the biggest option markets Congress hasn’t touched. The biggest piles often act like price walls.</p></div>' +
       '<div class="controls oi-controls" role="group" aria-label="Rank stocks by">' +
         '<button type="button" class="chip" data-action="oi-sort" data-v="size" aria-pressed="' + (S.oiSort === 'size') + '">By size</button>' +
         '<button type="button" class="chip" data-action="oi-sort" data-v="loading" aria-pressed="' + (S.oiSort === 'loading') + '">By loading</button>' +
@@ -773,7 +773,8 @@
       '<p class="bm-caveat"><b>Open interest is positioning, not a prediction.</b> It counts option contracts still open; it says nothing about which way a stock will move. ' +
         'Totals are summed across the next few expirations, and the put/call ratio uses those same totals. ' +
         '“Days of volume” is open contracts × 100 shares ÷ the stock’s 30-day average daily share volume. ' +
-        '<span class="oi-pol-key">⚑︎</span> marks stocks members of Congress have also traded.</p>' +
+        '<span class="oi-pol-key">⚑︎</span> marks stocks members of Congress have also traded. ' +
+        'Stocks without a page here open on TradingView in a new tab.</p>' +
     '</section>';
   }
   function oiRow(r) {
@@ -786,10 +787,16 @@
       (hasPc ? '. Put/call ratio ' + r.pc_ratio.toFixed(2) + ', ' + pcRead(r.pc_ratio) : '') +
       (hasDays ? '. ' + r.oi_days_of_volume.toFixed(1) + ' days of average volume' : '') +
       (nPol ? '. Traded by ' + plural(nPol, 'politician') + ' (' + plural(nTr, 'trade') + ')' : '') +
-      (validDate(r.expiry) ? '. Most active expiry ' + mdy(r.expiry) : '') + '. Open detail.';
+      (nPol ? '' : '. No congressional activity') +
+      (validDate(r.expiry) ? '. Most active expiry ' + mdy(r.expiry) : '') +
+      // untracked tickers have no stock page here — send them to TradingView instead
+      (r.tracked === true ? '. Open detail.' : '. Open ' + r.ticker + ' on TradingView, new tab');
     var segs = (c ? '<i class="b" style="width:' + cp.toFixed(2) + '%"></i>' : '') +
                (p ? '<i class="s" style="width:' + (100 - cp).toFixed(2) + '%"></i>' : '');
-    return '<li><a class="oi-row' + (nPol ? ' pol' : '') + '" href="#/stock/' + encodeURIComponent(r.ticker) + '" aria-label="' + esc(label) + '">' +
+    var href = r.tracked === true
+      ? '"#/stock/' + encodeURIComponent(r.ticker) + '"'
+      : '"https://www.tradingview.com/symbols/' + encodeURIComponent(r.ticker) + '/" target="_blank" rel="noopener"';
+    return '<li><a class="oi-row' + (nPol ? ' pol' : '') + '" href=' + href + ' aria-label="' + esc(label) + '">' +
       '<div class="oi-tk"><div class="display">' + esc(r.ticker) + '</div>' +
         (r.sector ? '<div class="bm-meta oi-sec" aria-hidden="true">' + esc(r.sector) + '</div>' : '') + '</div>' +
       '<div class="oi-cell oi-tot" aria-hidden="true"><span class="display">' + oiFmt(r.total_oi) + '</span><span class="oi-lab">Contracts</span></div>' +
@@ -801,7 +808,8 @@
         (hasPc ? '<span class="display">' + r.pc_ratio.toFixed(2) + '</span><span class="oi-lab">P/C · ' + pcRead(r.pc_ratio) + '</span>' : '') + '</div>' +
       '<div class="oi-cell oi-days" aria-hidden="true"><span class="display">' + (hasDays ? r.oi_days_of_volume.toFixed(1) : '—') + '</span><span class="oi-lab">Days of vol</span></div>' +
       '<div class="oi-pol" aria-hidden="true">' +
-        (nPol ? '<span class="badge oi-badge">⚑︎ ' + plural(nPol, 'politician').toUpperCase() + ' · ' + plural(nTr, 'trade').toUpperCase() + '</span>' : '') + '</div>' +
+        (nPol ? '<span class="badge oi-badge">⚑︎ ' + plural(nPol, 'politician').toUpperCase() + ' · ' + plural(nTr, 'trade').toUpperCase() + '</span>'
+              : '<span class="bm-meta oi-none">No congressional activity</span>') + '</div>' +
     '</a></li>';
   }
   function renderOi() {

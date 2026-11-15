@@ -340,5 +340,383 @@
 "sector": "Energy",
 "sic": "2911",
 "industry": "Petroleum Refining"
+},
+"AAL": {
+"name": "American Airlines Group Inc.",
+"sector": "Industrials",
+"sic": "4512",
+"industry": "Air Transportation, Scheduled"
+},
+"ABBV": {
+"name": "AbbVie Inc.",
+"sector": "Healthcare",
+"sic": "2834",
+"industry": "Pharmaceutical Preparations"
+},
+"ADBE": {
+"name": "ADOBE INC.",
+"sector": "Technology",
+"sic": "7372",
+"industry": "Services-Prepackaged Software"
+},
+"AI": {
+"name": "C3.ai, Inc.",
+"sector": "Technology",
+"sic": "7372",
+"industry": "Services-Prepackaged Software"
+},
+"AMC": {
+"name": "AMC ENTERTAINMENT HOLDINGS, INC.",
+"sector": "Communication Services",
+"sic": "7830",
+"industry": "Services-Motion Picture Theaters"
+},
+"AMD": {
+"name": "ADVANCED MICRO DEVICES INC",
+"sector": "Technology",
+"sic": "3674",
+"industry": "Semiconductors & Related Devices"
+},
+"ARM": {
+"name": "ARM HOLDINGS PLC /UK",
+"sector": "Technology",
+"sic": "3674",
+"industry": "Semiconductors & Related Devices"
+},
+"AXP": {
+"name": "AMERICAN EXPRESS CO",
+"sector": "Financial Services",
+"sic": "6199",
+"industry": "Finance Services"
+},
+"BA": {
+"name": "BOEING CO",
+"sector": "Industrials",
+"sic": "3721",
+"industry": "Aircraft"
+},
+"CAT": {
+"name": "CATERPILLAR INC",
+"sector": "Industrials",
+"sic": "3531",
+"industry": "Construction Machinery & Equip"
+},
+"CCL": {
+"name": "Carnival Corp Ltd.",
+"sector": "Industrials",
+"sic": "4400",
+"industry": "Water Transportation"
+},
+"CMCSA": {
+"name": "COMCAST CORP",
+"sector": "Communication Services",
+"sic": "4841",
+"industry": "Cable & Other Pay Television Services"
+},
+"COIN": {
+"name": "Coinbase Global, Inc.",
+"sector": "Financial Services",
+"sic": "6199",
+"industry": "Finance Services"
+},
+"CRM": {
+"name": "Salesforce, Inc.",
+"sector": "Technology",
+"sic": "7372",
+"industry": "Services-Prepackaged Software"
+},
+"CRWD": {
+"name": "CrowdStrike Holdings, Inc.",
+"sector": "Technology",
+"sic": "7372",
+"industry": "Services-Prepackaged Software"
+},
+"DAL": {
+"name": "DELTA AIR LINES, INC.",
+"sector": "Industrials",
+"sic": "4512",
+"industry": "Air Transportation, Scheduled"
+},
+"DIA": {
+"name": "SPDR DOW JONES INDUSTRIAL AVERAGE ETF TRUST",
+"sector": null,
+"sic": "",
+"industry": ""
+},
+"DIS": {
+"name": "Walt Disney Co",
+"sector": "Consumer Cyclical",
+"sic": "7990",
+"industry": "Services-Miscellaneous Amusement & Recreation"
+},
+"DKNG": {
+"name": "DraftKings Inc.",
+"sector": "Consumer Cyclical",
+"sic": "7990",
+"industry": "Services-Miscellaneous Amusement & Recreation"
+},
+"F": {
+"name": "FORD MOTOR CO",
+"sector": "Industrials",
+"sic": "3711",
+"industry": "Motor Vehicles & Passenger Car Bodies"
+},
+"GLD": {
+"name": "SPDR GOLD TRUST",
+"sector": "Financial Services",
+"sic": "6221",
+"industry": "Commodity Contracts Brokers & Dealers"
+},
+"GME": {
+"name": "GameStop Corp.",
+"sector": "Consumer Cyclical",
+"sic": "5734",
+"industry": "Retail-Computer & Computer Software Stores"
+},
+"GOOGL": {
+"name": "Alphabet Inc.",
+"sector": "Communication Services",
+"sic": "7370",
+"industry": "Services-Computer Programming, Data Processing, Etc."
+},
+"GS": {
+"name": "GOLDMAN SACHS GROUP INC",
+"sector": "Financial Services",
+"sic": "6211",
+"industry": "Security Brokers, Dealers & Flotation Companies"
+},
+"HOOD": {
+"name": "Robinhood Markets, Inc.",
+"sector": "Financial Services",
+"sic": "6211",
+"industry": "Security Brokers, Dealers & Flotation Companies"
+},
+"INTC": {
+"name": "INTEL CORP",
+"sector": "Technology",
+"sic": "3674",
+"industry": "Semiconductors & Related Devices"
+},
+"IONQ": {
+"name": "IonQ, Inc.",
+"sector": "Technology",
+"sic": "7373",
+"industry": "Services-Computer Integrated Systems Design"
+},
+"JNJ": {
+"name": "JOHNSON & JOHNSON",
+"sector": "Healthcare",
+"sic": "2834",
+"industry": "Pharmaceutical Preparations"
+},
+"JPM": {
+"name": "JPMORGAN CHASE & CO",
+"sector": "Financial Services",
+"sic": "6021",
+"industry": "National Commercial Banks"
+},
+"KO": {
+"name": "COCA COLA CO",
+"sector": "Consumer Defensive",
+"sic": "2080",
+"industry": "Beverages"
+},
+"LCID": {
+"name": "Lucid Group, Inc.",
+"sector": "Industrials",
+"sic": "3711",
+"industry": "Motor Vehicles & Passenger Car Bodies"
+},
+"MA": {
+"name": "Mastercard Inc",
+"sector": "Financial Services",
+"sic": "7389",
+"industry": "Services-Business Services, NEC"
+},
+"MARA": {
+"name": "MARA Holdings, Inc.",
+"sector": "Financial Services",
+"sic": "6199",
+"industry": "Finance Services"
+},
+"MRK": {
+"name": "Merck & Co., Inc.",
+"sector": "Healthcare",
+"sic": "2834",
+"industry": "Pharmaceutical Preparations"
+},
+"MS": {
+"name": "MORGAN STANLEY",
+"sector": "Financial Services",
+"sic": "6211",
+"industry": "Security Brokers, Dealers & Flotation Companies"
+},
+"MSTR": {
+"name": "Strategy Inc",
+"sector": "Financial Services",
+"sic": "6199",
+"industry": "Finance Services"
+},
+"NIO": {
+"name": "NIO Inc.",
+"sector": "Industrials",
+"sic": "3711",
+"industry": "Motor Vehicles & Passenger Car Bodies"
+},
+"NKE": {
+"name": "NIKE, Inc.",
+"sector": "Basic Materials",
+"sic": "3021",
+"industry": "Rubber & Plastics Footwear"
+},
+"ORCL": {
+"name": "ORACLE CORP",
+"sector": "Technology",
+"sic": "7372",
+"industry": "Services-Prepackaged Software"
+},
+"PEP": {
+"name": "PEPSICO INC",
+"sector": "Consumer Defensive",
+"sic": "2080",
+"industry": "Beverages"
+},
+"PFE": {
+"name": "PFIZER INC",
+"sector": "Healthcare",
+"sic": "2834",
+"industry": "Pharmaceutical Preparations"
+},
+"PLTR": {
+"name": "Palantir Technologies Inc.",
+"sector": "Technology",
+"sic": "7372",
+"industry": "Services-Prepackaged Software"
+},
+"PYPL": {
+"name": "PayPal Holdings, Inc.",
+"sector": "Financial Services",
+"sic": "7389",
+"industry": "Services-Business Services, NEC"
+},
+"QBTS": {
+"name": "D-Wave Quantum Inc.",
+"sector": "Technology",
+"sic": "7374",
+"industry": "Services-Computer Processing & Data Preparation"
+},
+"QCOM": {
+"name": "QUALCOMM INC/DE",
+"sector": "Technology",
+"sic": "3663",
+"industry": "Radio & Tv Broadcasting & Communications Equipment"
+},
+"RBLX": {
+"name": "Roblox Corp",
+"sector": "Technology",
+"sic": "7372",
+"industry": "Services-Prepackaged Software"
+},
+"RGTI": {
+"name": "Rigetti Computing, Inc.",
+"sector": "Technology",
+"sic": "7371",
+"industry": "Services-Computer Programming Services"
+},
+"RIOT": {
+"name": "Riot Platforms, Inc.",
+"sector": "Financial Services",
+"sic": "6199",
+"industry": "Finance Services"
+},
+"RIVN": {
+"name": "Rivian Automotive, Inc. / DE",
+"sector": "Industrials",
+"sic": "3711",
+"industry": "Motor Vehicles & Passenger Car Bodies"
+},
+"SHOP": {
+"name": "SHOPIFY INC.",
+"sector": "Technology",
+"sic": "7372",
+"industry": "Services-Prepackaged Software"
+},
+"SLV": {
+"name": "iShares Silver Trust",
+"sector": "Financial Services",
+"sic": "6221",
+"industry": "Commodity Contracts Brokers & Dealers"
+},
+"SMCI": {
+"name": "Super Micro Computer, Inc.",
+"sector": "Technology",
+"sic": "3571",
+"industry": "Electronic Computers"
+},
+"SNAP": {
+"name": "Snap Inc",
+"sector": "Technology",
+"sic": "7370",
+"industry": "Services-Computer Programming, Data Processing, Etc."
+},
+"SNOW": {
+"name": "Snowflake Inc.",
+"sector": "Technology",
+"sic": "7372",
+"industry": "Services-Prepackaged Software"
+},
+"SOFI": {
+"name": "SoFi Technologies, Inc.",
+"sector": "Financial Services",
+"sic": "6199",
+"industry": "Finance Services"
+},
+"SPY": {
+"name": "SPDR S&P 500 ETF TRUST",
+"sector": null,
+"sic": "",
+"industry": ""
+},
+"TMO": {
+"name": "THERMO FISHER SCIENTIFIC INC.",
+"sector": "Industrials",
+"sic": "3829",
+"industry": "Measuring & Controlling Devices, NEC"
+},
+"TSLA": {
+"name": "Tesla, Inc.",
+"sector": "Industrials",
+"sic": "3711",
+"industry": "Motor Vehicles & Passenger Car Bodies"
+},
+"TXN": {
+"name": "TEXAS INSTRUMENTS INC",
+"sector": "Technology",
+"sic": "3674",
+"industry": "Semiconductors & Related Devices"
+},
+"UBER": {
+"name": "Uber Technologies, Inc",
+"sector": "Industrials",
+"sic": "7389",
+"industry": "Services-Business Services, NEC"
+},
+"USO": {
+"name": "United States Oil Fund, LP",
+"sector": "Financial Services",
+"sic": "6221",
+"industry": "Commodity Contracts Brokers & Dealers"
+},
+"UVXY": {
+"name": "ProShares Trust II",
+"sector": "Financial Services",
+"sic": "6221",
+"industry": "Commodity Contracts Brokers & Dealers"
+},
+"VXX": {
+"name": "BARCLAYS BANK PLC",
+"sector": "Financial Services",
+"sic": "6029",
+"industry": "Commercial Banks, NEC"
 }
 }

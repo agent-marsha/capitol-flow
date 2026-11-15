@@ -153,6 +153,15 @@ def main() -> int:
         tickers = sorted((data.get("prices") or {}).keys())[: a.max]
     except Exception:
         tickers = []
+    # Also profile the high-open-interest option universe, so the dashboard board can
+    # show a sector for rows Congress never traded.
+    try:
+        opts = json.load(open("data/options.json"))
+        for t in sorted(opts.keys()):
+            if t not in tickers:
+                tickers.append(t)
+    except Exception:
+        pass
 
     cmap = cik_map()
     out, missing = {}, []

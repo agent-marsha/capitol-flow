@@ -193,11 +193,12 @@ def fetch_sectors(tickers: list[str]) -> dict:
         print("[enrich] data/profiles.json missing — sectors unavailable", file=sys.stderr)
         return {}
     out = {}
-    for t in tickers:
-        p = prof.get(t)
-        if p:
-            out[t] = {"sector": p.get("sector"), "industry": p.get("industry"),
-                      "sic": p.get("sic"), "name": p.get("name")}
+    # Return the WHOLE profile map, not just the congressional tickers — the dashboard's
+    # open-interest board also covers the high-OI option universe, and those rows need a
+    # sector too (TSLA/INTC were rendering blank because of this filter).
+    for t, p in prof.items():
+        out[t] = {"sector": p.get("sector"), "industry": p.get("industry"),
+                  "sic": p.get("sic"), "name": p.get("name")}
     return out
 
 
@@ -266,16 +267,21 @@ def build_oi_board(tickers: list[str], options: dict, prices: dict,
                 pols[tk].add(t["politician"])
 
     board = []
-    for tk in tickers:
+    # Iterate the OPTION universe, not the congressional one — the board must also show
+    # high-open-interest names Congress never touched (SPY, TSLA, the retail favourites).
+    for tk in sorted(options.keys()):
         o = options.get(tk) or {}
         call = o.get("call_oi") or 0
         put = o.get("put_oi") or 0
         total = call + put
         if total <= 0:
             continue
-        daily = (prices.get(tk) or {}).get("daily") or []
-        vols = [b.get("v") or 0 for b in daily[-30:]]
-        adv = sum(vols) / len(vols) if vols else 0
+        # ADV: prefer the batched value from fetch_options; else derive from our prices
+        adv = o.get("adv") or 0
+        if not adv:
+            daily = (prices.get(tk) or {}).get("daily") or []
+            vols = [b.get("v") or 0 for b in daily[-30:]]
+            adv = sum(vols) / len(vols) if vols else 0
         # contracts control 100 shares each; compare to average daily share volume
         days = round((total * 100) / adv, 1) if adv > 0 else None
         board.append({
@@ -291,6 +297,8 @@ def build_oi_board(tickers: list[str], options: dict, prices: dict,
             "oi_days_of_volume": days,
             "n_trades": trades_n.get(tk, 0),
             "n_politicians": len(pols.get(tk, ())),
+            # does this app have a stock page for it (i.e. did Congress trade it)?
+            "tracked": tk in prices,
         })
     board.sort(key=lambda r: -r["total_oi"])
     return board

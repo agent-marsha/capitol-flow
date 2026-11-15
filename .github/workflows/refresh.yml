@@ -53,7 +53,11 @@ jobs:
         continue-on-error: true
         run: python pipeline/profiles.py --in data/app_data.json --out data/profiles.json
 
-      - name: Enrich (prices, news, clusters, oversight)
+      - name: Officers & directors (SEC Forms 3/4/5, name-verified)
+        continue-on-error: true
+        run: python pipeline/insiders.py --in data/app_data.json --out data/insiders.json
+
+      - name: Enrich (prices, news, clusters, oversight, insiders)
         run: python pipeline/enrich.py --days 150 --max-tickers 60 --out data/app_data.json
 
       # ---- Plain-English fundamentals from SEC EDGAR (10-K XBRL) ----------------

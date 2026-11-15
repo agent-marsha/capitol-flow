@@ -209,18 +209,26 @@ def load_committees() -> dict:
 
 
 # ------------------------------------------------------------- oversight
-def attach_oversight(txs: list[dict], people: dict, com: dict, sectors: dict) -> None:
-    """Flag trades where the politician sits on a committee that oversees the sector.
+def attach_oversight(txs: list[dict], people: dict, com: dict, sectors: dict,
+                     insiders: dict | None = None) -> None:
+    """Flag trades where the politician sits on a committee that oversees the sector,
+    or is / was an OFFICER or DIRECTOR of the company itself.
 
-    This is the sharpest signal in the app: not "a politician traded X" but "the
-    politician who helps oversee X's industry traded X".
+    The second case is the one committee logic cannot reach: not "regulates the
+    company" but "ran the company".
     """
     members = com.get("members") or {}
     sec_map = com.get("sector_committees") or {}
+    ins = insiders or {}
     for t in txs:
         t["oversight"] = []
-        bio = (people.get(t.get("politician")) or {}).get("bioguide")
+        t["insider"] = None
+        pol = t.get("politician")
         ticker = t.get("ticker")
+        # officer / director of the traded company (verified against an SEC Form 4)
+        if pol and ticker and ticker in (ins.get(pol) or {}):
+            t["insider"] = ins[pol][ticker]
+        bio = (people.get(pol) or {}).get("bioguide")
         if not bio or not ticker:
             continue
         sector = (sectors.get(ticker) or {}).get("sector")
@@ -326,10 +334,15 @@ def main() -> int:
     print("[enrich] resolving sectors + committee oversight...", file=sys.stderr)
     sectors = fetch_sectors(tickers)
     com = load_committees()
-    attach_oversight(txs, people, com, sectors)
+    try:
+        insiders = json.load(open("data/insiders.json"))
+    except Exception:
+        insiders = {}
+    attach_oversight(txs, people, com, sectors, insiders)
     n_over = sum(1 for t in txs if t.get("oversight"))
-    print(f"[enrich] oversight: {n_over} of {len(txs)} trades involve a committee that "
-          f"oversees the stock's sector", file=sys.stderr)
+    n_ins = sum(1 for t in txs if t.get("insider"))
+    print(f"[enrich] oversight: {n_over} trades via committee jurisdiction; "
+          f"{n_ins} via verified officer/director status", file=sys.stderr)
     member_committees = {
         v["bioguide"]: [{"code": s["code"], "title": s.get("title")}
                         for s in (com.get("members") or {}).get(v["bioguide"], [])]
@@ -354,6 +367,7 @@ def main() -> int:
         "politicians": people,
         "committees": committee_names,
         "member_committees": member_committees,
+        "insiders": insiders,
         "sectors": sectors,
         "prices": prices,
         "news": news,

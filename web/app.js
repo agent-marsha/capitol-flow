@@ -289,6 +289,44 @@
   }
   var FOOT_OV = 'Committee jurisdiction is matched by sector and is a guide, not a legal determination.';
 
+  // ------------------------------------------------------------------ company insiders
+  // t.insider is set only when SEC Forms 3/4/5 name the politician as an officer or director
+  // of the traded company (owner name and isDirector/isOfficer verified in the Form 4 XML).
+  // Always worded as "is/was an officer/director" — never more.
+  function hasIns(t) { return !!(t && t.insider && (t.insider.role === 'Director' || t.insider.role === 'Officer')); }
+  function insTitle(i) { var x = i && i.title != null ? String(i.title).trim() : ''; return x; }
+  function insLabel(i) {
+    var x = i.role === 'Officer' && insTitle(i) ? ' · ' + insTitle(i) : '';
+    return (i.role === 'Officer' ? 'Officer' : 'Director') + x;
+  }
+  function plainName(n) { return stripHon(n).replace(/^(sen|rep|senator|representative)\.?\s+/i, '').replace(/[\s,]+$/, ''); }
+  function coName(c) {
+    var x = String(c || '').trim().replace(/[\s,]+(inc|corp|corporation|co|company|ltd|plc|llc|lp|l\.p|n\.v|s\.a)\.?$/i, '').replace(/[\s,]+$/, '');
+    if (x && x === x.toUpperCase()) x = x.toLowerCase().replace(/\b[a-z]/g, function (c) { return c.toUpperCase(); });
+    return x;
+  }
+  // "is" only while the most recent insider filing is recent (≤ 18 months); otherwise "was".
+  function insTense(i) {
+    if (!validDate(i.last_filed)) return 'was';
+    var now = new Date(), today = now.getUTCFullYear() + '-' + ('0' + (now.getUTCMonth() + 1)).slice(-2) + '-' + ('0' + now.getUTCDate()).slice(-2);
+    return days(i.last_filed, today) <= 548 ? 'is' : 'was';
+  }
+  function insRoleText(i) {
+    var r = i.role === 'Officer' ? (insTitle(i) ? 'an officer (' + insTitle(i) + ')' : 'an officer') : 'a director';
+    return r;
+  }
+  function insTip(t) {
+    var i = t.insider, co = coName(i.company) || t.ticker || 'this company';
+    return plainName(t.politician) + ' ' + insTense(i) + ' ' + insRoleText(i) + ' of ' + co +
+      (validDate(i.last_filed) ? ' (most recent SEC insider filing ' + i.last_filed + ').' : '.') +
+      '\n' + FOOT_INS;
+  }
+  function insBadge(t) {
+    if (!hasIns(t)) return '';
+    return '<span class="badge ins" title="' + esc(insTip(t)) + '">⚑︎ ' + esc(insLabel(t.insider)) + '</span>';
+  }
+  var FOOT_INS = 'Officer/director status verified against SEC Forms 3/4/5. Not a claim of wrongdoing.';
+
   function tradeRow(t, opt) {
     opt = opt || {};
     var dir = t.direction === 'sell' || t.direction === 'buy' ? t.direction : 'other';
@@ -309,6 +347,7 @@
 
     var badges = ovBadge(t);
     if (badges) cls.push('oversight');
+    if (hasIns(t)) { cls.push('insider'); badges = insBadge(t) + badges; }
     if (t.is_very_large) badges += '<span class="badge vl" title="Upper bound ≥ $500,000">$500K+</span>';
     else if (t.is_large) badges += '<span class="badge lg" title="Upper bound ≥ $100,000">$100K+</span>';
     var sig = signalOf.get(t.id);
@@ -452,6 +491,7 @@
       '</section>' +
 
       ovSection() +
+      insSection() +
 
       '<section class="block" id="big" aria-labelledby="big-h">' +
         '<div class="sec-head"><div><div class="micro">$100K and up</div><h2 id="big-h" class="display">Big money</h2></div>' +
@@ -546,6 +586,61 @@
     var lead = m === 1 ? 'This trade was' : n === m ? 'All ' + m + ' of these trades were' : n + ' of these ' + m + ' trades ' + (n === 1 ? 'was' : 'were');
     return '<p class="ov-note"><span class="ov-ink">\u26A1\uFE0E</span> ' + lead + ' made by ' + who + ' this sector' + (sec ? ' (' + esc(sec) + ')' : '') + '. ' +
       '<span class="ov-foot">' + FOOT_OV + '</span></p>';
+  }
+
+  // ---- Company insiders block: trades by politicians who are/were an officer or director of the company.
+  var insCache = null;
+  function insTrades() {
+    if (insCache) return insCache;
+    insCache = D.trades.filter(hasIns).sort(function (a, b) {
+      return ((b.amount_high || 0) - (a.amount_high || 0)) || String(b.txn_date).localeCompare(String(a.txn_date));
+    });
+    return insCache;
+  }
+  function insRow(t) {
+    var i = t.insider;
+    var dir = t.direction === 'sell' || t.direction === 'buy' ? t.direction : 'other';
+    var tk = t.ticker
+      ? '<button type="button" class="tk' + (hasPrices(t.ticker) ? '' : ' nochart') + '" data-tk="' + esc(t.ticker) + '" aria-label="Open ' + esc(t.ticker) + ' detail">' + esc(t.ticker) + '</button>'
+      : '<span class="tk none">No ticker</span>';
+    var when = validDate(t.txn_date) ? '<span class="ov-ago" title="' + mdy(t.txn_date) + '">' + ago(t.txn_date) + '</span>' : '';
+    return '<li class="ov-row ins-row ' + dir + '" title="' + esc(insTip(t)) + '">' +
+      '<div class="ov-who">' + avatar(t.politician, 28) + '<div class="ov-who-txt"><b>' + esc(stripHon(t.politician).replace(/[\s,]+$/, '')) + '</b>' +
+        '<span class="ov-cm"><b class="ins-ink">⚑︎ ' + esc(insLabel(i)) + '</b> · ' + esc(coName(i.company) || t.ticker || '') + '</span></div></div>' +
+      '<div class="ov-trade"><span class="dir ' + dir + '">' + dirLabel(t) + '</span>' + tk + '</div>' +
+      '<div class="ov-amt"><span class="display" title="' + esc(t.amount_label) + '">' + range(t.amount_low, t.amount_high) + '</span>' + when + '</div>' +
+    '</li>';
+  }
+  function insSection() {
+    var list = insTrades();
+    if (!list.length) return '';
+    var pols = new Set(list.map(function (t) { return t.politician; }));
+    return '<section class="block" id="insiders" aria-labelledby="ins-h">' +
+      '<div class="sec-head"><div><div class="micro ins-ink">⚑︎ Company insiders</div><h2 id="ins-h" class="display">They ran it.</h2></div>' +
+      '<p>These trades were made by politicians who are or were an officer or director of the company itself. ' +
+        plural(list.length, 'trade') + ' by ' + plural(pols.size, 'politician') + ', largest first.</p></div>' +
+      '<ul class="ov-list ins-list">' + list.map(insRow).join('') + '</ul>' +
+      '<p class="ov-foot">' + FOOT_INS + '</p>' +
+    '</section>';
+  }
+  function detailInsNote(trades) {
+    var ins = trades.filter(hasIns);
+    var n = ins.length;
+    if (!n) return '';
+    var m = trades.length;
+    var pols = new Map();
+    ins.forEach(function (t) { if (!pols.has(t.politician)) pols.set(t.politician, t.insider); });
+    var lead = m === 1 ? 'This trade was' : n === m ? 'All ' + m + ' of these trades were' : n + ' of these ' + m + ' trades ' + (n === 1 ? 'was' : 'were');
+    var who;
+    if (pols.size === 1) {
+      var i = pols.values().next().value;
+      who = 'a politician who ' + insTense(i) + ' ' + insRoleText(i) + ' of this company' +
+        (validDate(i.last_filed) ? ' (most recent SEC insider filing ' + i.last_filed + ')' : '');
+    } else {
+      who = 'politicians who are or were an officer or director of this company';
+    }
+    return '<p class="ov-note ins-note"><span class="ins-ink">⚑︎</span> ' + lead + ' made by ' + esc(who) + '. ' +
+      '<span class="ov-foot">' + FOOT_INS + '</span></p>';
   }
 
   function segBtn(v, label) {
@@ -727,6 +822,7 @@
 
       '<div class="d-cols">' +
         '<section class="block" aria-labelledby="who-h"><div class="micro">Who traded ' + esc(tk) + '</div><h3 id="who-h" class="display">The trades</h3>' +
+          detailInsNote(trades) +
           detailOvNote(trades) +
           (trades.length ? '<ul class="trades">' + trades.map(function (t) { return tradeRow(t, { since: true }); }).join('') + '</ul>' : '<p class="empty">No disclosed trades.</p>') +
         '</section>' +

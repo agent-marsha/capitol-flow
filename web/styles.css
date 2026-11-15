@@ -11,6 +11,7 @@
   --buy: #00C805;
   --sell: #FF5000;
   --ov: #FFC700;   /* committee oversight only — the one 'attention' accent */
+  --ins: #3D9BFF;  /* company insiders (officer/director) only */
   --radius: 4px;
   --display: "Helvetica Neue", "HelveticaNeue-CondensedBold", "Arial Narrow", "Roboto Condensed", "Liberation Sans Narrow", "Nimbus Sans Narrow", sans-serif-condensed, Arial, sans-serif;
   --body: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -254,6 +255,8 @@ section.block { padding: 40px 0 8px; }
 .badge.cl { border: 1px solid var(--line-2); color: var(--ink-2); }
 .badge.ov { background: var(--ov); color: var(--bg); text-transform: uppercase; white-space: normal; max-width: 100%; cursor: help; }
 .trade.oversight { border-color: rgba(255, 199, 0, .45); }
+.badge.ins { background: var(--ins); color: var(--bg); text-transform: uppercase; white-space: normal; max-width: 100%; cursor: help; }
+.trade.insider, .trade.insider.oversight { border-color: rgba(61, 155, 255, .6); }
 .t-asset { color: var(--ink-2); font-size: 13px; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .t-who { font-size: 13px; margin-top: 6px; color: var(--muted); display: flex; align-items: center; gap: 8px; min-width: 0; }
 .t-who-txt { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -518,3 +521,8 @@ section[id] { scroll-margin-top: 64px; }
   .ov-amt .display { font-size: 20px; }
   .ov-ago { min-width: 0; }
 }
+
+/* ---------- company insiders (officer / director) ---------- */
+.ins-ink { color: var(--ins); }
+.ov-row.ins-row::before { background: var(--ins); }
+.ov-cm b.ins-ink { color: var(--ins); }

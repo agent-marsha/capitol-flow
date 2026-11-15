@@ -410,7 +410,8 @@ section[id] { scroll-margin-top: 64px; }
 @media (max-width: 599px) { .opt-stat:nth-child(2) { grid-column: span 2; order: 3; } }
 .opt-vs { color: var(--muted); margin: 0 6px; font-weight: 400; }
 .opt-split { height: 6px; margin-top: 10px; }
-.opt-explain { margin: 16px 0 20px; color: var(--ink-2); font-size: 15px; max-width: 60ch; }
+.opt-explain { margin: 16px 0 8px; color: var(--ink-2); font-size: 15px; max-width: 60ch; }
+.opt-range { margin: 0 0 20px; color: var(--muted); font-size: 13px; max-width: 64ch; }
 .opt-under b { color: var(--ink); font-weight: 700; }
 .opt-cols { display: grid; grid-template-columns: 1fr; gap: 24px; }
 @media (min-width: 700px) { .opt-cols { grid-template-columns: 1fr 1fr; } }
@@ -421,7 +422,7 @@ section[id] { scroll-margin-top: 64px; }
 .opt-col-head .micro { color: inherit; font-size: 10px; }
 .opt-legend { display: flex; justify-content: space-between; padding: 0 14px 6px; font-size: 10px; }
 .opt-rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
-.opt-row { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 14px 10px 16px; }
+.opt-row { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 14px 8px 16px; }
 .opt-row::before { content: ""; position: absolute; left: -1px; top: -1px; bottom: -1px; width: 3px; border-radius: var(--radius) 0 0 var(--radius); }
 .opt-row.call::before, .opt-row.call .opt-track i { background: var(--buy); }
 .opt-row.put::before, .opt-row.put .opt-track i { background: var(--sell); }
@@ -430,7 +431,9 @@ section[id] { scroll-margin-top: 64px; }
 .opt-track { display: block; height: 12px; min-width: 0; }
 .opt-track i { display: block; height: 100%; border-radius: 2px; }
 .opt-oi { font-size: 22px; text-align: right; white-space: nowrap; }
-.opt-l2 { display: flex; align-items: baseline; gap: 6px 14px; margin-top: 8px; flex-wrap: wrap; }
+.opt-l2 { display: flex; align-items: baseline; gap: 6px 14px; margin-top: 6px; flex-wrap: wrap; }
+.opt-exp { display: inline-flex; align-items: baseline; gap: 6px; white-space: nowrap; }
+.opt-exp b { font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--muted); font-variant-numeric: tabular-nums; }
 .opt-px { display: inline-flex; align-items: baseline; gap: 6px; }
 .opt-px b { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .opt-lab { font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }

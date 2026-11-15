@@ -1,25 +1,28 @@
 #!/usr/bin/env python3
 """Options read per ticker: where open interest is concentrated, contract prices,
-and a TradingView link for each contract.
+expiration dates, and a TradingView link for each contract.
 
-Data: Yahoo option chains (yfinance).  We pick the single most-active expiry in a
-sensible window, then report the strikes carrying the most open interest on the
-CALL side and the PUT side — the classic "walls".
+Data: Yahoo option chains (yfinance).  We look at the nearest few expirations in a
+sensible window and aggregate open interest BY STRIKE, so a strike that is heavily
+positioned across several expiries shows up once, with its dominant expiration.
 
 TradingView symbol format (verified 2026-11):
-    OCC  AAPL261116C00355000
-    TV   OPRA:AAPL261116C355.0
+    OCC  AAPL261127C00362500
+    TV   OPRA:AAPL261127C362.5
   i.e. root + YYMMDD + C/P + strike (no zero padding, one decimal kept).
-  Page:  https://www.tradingview.com/symbols/OPRA-AAPL261116C355.0/
+  Page:  https://www.tradingview.com/symbols/OPRA-AAPL261127C362.5/
 
 Output: data/options.json
-  { "AAPL": { "underlying":356.27, "expiry":"2026-12-18", "dte":33,
+  { "AAPL": { "underlying":356.27,
+              "expiry":"2026-11-27", "dte":12,          # most-active expiry
+              "expiries_considered":[...],
               "call_oi":..., "put_oi":..., "pc_ratio":0.83,
-              "top_calls":[{strike,oi,volume,price,bid,ask,iv,symbol,tv_url}],
-              "top_puts":[...], "expiries":[...] } }
+              "top_calls":[{strike,oi,expiry,dte,volume,price,bid,ask,iv,
+                            symbol,tv_url,parts:[{expiry,oi}]}],
+              "top_puts":[...] } }
 
 Usage: python fetch_options.py [--in data/app_data.json] [--out data/options.json]
-                               [--max 60] [--top 4]
+                               [--max 60] [--top 10]
 """
 from __future__ import annotations
 
@@ -53,7 +56,7 @@ def tv_url(occ: str):
 
 
 def price_of(row):
-    """Best available contract price: last, else mid of bid/ask."""
+    """Best available contract price: last trade, else mid of bid/ask."""
     try:
         last = float(row.get("lastPrice") or 0)
     except Exception:
@@ -63,50 +66,88 @@ def price_of(row):
     except Exception:
         b = a = 0.0
     if last > 0:
-        return round(last, 2)
+        return round(last, 2), "last"
     if b > 0 and a > 0:
-        return round((b + a) / 2, 2)
-    return round(max(b, a), 2) if max(b, a) > 0 else None
+        return round((b + a) / 2, 2), "mid"
+    m = max(b, a)
+    return (round(m, 2), "last") if m > 0 else (None, None)
 
 
-def pick_expiry(exps, chains, lo=7, hi=75):
-    """The most-active expiry inside the window (by total open interest)."""
+def num(x, default=0):
+    try:
+        f = float(x)
+        return default if f != f else f          # NaN check
+    except Exception:
+        return default
+
+
+def expire_list(exps, lo=7, hi=75, limit=6):
+    """Nearest expirations inside the window, oldest first."""
     today = date.today()
-    best = None
-    for e in exps[:10]:
+    out = []
+    for e in exps:
         try:
             d = datetime.strptime(e, "%Y-%m-%d").date()
         except Exception:
             continue
         dte = (d - today).days
-        if dte < lo or dte > hi:
-            continue
-        ch = chains.get(e)
-        if not ch:
-            continue
-        c, p = ch
-        total = int((c["openInterest"].fillna(0)).sum() + (p["openInterest"].fillna(0)).sum())
-        if best is None or total > best[1]:
-            best = (e, total, dte)
-    return best  # (expiry, total_oi, dte) or None
+        if lo <= dte <= hi:
+            out.append((e, dte))
+        if len(out) >= limit:
+            break
+    return out
 
 
-def top_rows(df, n):
-    d = df.copy()
-    d["openInterest"] = d["openInterest"].fillna(0)
-    d = d[d["openInterest"] > 0].nlargest(n, "openInterest")
+def most_active(chains, exp_list):
+    """Expiry carrying the most open interest overall (for the header)."""
+    best = None
+    for e, dte in exp_list:
+        c, p = chains[e]
+        tot = num(c["openInterest"].fillna(0).sum()) + num(p["openInterest"].fillna(0).sum())
+        if best is None or tot > best[2]:
+            best = (e, dte, tot)
+    return best
+
+
+def build_side(chains, exp_list, side_idx, top_n):
+    """Top strikes by open interest, aggregated across the considered expiries.
+
+    Each strike is reported once, with the expiration that holds most of its OI.
+    """
+    agg: dict[float, dict] = {}
+    for e, _dte in exp_list:
+        df = chains[e][side_idx]
+        for _, r in df.iterrows():
+            oi = num(r.get("openInterest"))
+            if oi <= 0:
+                continue
+            st = float(r["strike"])
+            a = agg.setdefault(st, {"oi": 0.0, "parts": {}, "rows": {}})
+            a["oi"] += oi
+            a["parts"][e] = int(a["parts"].get(e, 0) + oi)
+            a["rows"][e] = r
+    ranked = sorted(agg.items(), key=lambda kv: -kv[1]["oi"])[:top_n]
     out = []
-    for _, r in d.iterrows():
+    for st, a in ranked:
+        dom = max(a["parts"], key=lambda e: a["parts"][e])
+        r = a["rows"][dom]
+        price, basis = price_of(r)
+        exp_dte = dict(exp_list)[dom]
         out.append({
-            "strike": float(r["strike"]),
-            "oi": int(r["openInterest"]),
-            "volume": int(r.get("volume") or 0) if r.get("volume") == r.get("volume") else 0,
-            "price": price_of(r),
-            "bid": float(r["bid"]) if r.get("bid") == r.get("bid") else None,
-            "ask": float(r["ask"]) if r.get("ask") == r.get("ask") else None,
-            "iv": round(float(r["impliedVolatility"]) * 100, 1) if r.get("impliedVolatility") == r.get("impliedVolatility") else None,
+            "strike": st,
+            "oi": int(a["oi"]),
+            "expiry": dom,
+            "dte": exp_dte,
+            "volume": int(num(r.get("volume"))),
+            "price": price,
+            "price_basis": basis,
+            "bid": num(r.get("bid")) or None,
+            "ask": num(r.get("ask")) or None,
+            "iv": round(num(r.get("impliedVolatility")) * 100, 1) or None,
             "symbol": tv_symbol(r.get("contractSymbol")),
             "tv_url": tv_url(r.get("contractSymbol")),
+            "parts": [{"expiry": e, "oi": a["parts"][e]}
+                      for e in sorted(a["parts"], key=lambda e: -a["parts"][e])],
         })
     return out
 
@@ -116,7 +157,7 @@ def main() -> int:
     ap.add_argument("--in", dest="inp", default="data/app_data.json")
     ap.add_argument("--out", default="data/options.json")
     ap.add_argument("--max", type=int, default=60)
-    ap.add_argument("--top", type=int, default=4)
+    ap.add_argument("--top", type=int, default=10)
     a = ap.parse_args()
 
     try:
@@ -127,7 +168,7 @@ def main() -> int:
 
     data = json.load(open(a.inp))
     tickers = sorted((data.get("prices") or {}).keys())[: a.max]
-    print(f"[options] {len(tickers)} tickers", file=sys.stderr)
+    print(f"[options] {len(tickers)} tickers, top {a.top} per side", file=sys.stderr)
 
     out, ok, skipped = {}, 0, []
     for i, t in enumerate(tickers, 1):
@@ -137,40 +178,44 @@ def main() -> int:
             if not exps:
                 skipped.append(t)
                 continue
+            exp_list = expire_list(exps)
+            if not exp_list:
+                skipped.append(t)
+                continue
             chains = {}
-            for e in exps[:8]:
+            for e, _ in exp_list:
                 try:
                     ch = tk.option_chain(e)
                     chains[e] = (ch.calls, ch.puts)
                 except Exception:
                     continue
-            pick = pick_expiry(exps, chains)
-            if not pick:
+            if not chains:
                 skipped.append(t)
                 continue
-            exp, _, dte = pick
-            calls, puts = chains[exp]
-            call_oi = int(calls["openInterest"].fillna(0).sum())
-            put_oi = int(puts["openInterest"].fillna(0).sum())
-            spot = None
+            exp_list = [(e, d) for e, d in exp_list if e in chains]
+
+            call_oi = sum(int(num(chains[e][0]["openInterest"].fillna(0).sum())) for e, _ in exp_list)
+            put_oi = sum(int(num(chains[e][1]["openInterest"].fillna(0).sum())) for e, _ in exp_list)
+            top_exp = most_active(chains, exp_list)
             try:
                 spot = float(tk.fast_info.get("lastPrice") or 0) or None
             except Exception:
-                pass
+                spot = None
+
             out[t] = {
                 "underlying": spot,
-                "expiry": exp,
-                "dte": dte,
+                "expiry": top_exp[0] if top_exp else exp_list[0][0],
+                "dte": top_exp[1] if top_exp else exp_list[0][1],
+                "expiries_considered": [e for e, _ in exp_list],
                 "call_oi": call_oi,
                 "put_oi": put_oi,
                 "pc_ratio": round(put_oi / call_oi, 2) if call_oi else None,
-                "top_calls": top_rows(calls, a.top),
-                "top_puts": top_rows(puts, a.top),
-                "expiries": exps[:8],
+                "top_calls": build_side(chains, exp_list, 0, a.top),
+                "top_puts": build_side(chains, exp_list, 1, a.top),
             }
             ok += 1
-            print(f"  [{i}/{len(tickers)}] {t:6s} exp={exp} dte={dte:3d} "
-                  f"callOI={call_oi:>7,} putOI={put_oi:>7,}", file=sys.stderr)
+            print(f"  [{i}/{len(tickers)}] {t:6s} exps={len(exp_list)} "
+                  f"callOI={call_oi:>8,} putOI={put_oi:>8,}", file=sys.stderr)
         except Exception as e:
             print(f"  ! {t}: {type(e).__name__} {e}", file=sys.stderr)
             skipped.append(t)

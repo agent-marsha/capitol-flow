@@ -589,12 +589,25 @@
     }).sort(function (a, b) { return a.strike - b.strike; });
   }
 
-  function optRow(c, side, max, tk, expiry) {
+  var MONTH = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  // Short contract date: "DEC 18", or "DEC 18 '26" when it isn't this year.
+  function optDate(s) {
+    if (!validDate(s)) return '';
+    var y = String(TODAY || new Date().toISOString()).slice(0, 4);
+    return md(s) + (s.slice(0, 4) !== y ? " '" + s.slice(2, 4) : '');
+  }
+  function optDateLong(s) {
+    var p = s.split('-'), y = String(TODAY || new Date().toISOString()).slice(0, 4);
+    return MONTH[+p[1] - 1] + ' ' + (+p[2]) + (p[0] !== y ? ', ' + p[0] : '');
+  }
+
+  function optRow(c, side, max, tk) {
     var kind = side === 'call' ? 'call' : 'put';
     var w = max > 0 ? Math.max(2, Math.round(c.oi / max * 100)) : 0;
     var pr = optPrice(c);
     var prTxt = pr ? '$' + pr.v.toFixed(2) : '—';
-    var phrase = optStrike(c.strike) + ' ' + kind + ', open interest ' + Math.round(c.oi).toLocaleString('en-US') +
+    var expiry = validDate(c.expiry) ? c.expiry : null;
+    var phrase = optStrike(c.strike) + ' ' + kind + (expiry ? ' expiring ' + optDateLong(expiry) : '') + ', open interest ' + Math.round(c.oi).toLocaleString('en-US') +
       (pr ? ', price ' + prTxt : '');
     var extra = [];
     if (fnum(c.volume)) extra.push('Vol ' + optCount(c.volume));
@@ -614,6 +627,7 @@
         '<span class="opt-oi display" title="' + esc(Math.round(c.oi).toLocaleString('en-US')) + ' open contracts">' + esc(optCount(c.oi)) + '</span>' +
       '</div>' +
       '<div class="opt-l2">' +
+        (expiry ? '<span class="opt-exp" aria-hidden="true" title="Expires ' + esc(mdy(expiry)) + '"><span class="opt-lab">Exp</span><b>' + esc(optDate(expiry)) + '</b></span>' : '') +
         '<span class="opt-px" aria-hidden="true"><span class="opt-lab">' + (pr ? pr.lab : 'price') + '</span><b>' + esc(prTxt) + '</b></span>' +
         (extra.length ? '<span class="opt-extra" aria-hidden="true">' + esc(extra.join(' · ')) + '</span>' : '') +
         link +
@@ -621,7 +635,7 @@
     '</li>';
   }
 
-  function optCol(side, list, tk, expiry) {
+  function optCol(side, list, tk) {
     var isCall = side === 'call';
     var max = list.reduce(function (m, c) { return Math.max(m, c.oi); }, 0);
     var id = 'opt-' + side + '-h';
@@ -632,7 +646,7 @@
       '</div>' +
       '<div class="opt-legend micro" aria-hidden="true"><span>Strike</span><span>Open interest</span></div>' +
       (list.length
-        ? '<ul class="opt-rows">' + list.map(function (c) { return optRow(c, side, max, tk, expiry); }).join('') + '</ul>'
+        ? '<ul class="opt-rows">' + list.map(function (c) { return optRow(c, side, max, tk); }).join('') + '</ul>'
         : '<p class="empty">No open ' + (isCall ? 'calls' : 'puts') + ' listed.</p>') +
     '</div>';
   }
@@ -651,12 +665,15 @@
     var expTxt = exp ? md(exp) : '—';
     var dteTxt = dte != null ? (dte <= 0 ? 'Expires today' : plural(dte, 'day') + ' to go') : '';
     var total = cOI + pOI;
+    var cons = (Array.isArray(o.expiries_considered) ? o.expiries_considered : []).filter(validDate).sort();
+    var range = cons.length ? (cons.length > 1 && cons[0] !== cons[cons.length - 1]
+      ? optDate(cons[0]) + ' – ' + optDate(cons[cons.length - 1]) : optDate(cons[0])) : '';
 
     return '<section class="block opt" aria-labelledby="opt-h">' +
       '<div class="micro">Market positioning</div><h3 id="opt-h" class="display">Options</h3>' +
       '<p class="note">Where traders have placed their bets on ' + esc(tk) + ', by strike price.</p>' +
       '<div class="opt-strip" role="list">' +
-        '<div class="opt-stat" role="listitem"><div class="micro">Expires</div><div class="display">' + esc(expTxt) + '</div>' + (dteTxt ? '<div class="sub">' + dteTxt + '</div>' : '') + '</div>' +
+        '<div class="opt-stat" role="listitem"><div class="micro">Most active expiry</div><div class="display">' + esc(exp ? optDate(exp) : expTxt) + '</div>' + (dteTxt ? '<div class="sub">' + dteTxt + '</div>' : '') + '</div>' +
         '<div class="opt-stat" role="listitem"><div class="micro">Call vs put OI</div>' +
           '<div class="display"><span class="buy-ink">' + esc(optCount(cOI)) + '</span><span class="opt-vs">/</span><span class="sell-ink">' + esc(optCount(pOI)) + '</span></div>' +
           (total > 0 ? '<div class="split opt-split" aria-hidden="true"><i class="b" style="width:' + (cOI / total * 100).toFixed(1) + '%"></i><i class="s" style="width:' + (pOI / total * 100).toFixed(1) + '%"></i></div>' : '') +
@@ -667,8 +684,9 @@
       '</div>' +
       '<p class="opt-explain">Open interest is how many contracts are still open at each strike. Big piles often act like walls — prices tend to stall there.' +
         (fnum(o.underlying) ? ' <span class="opt-under">' + esc(tk) + ' is at <b>$' + px(o.underlying) + '</b>.</span>' : '') + '</p>' +
-      '<div class="opt-cols">' + optCol('call', calls, tk, exp) + optCol('put', puts, tk, exp) + '</div>' +
-      '<p class="opt-foot">Price is for one contract on the ' + (exp ? esc(mdy(exp)) + ' ' : '') + 'expiry, quoted per share (one contract covers 100 shares). Snapshot from the last data refresh.</p>' +
+      (range ? '<p class="opt-range">Totals cover the next few expirations (' + esc(range) + '). Each row shows its own expiration.</p>' : '') +
+      '<div class="opt-cols">' + optCol('call', calls, tk) + optCol('put', puts, tk) + '</div>' +
+      '<p class="opt-foot">Open interest per strike is summed across those expirations. Price is for one contract on the row\'s expiration, quoted per share (one contract covers 100 shares). Snapshot from the last data refresh.</p>' +
     '</section>';
   }
 

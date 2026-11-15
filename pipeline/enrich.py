@@ -12,7 +12,7 @@ Applies the four editorial rules:
   4. (Rule 4 is a view concern; the data marks buys and sells symmetrically.)
 
 Also attaches, per ticker:
-  * daily OHLC  (6 months)   for the candlestick + Bollinger view
+  * daily OHLC  (1 year)     for the candlestick + Bollinger view
   * hourly OHLC (60 days, 1h)
   * recent news headlines (for the "news around the trade date" panel)
 
@@ -44,7 +44,7 @@ def fetch_prices(tickers: list[str]) -> dict:
     import yfinance as yf
     out: dict[str, dict] = {}
     try:
-        daily = yf.download(tickers, period="6mo", interval="1d",
+        daily = yf.download(tickers, period="1y", interval="1d",
                             group_by="ticker", progress=False, auto_adjust=False, threads=True)
     except Exception as e:
         print(f"  daily download failed: {e}", file=sys.stderr)

@@ -34,16 +34,27 @@ jobs:
       - name: Enrich (prices, news, clusters)
         run: python pipeline/enrich.py --days 150 --max-tickers 60 --out data/app_data.json
 
+      # Plain-English fundamentals from SEC EDGAR (10-K XBRL). Non-fatal: if EDGAR is
+      # unreachable, the previously committed data/fundamentals.json is kept.
+      - name: Fundamentals (SEC EDGAR)
+        continue-on-error: true
+        run: python pipeline/fundamentals.py --in data/app_data.json --out data/fundamentals.json --max 60
+
       - name: Generate inline data fallback for file:// preview
         run: |
           mkdir -p web/data
           cp data/app_data.json web/data/app_data.json
           { printf 'window.__CAPITOL_DATA__ = '; cat data/app_data.json; printf ';\n'; } > web/data/app_data.js
+          if [ -f data/fundamentals.json ]; then
+            cp data/fundamentals.json web/data/fundamentals.json
+            { printf 'window.__CAPITOL_FUNDAMENTALS__ = '; cat data/fundamentals.json; printf ';\n'; } > web/data/fundamentals.js
+          fi
 
       - name: Commit refreshed data
         run: |
           git config user.name  "capitol-flow-bot"
           git config user.email "bot@users.noreply.github.com"
           git add data/app_data.json web/data/app_data.json web/data/app_data.js
+          git add data/fundamentals.json web/data/fundamentals.json web/data/fundamentals.js 2>/dev/null || true
           git diff --quiet --cached || git commit -m "data: daily refresh $(date -u +%F)"
           git push

@@ -23,6 +23,8 @@ Or open `web/index.html` straight from disk. On `file://` the app skips `fetch` 
 | `app.js` | Data loading, hash routing (`#/stock/TICKER`), rendering, Bollinger maths, charts |
 | `data/app_data.json` | Copy of `../data/app_data.json`, loaded with `fetch` |
 | `data/app_data.js` | The same data wrapped as `window.__CAPITOL_DATA__ = {...};` for `file://` |
+| `data/fundamentals.json` | Copy of `../data/fundamentals.json` (optional; powers "The basics") |
+| `data/fundamentals.js` | The same wrapped as `window.__CAPITOL_FUNDAMENTALS__ = {...};` for `file://` |
 
 ## Regenerating the data copies
 
@@ -32,7 +34,26 @@ The `refresh.yml` workflow does this every day. To do it by hand:
 mkdir -p web/data
 cp data/app_data.json web/data/app_data.json
 { printf 'window.__CAPITOL_DATA__ = '; cat data/app_data.json; printf ';\n'; } > web/data/app_data.js
+
+python3 pipeline/fundamentals.py --out data/fundamentals.json   # SEC EDGAR, ~4 min
+cp data/fundamentals.json web/data/fundamentals.json
+{ printf 'window.__CAPITOL_FUNDAMENTALS__ = '; cat data/fundamentals.json; printf ';\n'; } > web/data/fundamentals.js
 ```
+
+## The basics (fundamentals)
+
+Each stock page ends with **THE BASICS**: short cards that explain the company's official
+10-K numbers (from SEC EDGAR XBRL) in plain English, at about a 4th-grade reading level.
+Each card has a sentence and a small chart drawn with plain CSS (no chart library):
+
+- `bars`: one column per year, showing the last 6 years. The newest year is the lighter bar. A loss is drawn as a dashed bar below the line.
+- `bars2`: labelled horizontal bars. Green/red is used only for *Owns / In the bank* vs
+  *Owes*, and only when the gap is at least 10%. Anything closer, or any label it doesn't know, stays grey.
+- `split`: one bar split into two parts that add up to 100% (e.g. Kept vs Cost to make).
+
+The card sentences are shown exactly as `pipeline/fundamentals.py` writes them. The file loads
+separately from the main bundle and never holds up the page. If the file is missing, or a ticker
+(ETF, fund, foreign listing) has no entry, the section is left out.
 
 ## Notes
 

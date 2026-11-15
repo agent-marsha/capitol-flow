@@ -263,6 +263,61 @@ th { color: var(--muted); font-weight: 700; letter-spacing: .08em; text-transfor
 .news .near-tag { background: var(--ink); color: var(--bg); font-size: 10px; font-weight: 800; letter-spacing: .12em; padding: 3px 6px; border-radius: 2px; }
 .note { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
 
+/* ---------- the basics (fundamentals, plain English) ---------- */
+.fund h3 { margin: 6px 0 10px; font-size: 40px; }
+.fund-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 700px) { .fund-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .fund-grid { grid-template-columns: repeat(3, 1fr); } }
+.fund-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0;
+}
+.fund-head { display: flex; align-items: center; gap: 8px; color: var(--ink-2); }
+.fund-emoji { font-size: 16px; letter-spacing: 0; line-height: 1; }
+.fund-text { margin: 0; font-size: 19px; line-height: 1.5; color: var(--ink); max-width: 40ch; }
+.fund-viz { margin-top: auto; border-top: 1px solid var(--line); padding-top: 14px; min-width: 0; }
+.fund-label { margin-bottom: 12px; font-size: 10px; }
+
+/* bars: one column per year */
+.fbars { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; }
+.fb-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: stretch; }
+.fb-pos, .fb-neg { display: flex; flex-direction: column; align-items: center; }
+.fb-pos { justify-content: flex-end; }
+.fb-neg { justify-content: flex-start; }
+.fbars.has-neg .fb-pos { border-bottom: 1px solid var(--line-2); }
+.fb-bar { display: block; width: 100%; max-width: 44px; background: #3A3A40; border-radius: 2px 2px 0 0; }
+.fb-bar.neg { background: transparent; border: 1px dashed var(--muted); border-top: 0; border-radius: 0 0 2px 2px; }
+.fb-col:last-child .fb-bar:not(.neg) { background: var(--ink-2); }
+.fb-v { font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; line-height: 18px; letter-spacing: -.01em; }
+.fb-x { margin-top: 6px; text-align: center; font-size: 10px; font-weight: 700; letter-spacing: .08em; color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (max-width: 360px) { .fb-v { font-size: 10px; } .fbars { gap: 4px; } }
+
+/* bars2: labelled horizontal comparison */
+.fbars2 { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.f2-row { display: grid; grid-template-columns: minmax(64px, 30%) 1fr auto; align-items: center; gap: 10px; }
+.f2-x { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.f2-track { height: 14px; min-width: 0; }
+.f2-track i { display: block; height: 100%; background: #3A3A40; border-radius: 2px; }
+.f2-track i.neg { background: transparent; border: 1px dashed var(--muted); }
+.f2-v { font-family: var(--display); font-weight: 800; font-stretch: condensed; font-size: 20px; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; min-width: 64px; }
+.f2-row.good .f2-track i { background: var(--buy); }
+.f2-row.good .f2-v { color: var(--buy); }
+.f2-row.bad .f2-track i { background: var(--sell); }
+.f2-row.bad .f2-track i.neg { background: transparent; border-color: var(--sell); }
+.f2-row.bad .f2-v { color: var(--sell); }
+
+/* split: one 100% bar, two parts */
+.fsplit { display: flex; gap: 2px; height: 14px; }
+.fsplit i { display: block; height: 100%; }
+.fsplit .fs-0 { background: var(--ink-2); border-radius: 2px 0 0 2px; }
+.fsplit .fs-1 { background: #3A3A40; border-radius: 0 2px 2px 0; }
+.fsplit i:only-child { border-radius: 2px; }
+.fs-labels { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; }
+.fs-lab { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.fs-lab .display { font-size: 32px; }
+.fs-lab-1 { text-align: right; align-items: flex-end; }
+.fs-lab-1 .display { color: var(--ink-2); }
+
 /* ---------- footer ---------- */
 footer { border-top: 1px solid var(--line); margin-top: 64px; padding: 28px 0 48px; color: var(--muted); font-size: 13px; }
 footer p { margin: 6px 0; max-width: 72ch; }

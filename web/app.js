@@ -1,6 +1,8 @@
 /* Capitol Flow — vanilla JS, no build step.
  * Data: data/app_data.json (fetch) → falls back to data/app_data.js (window.__CAPITOL_DATA__)
  * so the site works on GitHub Pages and when opened straight from disk (file://).
+ * Optional: data/fundamentals.json → data/fundamentals.js (window.__CAPITOL_FUNDAMENTALS__)
+ * powers "The basics" on each stock page. If it is missing the section is simply omitted.
  */
 (function () {
   'use strict';
@@ -47,6 +49,7 @@
 
   // ------------------------------------------------------------------ state
   var D = null;          // the bundle
+  var F = null;          // fundamentals by ticker (null until loaded; {} if unavailable)
   var TODAY = '';        // bundle generation date (YYYY-MM-DD)
   var byId = new Map();
   var byTicker = new Map();
@@ -84,6 +87,22 @@
         return window.__CAPITOL_DATA__;
       });
     });
+  }
+
+  // Fundamentals are optional: any failure resolves to {} and never blocks the page.
+  function loadFundamentals() {
+    if (window.__CAPITOL_FUNDAMENTALS__) return Promise.resolve(window.__CAPITOL_FUNDAMENTALS__);
+    var viaFetch = location.protocol === 'file:'
+      ? Promise.reject(new Error('file://'))
+      : fetch('data/fundamentals.json', { cache: 'no-cache' }).then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        });
+    return viaFetch.catch(function () {
+      return loadScript('data/fundamentals.js').then(function () { return window.__CAPITOL_FUNDAMENTALS__; });
+    }).then(function (f) {
+      return f && typeof f === 'object' && !Array.isArray(f) ? f : {};
+    }).catch(function () { return {}; });
   }
 
   function index(d) {
@@ -439,12 +458,150 @@
           (trades.length ? '<ul class="trades">' + trades.map(function (t) { return tradeRow(t, { since: true }); }).join('') + '</ul>' : '<p class="empty">No disclosed trades.</p>') +
         '</section>' +
         '<section class="block" aria-labelledby="news-h"><div class="micro">Around the trades</div><h3 id="news-h" class="display">The news</h3>' + newsBlock(tk, trades) + '</section>' +
-      '</div>';
+      '</div>' +
+      '<div id="fund-slot" data-fund-tk="' + esc(tk) + '"></div>';
 
     $('#app').innerHTML = html;
     document.title = tk + ' — Capitol Flow';
     window.scrollTo(0, 0);
     mountChart(tk);
+    fillFundamentals();
+  }
+
+  // ------------------------------------------------------------------ fundamentals ("The basics")
+  // Fills the slot for whichever ticker the slot was rendered for. Safe to call any time:
+  // before the data arrives it does nothing; once it arrives it is called again.
+  function fillFundamentals() {
+    var slot = $('#fund-slot');
+    if (!slot || F === null) return;
+    var tk = slot.getAttribute('data-fund-tk');
+    var f = Object.prototype.hasOwnProperty.call(F, tk) ? F[tk] : null;
+    var cards = f && Array.isArray(f.cards) ? f.cards : [];
+    var html = '';
+    try {
+      html = cards.map(fundCard).join('');
+    } catch (e) { html = ''; }
+    if (!html) { slot.innerHTML = ''; return; }
+    var name = f.name || nameOf.get(tk) || tk;
+    var cik = /^\d+$/.test(f.cik || '') ? f.cik : null;
+    var src = cik
+      ? '<a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&amp;CIK=' + cik + '&amp;type=10-K" target="_blank" rel="noopener noreferrer">official yearly reports to the SEC ↗</a>'
+      : 'official yearly reports to the SEC';
+    slot.innerHTML = '<section class="block fund" aria-labelledby="fund-h">' +
+      '<div class="micro">In plain English</div><h3 id="fund-h" class="display">The basics</h3>' +
+      '<p class="note">' + esc(name) + '’s numbers, from its ' + src + ' (10-K).</p>' +
+      '<div class="fund-grid">' + html + '</div></section>';
+  }
+
+  function fnum(n) { return typeof n === 'number' && isFinite(n); }
+
+  // $478.8B, $132.2B, $73M, −$1.4B
+  function bigMoney(n) {
+    var a = Math.abs(n), s = n < 0 ? '−$' : '$', v, u;
+    if (a >= 1e12) { v = a / 1e12; u = 'T'; }
+    else if (a >= 1e9) { v = a / 1e9; u = 'B'; }
+    else if (a >= 1e6) { v = a / 1e6; u = 'M'; }
+    else if (a >= 1e3) { v = a / 1e3; u = 'K'; }
+    else return s + Math.round(a);
+    return s + (v >= 100 && u !== 'B' && u !== 'T' ? Math.round(v) : v.toFixed(1)) + u;
+  }
+  function fmtVal(y, unit) {
+    if (unit === 'pct') return (+y).toFixed(1) + '%';
+    return bigMoney(y);
+  }
+
+  function fundCard(c) {
+    if (!c || !c.text || !c.chart) return '';
+    var viz = '';
+    var pts = (c.chart.points || []).filter(function (p) { return p && p.x != null && fnum(p.y); });
+    if (pts.length) {
+      if (c.chart.type === 'bars') viz = vizBars(pts, c.chart);
+      else if (c.chart.type === 'bars2') viz = vizBars2(pts, c.chart, c.id);
+      else if (c.chart.type === 'split') viz = vizSplit(pts, c.chart);
+    }
+    return '<article class="fund-card">' +
+      '<div class="micro fund-head"><span class="fund-emoji" aria-hidden="true">' + esc(c.emoji || '') + '</span>' + esc(c.headline || '') + '</div>' +
+      '<p class="fund-text">' + esc(c.text) + '</p>' +
+      (viz ? '<div class="fund-viz">' + (c.chart.label ? '<div class="micro fund-label">' + esc(c.chart.label) + '</div>' : '') + viz + '</div>' : '') +
+    '</article>';
+  }
+
+  var BARS_MAX = 6;   // most recent years; keeps value labels legible at 390px
+  var BARS_H = 96;    // plot height in px
+
+  function vizBars(pts, ch) {
+    pts = pts.slice(-BARS_MAX);
+    var maxP = 0, maxN = 0;
+    pts.forEach(function (p) { if (p.y > maxP) maxP = p.y; if (-p.y > maxN) maxN = -p.y; });
+    var span = maxP + maxN || 1;
+    var hp = Math.round(BARS_H * maxP / span), hn = BARS_H - hp;
+    if (!maxN) { hp = BARS_H; hn = 0; }
+    var cols = pts.map(function (p) {
+      var h = Math.max(2, Math.round(BARS_H * Math.abs(p.y) / span));
+      var v = '<span class="fb-v">' + esc(fmtVal(p.y, ch.unit)) + '</span>';
+      var pos = p.y >= 0
+        ? v + '<i class="fb-bar" style="height:' + h + 'px"></i>'
+        : '';
+      var neg = p.y < 0
+        ? '<i class="fb-bar neg" style="height:' + h + 'px"></i>' + v
+        : '';
+      return '<li class="fb-col">' +
+        '<div class="fb-pos" style="height:' + (hp + 18) + 'px">' + pos + '</div>' +
+        (maxN ? '<div class="fb-neg" style="height:' + (hn + 18) + 'px">' + neg + '</div>' : '') +
+        '<span class="fb-x">' + esc(p.x) + '</span></li>';
+    }).join('');
+    var aria = pts.map(function (p) { return p.x + ': ' + fmtVal(p.y, ch.unit); }).join(', ');
+    return '<ul class="fbars' + (maxN ? ' has-neg' : '') + '" role="img" aria-label="' + esc((ch.label || 'Each year') + '. ' + aria) + '">' + cols + '</ul>';
+  }
+
+  // Which bars are "good" / "bad" for a comparison. Only labels we understand get a colour.
+  var GOOD_X = { 'owns': 1, 'in the bank': 1 };
+  var BAD_X = { 'owes': 1 };
+  var NET_X = { 'really left': 1 };
+  var CLEAR = 0.10; // a gap under 10% of the larger side counts as a tie
+
+  function vizBars2(pts, ch) {
+    var key = function (p) { return String(p.x).trim().toLowerCase(); };
+    var good = pts.find(function (p) { return GOOD_X[key(p)]; });
+    var bad = pts.find(function (p) { return BAD_X[key(p)]; });
+    var verdict = 0; // 1 good wins, -1 bad wins, 0 unclear
+    if (good && bad && good.y >= 0 && bad.y >= 0) {
+      var big = Math.max(good.y, bad.y);
+      if (big > 0 && Math.abs(good.y - bad.y) / big >= CLEAR) verdict = good.y > bad.y ? 1 : -1;
+    }
+    var max = 0;
+    pts.forEach(function (p) { if (Math.abs(p.y) > max) max = Math.abs(p.y); });
+    max = max || 1;
+    var rows = pts.map(function (p) {
+      var k = key(p), cls = '';
+      if (GOOD_X[k] && verdict === 1) cls = 'good';
+      else if (BAD_X[k] && verdict !== 0) cls = 'bad';
+      else if (NET_X[k] && Math.abs(p.y) / max >= CLEAR) cls = p.y > 0 && verdict === 1 ? 'good' : p.y < 0 ? 'bad' : '';
+      var w = Math.abs(p.y) / max * 100;
+      return '<li class="f2-row ' + cls + '">' +
+        '<span class="f2-x">' + esc(p.x) + '</span>' +
+        '<span class="f2-track"><i style="width:' + Math.max(w, p.y ? 1 : 0).toFixed(2) + '%"' + (p.y < 0 ? ' class="neg"' : '') + '></i></span>' +
+        '<span class="f2-v">' + esc(fmtVal(p.y, ch.unit)) + '</span></li>';
+    }).join('');
+    var aria = pts.map(function (p) { return p.x + ': ' + fmtVal(p.y, ch.unit); }).join(', ');
+    return '<ul class="fbars2" role="img" aria-label="' + esc((ch.label || 'Comparison') + '. ' + aria) + '">' + rows + '</ul>';
+  }
+
+  function vizSplit(pts, ch) {
+    pts = pts.slice(0, 2);
+    var vals = pts.map(function (p) { return Math.max(0, p.y); });
+    var total = vals.reduce(function (a, b) { return a + b; }, 0);
+    if (!total) return '';
+    var segs = pts.map(function (p, i) {
+      var w = vals[i] / total * 100;
+      return w > 0 ? '<i class="fs-' + i + '" style="width:' + w.toFixed(2) + '%"></i>' : '';
+    }).join('');
+    var labels = pts.map(function (p, i) {
+      return '<div class="fs-lab fs-lab-' + i + '"><span class="display">' + esc((vals[i] / total * 100).toFixed(1)) + '%</span><span class="micro">' + esc(p.x) + '</span></div>';
+    }).join('');
+    var aria = pts.map(function (p, i) { return p.x + ': ' + (vals[i] / total * 100).toFixed(1) + '%'; }).join(', ');
+    return '<div role="img" aria-label="' + esc((ch.label || 'Split') + '. ' + aria) + '">' +
+      '<div class="fsplit">' + segs + '</div><div class="fs-labels">' + labels + '</div></div>';
   }
 
   function newsBlock(tk, trades) {
@@ -734,6 +891,11 @@
   }
 
   function boot() {
+    // In parallel with the main bundle; fills the section in whenever it lands.
+    loadFundamentals().then(function (f) {
+      F = f;
+      try { fillFundamentals(); } catch (e) { /* never break the page */ }
+    });
     loadData().then(function (d) {
       index(d);
       var g = String(D.generated || '');

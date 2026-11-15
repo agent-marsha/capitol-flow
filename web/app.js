@@ -311,6 +311,9 @@
     var buys = T.filter(function (t) { return t.direction === 'buy'; });
     var large = T.filter(function (t) { return t.is_large; });
     var vlarge = T.filter(function (t) { return t.is_very_large; });
+    // The Big money columns list STOCKS only. Bonds, funds, CDs and similar have no
+    // ticker, so they cannot be charted or looked up — they are excluded there.
+    var largeTk = large.filter(function (t) { return t.ticker; });
     var dates = T.map(function (t) { return t.txn_date; }).filter(validDate).sort();
     var span = dates.length ? md(dates[0]) + ' – ' + md(dates[dates.length - 1]) : '';
 
@@ -341,8 +344,8 @@
 
       '<section class="block" id="big" aria-labelledby="big-h">' +
         '<div class="sec-head"><div><div class="micro">$100K and up</div><h2 id="big-h" class="display">Big money</h2></div>' +
-        '<p>Every trade with a disclosed upper bound of $100,000 or more. Sells and buys side by side, newest first.</p></div>' +
-        '<div class="duo">' + bigCol('sell', large) + bigCol('buy', large) + '</div>' +
+        '<p>Stock trades with a disclosed upper bound of $100,000 or more — bonds, funds and similar instruments are left out, since they can\'t be charted. Sells and buys side by side, newest first.</p></div>' +
+        '<div class="duo">' + bigCol('sell', largeTk) + bigCol('buy', largeTk) + '</div>' +
         bigChartShell(large) +
       '</section>' +
 

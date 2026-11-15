@@ -64,12 +64,12 @@ jobs:
         run: python pipeline/fetch_options.py --max 60 --top 10 --out data/options.json
 
       - name: Enrich (prices, news, clusters, oversight, insiders, OI board)
-        run: python pipeline/enrich.py --days 150 --max-tickers 60 --out data/app_data.json
+        run: python pipeline/enrich.py --days 150 --max-tickers 120 --out data/app_data.json
 
       # ---- Plain-English fundamentals from SEC EDGAR (10-K XBRL) ----------------
       - name: Fundamentals (SEC EDGAR)
         continue-on-error: true
-        run: python pipeline/fundamentals.py --max 60 --out data/fundamentals.json
+        run: python pipeline/fundamentals.py --max 120 --out data/fundamentals.json
 
       # ---- Publish the data into the static site --------------------------------
       - name: Copy data into the site (JSON + inline fallbacks)

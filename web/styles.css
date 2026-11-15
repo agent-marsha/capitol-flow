@@ -360,6 +360,7 @@ section.block { padding: 40px 0 8px; }
 .back:hover { color: var(--ink); }
 .d-hero { display: grid; grid-template-columns: 1fr; gap: 16px; padding: 20px 0 8px; align-items: end; }
 @media (min-width: 900px) { .d-hero { grid-template-columns: 1fr auto; } }
+.d-hero > * { min-width: 0; } /* let a long profile line shrink instead of widening the page */
 .d-ticker { font-size: clamp(88px, 22vw, 200px); margin: 0; word-break: break-all; }
 .d-name { color: var(--ink-2); margin-top: 8px; }
 .d-profile { display: flex; align-items: center; gap: 10px; margin-top: 10px; min-width: 0; }
@@ -383,6 +384,17 @@ section.block { padding: 40px 0 8px; }
 @media (min-width: 768px) { .chart { height: 460px; } }
 .chart-empty { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; color: var(--muted); }
 .chart-empty .display { font-size: 40px; color: var(--ink-2); display: block; margin-bottom: 8px; }
+/* No-price fallback: replaces the whole chart card for tickers outside the charted set. */
+.chart-fallback .cf-body { padding: 40px 20px; text-align: center; max-width: 100%; }
+.cf-line { margin: 0 0 8px; font-size: 17px; font-weight: 600; color: var(--ink-2); }
+.chart-fallback .cf-why { margin: 0 auto 16px; max-width: 46ch; overflow-wrap: anywhere; }
+.cf-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px; }
+.cf-link {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px;
+  font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  text-decoration: none; white-space: nowrap; border-radius: var(--radius);
+}
+.cf-link:hover { color: var(--ink); }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 12px 16px; border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-2); }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
 .sw-line { width: 18px; height: 0; border-top: 2px solid var(--muted); }

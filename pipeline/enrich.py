@@ -41,40 +41,47 @@ def load(path: str) -> dict:
 
 # ---------------------------------------------------------------- price data
 def fetch_prices(tickers: list[str]) -> dict:
+    """Daily + hourly OHLCV for every ticker, in TWO batched downloads.
+
+    Hourly used to be fetched one ticker at a time (yf.Ticker(t).history), which is slow
+    and hammers Yahoo — fine for 60 tickers, not for a larger charted set. Both frames now
+    come from a single grouped yf.download each.
+    """
     import yfinance as yf
-    out: dict[str, dict] = {}
-    try:
-        daily = yf.download(tickers, period="1y", interval="1d",
-                            group_by="ticker", progress=False, auto_adjust=False, threads=True)
-    except Exception as e:
-        print(f"  daily download failed: {e}", file=sys.stderr)
-        daily = None
-    for t in tickers:
-        rec = {"daily": [], "hourly": []}
-        try:
-            df = daily[t] if daily is not None and len(tickers) > 1 else daily
-            if df is not None:
-                df = df.dropna()
-                for ts, row in df.iterrows():
-                    rec["daily"].append({
-                        "t": ts.date().isoformat(), "o": round(float(row["Open"]), 4),
-                        "h": round(float(row["High"]), 4), "l": round(float(row["Low"]), 4),
-                        "c": round(float(row["Close"]), 4), "v": int(row["Volume"] or 0),
-                    })
-        except Exception:
-            pass
-        try:
-            h = yf.Ticker(t).history(period="60d", interval="1h")
-            h = h.dropna()
-            for ts, row in h.iterrows():
-                rec["hourly"].append({
-                    "t": int(ts.timestamp()), "o": round(float(row["Open"]), 4),
-                    "h": round(float(row["High"]), 4), "l": round(float(row["Low"]), 4),
-                    "c": round(float(row["Close"]), 4), "v": int(row["Volume"] or 0),
+    out: dict[str, dict] = {t: {"daily": [], "hourly": []} for t in tickers}
+
+    def _rows(df, daily: bool) -> list[dict]:
+        rows = []
+        for ts, row in df.iterrows():
+            try:
+                rows.append({
+                    "t": ts.date().isoformat() if daily else int(ts.timestamp()),
+                    "o": round(float(row["Open"]), 4), "h": round(float(row["High"]), 4),
+                    "l": round(float(row["Low"]), 4), "c": round(float(row["Close"]), 4),
+                    "v": int(row["Volume"] or 0),
                 })
-        except Exception:
-            pass
-        out[t] = rec
+            except Exception:
+                continue
+        return rows
+
+    def _frame(period: str, interval: str, field: str) -> None:
+        try:
+            data = yf.download(tickers, period=period, interval=interval,
+                               group_by="ticker", progress=False,
+                               auto_adjust=False, threads=True)
+        except Exception as e:
+            print(f"  {field} download failed: {e}", file=sys.stderr)
+            return
+        for t in tickers:
+            try:
+                df = data[t] if len(tickers) > 1 else data
+                if df is not None:
+                    out[t][field] = _rows(df.dropna(), field == "daily")
+            except Exception:
+                continue
+
+    _frame("1y", "1d", "daily")
+    _frame("60d", "1h", "hourly")
     return out
 
 
@@ -310,7 +317,7 @@ def main() -> int:
     ap.add_argument("--out", default="data/app_data.json")
     ap.add_argument("--window", type=int, default=14)
     ap.add_argument("--days", type=int, default=120, help="keep trades within N days")
-    ap.add_argument("--max-tickers", type=int, default=60)
+    ap.add_argument("--max-tickers", type=int, default=120)
     ap.add_argument("--also", nargs="*", default=["data/senate_trades.json"],
                     help="extra transaction files to merge (e.g. the Senate)")
     a = ap.parse_args()
@@ -377,7 +384,25 @@ def main() -> int:
     for c in clusters:
         cl, lg, n = score.get(c["ticker"], (0, 0, 0))
         score[c["ticker"]] = (max(cl, c["n_politicians"]), lg, n)
-    tickers = sorted(score, key=lambda k: (-score[k][0], -score[k][1], -score[k][2], k))[: a.max_tickers]
+    # Which tickers get price history?  Score-ranked, BUT always include the biggest
+    # option markets that Congress also traded: they're featured on the dashboard's
+    # open-interest board, and clicking one must not land on an empty chart.  (INTC is
+    # #5 by open interest but has a single $1K-$15K trade, so score alone dropped it.)
+    try:
+        _opts = json.load(open("data/options.json"))
+        _by_oi = sorted(_opts, key=lambda k: -((_opts[k].get("call_oi") or 0)
+                                               + (_opts[k].get("put_oi") or 0)))
+    except Exception:
+        _by_oi = []
+    ranked = sorted(score, key=lambda k: (-score[k][0], -score[k][1], -score[k][2], k))
+    must = [t for t in _by_oi[:25] if t in score]        # traded AND option-heavy
+    seen: set = set()
+    tickers = []
+    for t in must + ranked:
+        if t not in seen:
+            seen.add(t)
+            tickers.append(t)
+    tickers = tickers[: a.max_tickers]
     print(f"[enrich] {len(txs)} trades · {len(tickers)} tickers · {len(clusters)} clusters",
           file=sys.stderr)
 

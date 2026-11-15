@@ -899,6 +899,48 @@
         '<div class="stat" role="listitem"><div class="micro">Last trade</div><div class="display">' + (trades[0] && validDate(trades[0].txn_date) ? md(trades[0].txn_date) : '—') + '</div><div class="sub">' + (trades[0] && validDate(trades[0].txn_date) ? ago(trades[0].txn_date) : '') + '</div></div>' +
       '</div>' +
 
+      (hasPrices(tk) ? chartCard(tk) : chartFallback(tk)) +
+
+      '<div class="d-cols">' +
+        '<section class="block" aria-labelledby="who-h"><div class="micro">Who traded ' + esc(tk) + '</div><h3 id="who-h" class="display">The trades</h3>' +
+          detailInsNote(trades) +
+          detailOvNote(trades) +
+          (trades.length ? '<ul class="trades">' + trades.map(function (t) { return tradeRow(t, { since: true }); }).join('') + '</ul>' : '<p class="empty">No disclosed trades.</p>') +
+        '</section>' +
+        '<div id="opt-slot" class="opt-slot" data-opt-tk="' + esc(tk) + '"></div>' +
+        // Omit THE NEWS entirely when there are no headlines (same rule as BASICS).
+        ((D.news[tk] || []).length
+          ? '<section class="block d-news" aria-labelledby="news-h"><div class="micro">Around the trades</div><h3 id="news-h" class="display">The news</h3>' + newsBlock(tk, trades) + '</section>'
+          : '') +
+      '</div>' +
+      '<div id="fund-slot" data-fund-tk="' + esc(tk) + '"></div>';
+
+    $('#app').innerHTML = html;
+    document.title = tk + ' — Capitol Flow';
+    window.scrollTo(0, 0);
+    mountChart(tk);
+    fillOptions();
+    fillFundamentals();
+  }
+
+  // Tickers outside the charted set get a calm dead-end-free panel instead of an empty chart:
+  // no timeframe toggle, legend or data table (they'd do nothing), just two places to chart it.
+  function chartFallback(tk) {
+    var q = encodeURIComponent(tk);
+    return '<section class="chart-card chart-fallback" aria-labelledby="cf-h">' +
+      '<div class="cf-body">' +
+        '<p id="cf-h" class="cf-line">No price history for this ticker yet.</p>' +
+        '<p class="note cf-why">This app charts the most-traded names. Chart ' + esc(tk) + ' elsewhere:</p>' +
+        '<div class="cf-links">' +
+          '<a class="cf-link" href="https://finance.yahoo.com/quote/' + q + '/" target="_blank" rel="noopener" aria-label="' + esc('Open ' + tk + ' on Yahoo Finance, new tab') + '">Yahoo Finance ↗</a>' +
+          '<a class="cf-link" href="https://www.tradingview.com/symbols/' + q + '/" target="_blank" rel="noopener" aria-label="' + esc('Open ' + tk + ' on TradingView, new tab') + '">TradingView ↗</a>' +
+        '</div>' +
+      '</div>' +
+    '</section>';
+  }
+
+  function chartCard(tk) {
+    return '' +
       '<section class="chart-card" aria-label="' + esc(tk) + ' candlestick chart with Bollinger Bands">' +
         '<div class="chart-bar">' +
           '<div class="seg" role="group" aria-label="Chart timeframe">' +
@@ -915,25 +957,7 @@
         '</div>' +
         '<div class="chart-note" id="chart-note"></div>' +
         '<details class="table"><summary>VIEW PRICE DATA TABLE</summary><div class="scroll" id="chart-table"></div></details>' +
-      '</section>' +
-
-      '<div class="d-cols">' +
-        '<section class="block" aria-labelledby="who-h"><div class="micro">Who traded ' + esc(tk) + '</div><h3 id="who-h" class="display">The trades</h3>' +
-          detailInsNote(trades) +
-          detailOvNote(trades) +
-          (trades.length ? '<ul class="trades">' + trades.map(function (t) { return tradeRow(t, { since: true }); }).join('') + '</ul>' : '<p class="empty">No disclosed trades.</p>') +
-        '</section>' +
-        '<div id="opt-slot" class="opt-slot" data-opt-tk="' + esc(tk) + '"></div>' +
-        '<section class="block d-news" aria-labelledby="news-h"><div class="micro">Around the trades</div><h3 id="news-h" class="display">The news</h3>' + newsBlock(tk, trades) + '</section>' +
-      '</div>' +
-      '<div id="fund-slot" data-fund-tk="' + esc(tk) + '"></div>';
-
-    $('#app').innerHTML = html;
-    document.title = tk + ' — Capitol Flow';
-    window.scrollTo(0, 0);
-    mountChart(tk);
-    fillOptions();
-    fillFundamentals();
+      '</section>';
   }
 
   // ------------------------------------------------------------------ options ("Options")

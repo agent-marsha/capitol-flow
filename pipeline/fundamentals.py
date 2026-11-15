@@ -55,6 +55,12 @@ CONCEPTS = {
     "op_cash": ["NetCashProvidedByUsedInOperatingActivities",
                 "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations",
                 "CashFlowsFromUsedInOperatingActivities"],
+    # for EBITDA (operating income + D&A) and free cash flow (op cash - capex)
+    "dna": ["DepreciationDepletionAndAmortization", "DepreciationAndAmortization",
+            "DepreciationAmortizationAndAccretionNet", "Depreciation"],
+    "capex": ["PaymentsToAcquirePropertyPlantAndEquipment",
+              "PaymentsToAcquireProductiveAssets",
+              "PaymentsToAcquirePropertyPlantAndEquipmentAndIntangibleAssets"],
 }
 
 
@@ -115,6 +121,28 @@ def prev(series: list[tuple[int, float]]):
     return series[-2][1] if len(series) >= 2 else None
 
 
+def latest_shares(facts: dict):
+    """Most recent shares outstanding (dei taxonomy preferred, then us-gaap)."""
+    alloc = facts.get("facts", {})
+    best = None
+    for taxo in ("dei", "us-gaap", "ifrs-full"):
+        t = alloc.get(taxo, {})
+        node = (t.get("EntityCommonStockSharesOutstanding")
+                or t.get("CommonStockSharesOutstanding")
+                or t.get("NumberOfSharesOutstanding")
+                or t.get("WeightedAverageNumberOfDilutedSharesOutstanding"))
+        if not node:
+            continue
+        for rows in node.get("units", {}).values():
+            for r in rows:
+                end, val = r.get("end", ""), r.get("val")
+                if val and (best is None or end > best[0]):
+                    best = (end, float(val))
+        if best and best[1] > 0:
+            return best[1]
+    return None
+
+
 # ------------------------------------------------------------------ wording
 def money(v) -> str:
     """Plain-English money, e.g. 478834000000 -> '478.8 billion'."""
@@ -159,7 +187,23 @@ def reading_grade(text: str) -> float:
     return 0.39 * S + 11.8 * W - 15.59
 
 
-def build_cards(name: str, s: dict) -> list[dict]:
+_GENERIC = {"international", "american", "general", "national", "united", "advanced",
+            "global", "new", "first", "the", "walt"}
+
+
+def short_name(name: str, ticker: str) -> str:
+    """A short, kid-friendly name — long names inflate the reading level and read badly."""
+    n = re.sub(r"\s*[/.]?\s*(com|corp|co|de)\s*$", "", name, flags=re.I).strip(" ,./")
+    n = re.sub(r"\s+", " ", n)
+    if len(n) <= 14 and len(n.split()) <= 2:
+        return n
+    first = n.split()[0]
+    if len(first) >= 4 and first.lower() not in _GENERIC:
+        return first
+    return ticker
+
+
+def build_cards(name: str, s: dict, val: dict | None = None) -> list[dict]:
     """Short, simple cards: headline + plain text + chart-ready data."""
     cards = []
     rev, pv = latest(s.get("revenue", [])), prev(s.get("revenue", []))
@@ -252,7 +296,73 @@ def build_cards(name: str, s: dict) -> list[dict]:
                       "points": [{"x": "In the bank", "y": c}, {"x": "Owes", "y": d}]},
         })
 
+    # 6) EV/EBITDA — the price of the whole company per $1 of yearly profit
+    if val and val.get("ev_ebitda"):
+        m = val["ev_ebitda"]
+        cards.append({
+            "id": "ev_ebitda", "emoji": "🏷️", "rank": 2,
+            "headline": "What it costs to buy the whole company",
+            "text": (f"To buy all of {name} would cost about {money(val['ev'])}. "
+                     f"Each year it makes about {money(val['ebitda'])} before the bank and taxes get paid. "
+                     f"So you would pay about ${m:,.0f} for every $1 it makes."),
+            "chart": {"type": "stat", "label": "You pay, for each $1 it makes",
+                      "value": f"${m:,.1f}", "sub": "per $1 it makes in a year"},
+        })
+
+    # 7) FCF yield — real cash back per $100 you spend
+    if val and val.get("fcf_yield") is not None:
+        y = val["fcf_yield"]
+        if (val.get("fcf") or 0) >= 0:
+            text = (f"{name} had {money(val['fcf'])} left in cash after paying for everything. "
+                    f"That even counts new machines and buildings. For every $100 you spend, "
+                    f"you would get about ${y:.0f} back in cash each year.")
+        else:
+            text = (f"{name} spent more cash than it brought in, by {money(abs(val['fcf']))}. "
+                    "It is not handing cash back to its owners right now.")
+        cards.append({
+            "id": "fcf_yield", "emoji": "💵", "rank": 1,
+            "headline": "The real cash you get back",
+            "text": text,
+            "chart": {"type": "stat", "label": "Cash back each year, for every $100 you spend",
+                      "value": f"${y:,.1f}", "sub": "per $100 you spend, each year"},
+        })
+
     return cards
+
+
+def compute_valuation(s: dict, facts: dict, price: float | None) -> dict:
+    """EV/EBITDA and free-cash-flow yield, using the live price for market cap.
+
+    EV = market cap + total debt - cash  (the price of the whole business)
+    EBITDA = operating income + D&A
+    FCF = operating cash flow - capital expenditure
+    """
+    op = latest(s.get("operating_income", []))
+    dna = latest(s.get("dna", []))
+    cash = latest(s.get("cash", [])) or 0
+    debt = latest(s.get("debt", [])) or 0
+    op_cash = latest(s.get("op_cash", []))
+    capex = latest(s.get("capex", []))
+    shares = latest_shares(facts)
+    out: dict = {}
+    if not price or not shares:
+        return out
+    mc = price * shares
+    out.update(price=price, shares=shares, market_cap=mc, ev=mc + debt - cash)
+    if op is not None and dna is not None:
+        ebitda = op + dna
+        if ebitda > 0 and out["ev"] > 0:
+            mult = out["ev"] / ebitda
+            out["ebitda"] = ebitda
+            # a multiple above ~100x means it barely earns anything; the ratio is
+            # meaningless and would read as a broken number — omit the card.
+            if mult <= 100:
+                out["ev_ebitda"] = mult
+    if op_cash is not None and capex is not None and mc > 0:
+        fcf = op_cash - abs(capex)
+        out["fcf"] = fcf
+        out["fcf_yield"] = fcf / mc * 100.0
+    return out
 
 
 def main() -> int:
@@ -269,6 +379,12 @@ def main() -> int:
     if not tickers:
         tickers = sorted({t["ticker"] for t in data["trades"] if t.get("ticker")})
     tickers = tickers[: a.max]
+    # last daily close per ticker -> market cap for the valuation cards
+    prices: dict[str, float] = {}
+    for tk, pv in (data.get("prices") or {}).items():
+        daily = pv.get("daily") or []
+        if daily:
+            prices[tk] = daily[-1]["c"]
     cmap = cik_map()
     print(f"[fundamentals] {len(tickers)} tickers", file=sys.stderr)
 
@@ -301,13 +417,15 @@ def main() -> int:
         newest = max((v[-1][0] for v in s.values()), default=0)
         s = {k: v for k, v in s.items() if v[-1][0] >= newest - 1}
         facts = {k: latest(v) for k, v in s.items()}
-        cards = build_cards(name, s)
+        val = compute_valuation(s, f, prices.get(t))
+        short = short_name(name, t)
+        cards = build_cards(short, s, val)
         text_all = " ".join(c["text"] for c in cards)
         out[t] = {
-            "name": name, "cik": cik,
+            "name": name, "short_name": short, "cik": cik,
             "years": [str(y) for y, _ in s.get("revenue", [])],
             "series": {k: [{"x": str(y), "y": v} for y, v in vv] for k, vv in s.items()},
-            "facts": facts, "cards": cards,
+            "facts": facts, "valuation": val, "cards": cards,
             "reading_grade": round(reading_grade(text_all), 1) if text_all else None,
         }
         done += 1

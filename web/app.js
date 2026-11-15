@@ -550,7 +550,16 @@
     var cards = f && Array.isArray(f.cards) ? f.cards : [];
     var html = '';
     try {
-      html = cards.map(fundCard).join('');
+      var ordered = orderCards(cards);
+      var lead = ordered.filter(isStatCard).map(fundCard).filter(Boolean);
+      var rest = ordered.filter(function (c) { return !isStatCard(c); }).map(fundCard).filter(Boolean);
+      // The valuation pair leads, as its own group, ahead of the rest of the cards.
+      if (lead.length) {
+        html += '<div class="fund-lead" role="group" aria-labelledby="fund-lead-h">' +
+          '<div id="fund-lead-h" class="micro fund-tag">Valuation</div>' +
+          '<div class="fund-grid fund-grid-lead">' + lead.join('') + '</div></div>';
+      }
+      if (rest.length) html += '<div class="fund-grid">' + rest.join('') + '</div>';
     } catch (e) { html = ''; }
     if (!html) { slot.innerHTML = ''; return; }
     var name = f.name || nameOf.get(tk) || tk;
@@ -561,7 +570,27 @@
     slot.innerHTML = '<section class="block fund" aria-labelledby="fund-h">' +
       '<div class="micro">In plain English</div><h3 id="fund-h" class="display">The basics</h3>' +
       '<p class="note">' + esc(name) + '’s numbers, from its ' + src + ' (10-K).</p>' +
-      '<div class="fund-grid">' + html + '</div></section>';
+      html + '</section>';
+  }
+
+  // A stat card with something to show. Only these lead the section.
+  function isStatCard(c) {
+    return !!(c && c.chart && c.chart.type === 'stat' && c.chart.value != null && String(c.chart.value).trim());
+  }
+
+  // Stat cards first (by rank ascending; unranked after ranked), everything else after
+  // in its original relative order. Stable: ties fall back to the original index.
+  function orderCards(cards) {
+    var rk = function (c) { return c && fnum(c.rank) ? c.rank : Infinity; };
+    return cards.map(function (c, i) { return { c: c, i: i }; }).sort(function (a, b) {
+      var sa = isStatCard(a.c), sb = isStatCard(b.c);
+      if (sa !== sb) return sa ? -1 : 1;
+      if (sa) {
+        var d = rk(a.c) - rk(b.c);
+        if (d && !isNaN(d)) return d;
+      }
+      return a.i - b.i;
+    }).map(function (o) { return o.c; });
   }
 
   function fnum(n) { return typeof n === 'number' && isFinite(n); }
@@ -582,19 +611,42 @@
   }
 
   function fundCard(c) {
-    if (!c || !c.text || !c.chart) return '';
+    if (!c || !c.text) return '';
+    var head = '<div class="micro fund-head"><span class="fund-emoji" aria-hidden="true">' + esc(c.emoji || '') + '</span>' + esc(c.headline || '') + '</div>';
+    if (isStatCard(c)) {
+      // The figure is the headline: it sits right under the card title, ahead of the words.
+      return '<article class="fund-card fund-card-stat">' + head + vizStat(c.chart) +
+        '<p class="fund-text">' + esc(c.text) + '</p></article>';
+    }
     var viz = '';
-    var pts = (c.chart.points || []).filter(function (p) { return p && p.x != null && fnum(p.y); });
+    var ch = c.chart && typeof c.chart === 'object' ? c.chart : {};
+    var pts = (Array.isArray(ch.points) ? ch.points : []).filter(function (p) { return p && p.x != null && fnum(p.y); });
+    // Unknown or missing chart types fall through with no viz: the card's text still renders.
     if (pts.length) {
-      if (c.chart.type === 'bars') viz = vizBars(pts, c.chart);
-      else if (c.chart.type === 'bars2') viz = vizBars2(pts, c.chart, c.id);
-      else if (c.chart.type === 'split') viz = vizSplit(pts, c.chart);
+      try {
+        if (ch.type === 'bars') viz = vizBars(pts, ch);
+        else if (ch.type === 'bars2') viz = vizBars2(pts, ch, c.id);
+        else if (ch.type === 'split') viz = vizSplit(pts, ch);
+      } catch (e) { viz = ''; }
     }
     return '<article class="fund-card">' +
-      '<div class="micro fund-head"><span class="fund-emoji" aria-hidden="true">' + esc(c.emoji || '') + '</span>' + esc(c.headline || '') + '</div>' +
+      head +
       '<p class="fund-text">' + esc(c.text) + '</p>' +
-      (viz ? '<div class="fund-viz">' + (c.chart.label ? '<div class="micro fund-label">' + esc(c.chart.label) + '</div>' : '') + viz + '</div>' : '') +
+      (viz ? '<div class="fund-viz">' + (ch.label ? '<div class="micro fund-label">' + esc(ch.label) + '</div>' : '') + viz + '</div>' : '') +
     '</article>';
+  }
+
+  // stat: one big figure. Label above, value, sub below — read as one idea.
+  function vizStat(ch) {
+    var label = ch.label ? String(ch.label) : '';
+    var value = String(ch.value).trim();
+    var sub = ch.sub ? String(ch.sub) : '';
+    var aria = (label ? label + ': ' : '') + value + (sub ? ' ' + sub : '');
+    return '<div class="fund-stat" role="img" aria-label="' + esc(aria) + '">' +
+      (label ? '<div class="micro fund-label" aria-hidden="true">' + esc(label) + '</div>' : '') +
+      '<div class="display fstat-v" aria-hidden="true">' + esc(value) + '</div>' +
+      (sub ? '<div class="fstat-sub" aria-hidden="true">' + esc(sub) + '</div>' : '') +
+    '</div>';
   }
 
   var BARS_MAX = 6;   // most recent years; keeps value labels legible at 390px

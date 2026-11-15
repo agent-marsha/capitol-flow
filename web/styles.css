@@ -322,6 +322,24 @@ th { color: var(--muted); font-weight: 700; letter-spacing: .08em; text-transfor
 .fund-viz { margin-top: auto; border-top: 1px solid var(--line); padding-top: 14px; min-width: 0; }
 .fund-label { margin-bottom: 12px; font-size: 10px; }
 
+/* valuation pair: leads the section. Same flat card, brighter hairline, a micro-tag above. */
+.fund-lead { margin-bottom: 12px; }
+.fund-tag { margin-bottom: 8px; color: var(--ink-2); display: flex; align-items: center; gap: 10px; }
+.fund-tag::after { content: ""; flex: 1; border-top: 1px solid var(--line-2); }
+@media (min-width: 1100px) { .fund-grid-lead { grid-template-columns: repeat(2, 1fr); } }
+.fund-card-stat { border-color: var(--line-2); }
+.fund-card-stat .fund-text { font-size: 16px; color: var(--ink-2); }
+
+/* stat: a single large figure, no chrome */
+.fund-stat { container-type: inline-size; min-width: 0; border-bottom: 1px solid var(--line); padding-bottom: 16px; }
+.fund-stat .fund-label { margin-bottom: 10px; }
+.fstat-v {
+  font-size: clamp(40px, 12vw, 72px);
+  font-size: clamp(32px, 24cqi, 80px);
+  line-height: .9; white-space: nowrap; overflow: hidden; color: var(--ink);
+}
+.fstat-sub { margin-top: 8px; font-size: 13px; color: var(--muted); }
+
 /* bars: one column per year */
 .fbars { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; }
 .fb-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: stretch; }

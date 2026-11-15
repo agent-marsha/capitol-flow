@@ -458,17 +458,21 @@ th { color: var(--muted); font-weight: 700; letter-spacing: .08em; text-transfor
 }
 .fstat-sub { margin-top: 8px; font-size: 13px; color: var(--muted); }
 
-/* peer strip: the sector's min…max, middle half darker, median tick, this company's dot */
+/* peer compare: this company vs the average of the other companies in its sector */
 .fpeer { margin-top: auto; padding-top: 2px; min-width: 0; }
-.fpeer-strip { position: relative; height: 12px; margin: 0 5px; }
-.fpeer-strip::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 1px solid var(--line-2); }
-.fpeer-iqr { position: absolute; top: 4px; height: 4px; background: var(--muted); opacity: .4; border-radius: 1px; }
-.fpeer-med { position: absolute; top: 1px; width: 1px; height: 10px; margin-left: -.5px; background: var(--muted); }
-.fpeer-dot { position: absolute; top: 1px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: var(--ink); border: 2px solid var(--card); box-sizing: border-box; }
-.fpeer-dot.buy { background: var(--buy); }
-.fpeer-dot.sell { background: var(--sell); }
+.fpeer-bars { display: grid; gap: 6px; }
+.fpeer-row { display: grid; grid-template-columns: minmax(0, 7.5em) minmax(0, 1fr) auto; align-items: center; gap: 10px; font-size: 12px; color: var(--muted); }
+.fpeer-lab { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fpeer-track { display: block; height: 4px; min-width: 0; }
+.fpeer-track i { display: block; height: 100%; background: var(--muted); opacity: .45; border-radius: 1px; }
+.fpeer-row.is-co { color: var(--ink-2); }
+.fpeer-row.is-co .fpeer-track i { background: var(--ink-2); opacity: .7; }
+.fpeer-row.is-co.buy .fpeer-track i { background: var(--buy); opacity: 1; }
+.fpeer-row.is-co.sell .fpeer-track i { background: var(--sell); opacity: 1; }
+.fpeer-val { min-width: 3.5em; text-align: right; font-variant-numeric: tabular-nums; }
 .fpeer-line { margin: 8px 0 0; font-size: 12px; line-height: 1.45; color: var(--muted); }
 .fpeer-verdict { font-weight: 700; color: var(--ink-2); }
+.fpeer-med { opacity: .8; }
 
 /* bars: one column per year */
 .fbars { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; }

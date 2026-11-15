@@ -1237,63 +1237,57 @@
     '</div>';
   }
 
-  // Peer comparison for a valuation stat card: a slim min…max strip with the middle half
-  // darker, a median tick and this company's marker, plus one sentence underneath.
-  // The verdict reads the pipeline's `*_cheap` (always higher = cheaper) — never the raw
-  // multiple, because "low is cheap" for EV/EBITDA but "high is cheap" for FCF yield.
+  // Peer comparison for a valuation stat card: two hairline bars on a shared scale — this
+  // company's figure vs the AVERAGE of the OTHER companies in its sector (`*_peer_mean`,
+  // computed in the pipeline with the company excluded) — and one plain sentence.
+  // Tone reads the pipeline's `*_cheap` (always higher = cheaper), never the sign of
+  // `*_vs_mean`: "below average" is cheap for EV/EBITDA but pricey for FCF yield.
   // Returns '' (card renders exactly as before) whenever there isn't enough to say.
-  var PEER_MIN_N = 4;
+  var PEER_MIN_N = 4;   // companies in the sector with this figure, this one included
   var PEER_FMT = {
-    ev_ebitda: function (v) { return v.toFixed(1) + 'x'; },
+    ev_ebitda: function (v) { return v.toFixed(1) + '\u00d7'; },
     fcf_yield: function (v) { return v.toFixed(1) + '%'; }
   };
-  // Metrics where a HIGHER value means CHEAPER are handled entirely in the pipeline, which
-  // emits `*_cheap` already normalised. No per-metric direction logic belongs here.
   function peerBlock(metric, tk) {
     if (!PEER_FMT[metric] || !F || !Object.prototype.hasOwnProperty.call(F, tk)) return '';
     var f = F[tk], p = f && f.peer;
     if (!p || typeof p !== 'object' || !p.sector) return '';
-    var cheap = p[metric + '_cheap'], n = p[metric + '_n'];
-    if (!fnum(cheap) || !fnum(n) || n < PEER_MIN_N) return '';
+    var mean = p[metric + '_peer_mean'], vs = p[metric + '_vs_mean'], cheap = p[metric + '_cheap'];
+    var n = p[metric + '_n'], pn = p[metric + '_peer_n'];
     var val = f.valuation && f.valuation[metric];
+    if (!fnum(mean) || !fnum(vs) || !fnum(cheap) || !fnum(val)) return '';
+    if (!fnum(n) || n < PEER_MIN_N || !fnum(pn) || pn < 1) return '';
+
+    var fmt = PEER_FMT[metric];
+    var tone = cheap >= 0.75 ? 'buy' : cheap <= 0.25 ? 'sell' : 'mid';
+    var top = Math.max(val, mean, 0);
+    function w(v) { return top > 0 ? Math.max(0, v) / top * 100 : 0; }
+    function row(cls, label, v) {
+      return '<div class="fpeer-row ' + cls + '">' +
+        '<span class="fpeer-lab">' + esc(label) + '</span>' +
+        '<span class="fpeer-track"><i style="width:' + w(v).toFixed(1) + '%"></i></span>' +
+        '<span class="fpeer-val num">' + esc(fmt(v)) + '</span></div>';
+    }
+    var bars = '<div class="fpeer-bars" aria-hidden="true">' +
+      row('is-co ' + tone, tk, val) + row('is-avg', 'Sector average', mean) + '</div>';
+
+    var pctVs = Math.round(Math.abs(vs) * 100);
+    var vsText = vs > 2 ? (1 + vs).toFixed(1) + '\u00d7 the sector average'
+      : pctVs === 0 ? 'In line with the sector average'
+      : pctVs + '% ' + (vs < 0 ? 'below' : 'above') + ' the sector average';
     var secs = F._sectors && typeof F._sectors === 'object' ? F._sectors : null;
     var s = secs && Object.prototype.hasOwnProperty.call(secs, p.sector) ? secs[p.sector] : null;
     var d = s && s[metric];
-    if (!fnum(val) || !d || !fnum(d.median)) return '';
-    if (fnum(d.n) && d.n < PEER_MIN_N) return '';
+    var med = d && fnum(d.median) ? d.median : null;
 
-    // The track is a PERCENTILE scale of the sector: far LEFT = cheapest, far RIGHT =
-    // priciest, middle = the median peer.
-    //
-    // Positioning by raw value looked reasonable but was badly misleading on skewed data.
-    // FCF yield across Communication Services runs 2.0% … 13.0%, so one high outlier
-    // stretched the axis and squashed everyone else into a corner — T (genuinely the 25th
-    // percentile) landed on 0%, and a mid-pack company could read as ~70% of the way
-    // across.  Percentile positioning is outlier-proof and matches what the text says.
-    //
-    // So the middle band and median tick are a FIXED reference frame (the middle half of
-    // peers), and only the dot moves.
-    var BAND_L = 25, BAND_W = 50, MED = 50;
-    // `cheap` = share of peers this company is cheaper than, so the peers that are
-    // cheaper than IT are the remaining (1 - cheap) — they sit to its left.
-    var dotPos = Math.max(0, Math.min(100, (1 - cheap) * 100));
-    var tone = cheap >= 0.75 ? 'buy' : cheap <= 0.25 ? 'sell' : 'mid';
-    var verdict = tone === 'buy' ? 'Among the cheapest' : tone === 'sell' ? 'Among the priciest' : 'Mid-pack';
-    var pct = Math.round(cheap * 100);
-    var fmt = PEER_FMT[metric];
-
-    var strip = '<div class="fpeer-strip" aria-hidden="true">' +
-      '<i class="fpeer-iqr" style="left:' + BAND_L + '%;width:' + BAND_W + '%"></i>' +
-      '<i class="fpeer-med" style="left:' + MED + '%"></i>' +
-      '<i class="fpeer-dot ' + tone + '" style="left:' + dotPos.toFixed(1) + '%"></i>' +
-    '</div>';
     var line = '<p class="fpeer-line">' +
-      '<span class="fpeer-verdict' + (tone === 'mid' ? '' : ' ' + tone + '-ink') + '">' + verdict + '</span>' +
-      '<span class="sr-only">: </span><span aria-hidden="true"> — </span>' +
-      'cheaper than ' + pct + '% of ' + esc(p.sector) + ' companies' +
-      '<span class="sr-only">, </span><span aria-hidden="true"> · </span>' +
-      'sector median ' + esc(fmt(d.median)) + '</p>';
-    return '<div class="fpeer">' + strip + line + '</div>';
+      '<span class="fpeer-verdict' + (tone === 'mid' ? '' : ' ' + tone + '-ink') + '">' + vsText + '</span>' +
+      '<span class="sr-only"> (' + esc(fmt(val)) + ' vs ' + esc(fmt(mean)) + '), </span><span aria-hidden="true"> · </span>' +
+      'cheaper than ' + Math.round(cheap * 100) + '% of ' + esc(p.sector) + ' companies' +
+      (med != null ? '<span class="sr-only">; </span><span class="fpeer-med" aria-hidden="true"> · </span>' +
+        '<span class="fpeer-med">median ' + esc(fmt(med)) + '</span>' : '') +
+      '</p>';
+    return '<div class="fpeer">' + bars + line + '</div>';
   }
 
   var BARS_MAX = 6;   // most recent years; keeps value labels legible at 390px

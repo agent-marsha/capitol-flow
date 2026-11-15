@@ -435,7 +435,7 @@ def attach_peers(out: dict, sectors: dict) -> None:
     direction differs by metric: a LOW ev_ebitda is cheap, a HIGH fcf_yield is cheap, so
     the renderer has to flip the wording, not the number.
     """
-    by_sec: dict[str, dict[str, list[float]]] = {}
+    by_sec: dict[str, dict[str, list[tuple[str, float]]]] = {}
     for t, rec in out.items():
         sec = sectors.get(t)
         if not sec:
@@ -444,18 +444,19 @@ def attach_peers(out: dict, sectors: dict) -> None:
         for m in ("ev_ebitda", "fcf_yield"):
             v = val.get(m)
             if isinstance(v, (int, float)):
-                by_sec.setdefault(sec, {}).setdefault(m, []).append(float(v))
+                by_sec.setdefault(sec, {}).setdefault(m, []).append((t, float(v)))
 
     stats: dict[str, dict] = {}
     for sec, metrics in by_sec.items():
         stats[sec] = {"n": sum(1 for t in out if sectors.get(t) == sec)}
-        for m, vals in metrics.items():
-            vals = sorted(vals)
+        for m, pairs in metrics.items():
+            vals = sorted(v for _, v in pairs)
             stats[sec][m] = {
                 "n": len(vals),
                 "min": round(vals[0], 2), "p25": round(_pctl(vals, 0.25), 2),
                 "median": round(_pctl(vals, 0.5), 2), "p75": round(_pctl(vals, 0.75), 2),
                 "max": round(vals[-1], 2),
+                "mean": round(sum(vals) / len(vals), 2),
             }
 
     for t, rec in out.items():
@@ -466,10 +467,11 @@ def attach_peers(out: dict, sectors: dict) -> None:
         peer: dict = {"sector": sec, "sector_n": stats[sec]["n"]}
         for m in ("ev_ebitda", "fcf_yield"):
             v = val.get(m)
+            pairs = (by_sec.get(sec) or {}).get(m) or []
             st = (stats.get(sec) or {}).get(m)
             # need a real peer group for a percentile to mean anything
             if isinstance(v, (int, float)) and st and st["n"] >= 4:
-                vals = by_sec[sec][m]
+                vals = [x for _, x in pairs]
                 below = sum(1 for x in vals if x < v) / len(vals)
                 peer[m + "_pctile"] = round(below, 3)
                 peer[m + "_n"] = st["n"]
@@ -477,6 +479,15 @@ def attach_peers(out: dict, sectors: dict) -> None:
                 # EV/EBITDA is cheap, a HIGH FCF yield is cheap.  Normalise here so the
                 # renderer never has to know: higher *_cheap always means cheaper.
                 peer[m + "_cheap"] = round(1.0 - below if m == "ev_ebitda" else below, 3)
+                # The sector figure we lead with: the average of the OTHER companies, so a
+                # company never drags the benchmark toward itself.
+                others = [x for ot, x in pairs if ot != t]
+                if others:
+                    peer[m + "_peer_mean"] = round(sum(others) / len(others), 2)
+                    peer[m + "_peer_n"] = len(others)
+                    if others and abs(sum(others) / len(others)) > 1e-9:
+                        pm = sum(others) / len(others)
+                        peer[m + "_vs_mean"] = round((v - pm) / abs(pm), 3)
         rec["peer"] = peer
 
     out["_sectors"] = stats

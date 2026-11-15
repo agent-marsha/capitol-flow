@@ -796,7 +796,11 @@
     var href = r.tracked === true
       ? '"#/stock/' + encodeURIComponent(r.ticker) + '"'
       : '"https://www.tradingview.com/symbols/' + encodeURIComponent(r.ticker) + '/" target="_blank" rel="noopener"';
-    return '<li><a class="oi-row' + (nPol ? ' pol' : '') + '" href=' + href + ' aria-label="' + esc(label) + '">' +
+    // The Yahoo link is a sibling of the row link (anchors can't nest). The https quote URL is a
+    // Universal Link / App Link, so phones with the Yahoo Finance app open it there.
+    var yf = '<a class="oi-yf" href="https://finance.yahoo.com/quote/' + encodeURIComponent(r.ticker) + '/" target="_blank" rel="noopener" ' +
+      'aria-label="' + esc('Open ' + r.ticker + ' on Yahoo Finance, new tab') + '">Yahoo ↗</a>';
+    return '<li class="oi-item"><a class="oi-row' + (nPol ? ' pol' : '') + '" href=' + href + ' aria-label="' + esc(label) + '">' +
       '<div class="oi-tk"><div class="display">' + esc(r.ticker) + '</div>' +
         (r.sector ? '<div class="bm-meta oi-sec" aria-hidden="true">' + esc(r.sector) + '</div>' : '') + '</div>' +
       '<div class="oi-cell oi-tot" aria-hidden="true"><span class="display">' + oiFmt(r.total_oi) + '</span><span class="oi-lab">Contracts</span></div>' +
@@ -810,7 +814,7 @@
       '<div class="oi-pol" aria-hidden="true">' +
         (nPol ? '<span class="badge oi-badge">⚑︎ ' + plural(nPol, 'politician').toUpperCase() + ' · ' + plural(nTr, 'trade').toUpperCase() + '</span>'
               : '<span class="bm-meta oi-none">No congressional activity</span>') + '</div>' +
-    '</a></li>';
+    '</a>' + yf + '</li>';
   }
   function renderOi() {
     var ol = $('#oi-rows'); if (!ol) return;

@@ -28,19 +28,29 @@ jobs:
       - name: Install deps
         run: pip install -r pipeline/requirements.txt
 
+      # ---- House: official Clerk index + PTR PDFs -------------------------------
       - name: Fetch latest House PTRs
         run: python pipeline/fetch_house.py --days 150 --limit 70 --out data/house_trades.json
 
+      # ---- Senate: official EFD data via a public mirror ------------------------
+      # efdsearch.senate.gov (Akamai) returns 403 to automated requests, so we read
+      # a community mirror that republishes the same filings and keeps the official
+      # efdsearch source URL on every report. Non-fatal: keep the last good file.
+      - name: Fetch latest Senate PTRs
+        continue-on-error: true
+        run: python pipeline/fetch_senate.py --days 150 --out data/senate_trades.json
+
+      # ---- Merge both chambers, add prices / news / clusters --------------------
       - name: Enrich (prices, news, clusters)
         run: python pipeline/enrich.py --days 150 --max-tickers 60 --out data/app_data.json
 
-      # Plain-English fundamentals from SEC EDGAR (10-K XBRL). Non-fatal: if EDGAR is
-      # unreachable, the previously committed data/fundamentals.json is kept.
+      # ---- Plain-English fundamentals from SEC EDGAR (10-K XBRL) ----------------
       - name: Fundamentals (SEC EDGAR)
         continue-on-error: true
-        run: python pipeline/fundamentals.py --in data/app_data.json --out data/fundamentals.json --max 60
+        run: python pipeline/fundamentals.py --max 60 --out data/fundamentals.json
 
-      - name: Generate inline data fallback for file:// preview
+      # ---- Publish the data into the static site --------------------------------
+      - name: Copy data into the site (JSON + inline fallbacks)
         run: |
           mkdir -p web/data
           cp data/app_data.json web/data/app_data.json
@@ -54,7 +64,7 @@ jobs:
         run: |
           git config user.name  "capitol-flow-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add data/app_data.json web/data/app_data.json web/data/app_data.js
-          git add data/fundamentals.json web/data/fundamentals.json web/data/fundamentals.js 2>/dev/null || true
+          git add data/house_trades.json data/senate_trades.json data/app_data.json data/fundamentals.json || true
+          git add web/data/ || true
           git diff --quiet --cached || git commit -m "data: daily refresh $(date -u +%F)"
           git push

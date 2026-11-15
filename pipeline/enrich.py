@@ -187,10 +187,23 @@ def main() -> int:
     ap.add_argument("--window", type=int, default=14)
     ap.add_argument("--days", type=int, default=120, help="keep trades within N days")
     ap.add_argument("--max-tickers", type=int, default=60)
+    ap.add_argument("--also", nargs="*", default=["data/senate_trades.json"],
+                    help="extra transaction files to merge (e.g. the Senate)")
     a = ap.parse_args()
 
     src = load(a.inp)
-    txs = src["transactions"]
+    txs = list(src["transactions"])
+    sources = [src.get("source", "")]
+    for extra in (a.also or []):
+        if os.path.exists(extra):
+            e = load(extra)
+            txs += e["transactions"]
+            sources.append(e.get("source", ""))
+            print(f"[enrich] merged {len(e['transactions'])} trades from {extra}", file=sys.stderr)
+    chamber_counts = {}
+    for t in txs:
+        chamber_counts[t.get("chamber", "?")] = chamber_counts.get(t.get("chamber", "?"), 0) + 1
+    print(f"[enrich] chambers: {chamber_counts}", file=sys.stderr)
 
     cutoff = (date.today() - timedelta(days=a.days)).isoformat()
     txs = [t for t in txs if (t.get("txn_date") or "") >= cutoff]
@@ -247,7 +260,7 @@ def main() -> int:
 
     bundle = {
         "generated": datetime.utcnow().isoformat() + "Z",
-        "source": src["source"],
+        "source": " · ".join(s for s in sources if s),
         "window_days": a.window,
         "large_threshold": LARGE,
         "very_large_threshold": VERY_LARGE,

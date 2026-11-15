@@ -411,6 +411,77 @@ def compute_valuation(s: dict, facts: dict, price: float | None) -> dict:
     return out
 
 
+# ------------------------------------------------------------ sector peer stats
+def _pctl(vals: list[float], q: float) -> float:
+    """Linear-interpolated percentile (q in 0..1) of an ASCENDING list."""
+    if not vals:
+        return 0.0
+    if len(vals) == 1:
+        return vals[0]
+    pos = (len(vals) - 1) * q
+    lo = int(pos)
+    hi = min(lo + 1, len(vals) - 1)
+    return vals[lo] + (vals[hi] - vals[lo]) * (pos - lo)
+
+
+def attach_peers(out: dict, sectors: dict) -> None:
+    """Per-sector valuation distributions, so a card can show how a company compares.
+
+    Stored under the reserved `_sectors` key — tickers are always uppercase symbols, so
+    there is no collision.  Only companies that actually HAVE a given multiple are
+    counted, so n can differ between ev_ebitda and fcf_yield.
+
+    `*_pctile` is the share of sector peers sitting BELOW this company's value.  Note the
+    direction differs by metric: a LOW ev_ebitda is cheap, a HIGH fcf_yield is cheap, so
+    the renderer has to flip the wording, not the number.
+    """
+    by_sec: dict[str, dict[str, list[float]]] = {}
+    for t, rec in out.items():
+        sec = sectors.get(t)
+        if not sec:
+            continue
+        val = rec.get("valuation") or {}
+        for m in ("ev_ebitda", "fcf_yield"):
+            v = val.get(m)
+            if isinstance(v, (int, float)):
+                by_sec.setdefault(sec, {}).setdefault(m, []).append(float(v))
+
+    stats: dict[str, dict] = {}
+    for sec, metrics in by_sec.items():
+        stats[sec] = {"n": sum(1 for t in out if sectors.get(t) == sec)}
+        for m, vals in metrics.items():
+            vals = sorted(vals)
+            stats[sec][m] = {
+                "n": len(vals),
+                "min": round(vals[0], 2), "p25": round(_pctl(vals, 0.25), 2),
+                "median": round(_pctl(vals, 0.5), 2), "p75": round(_pctl(vals, 0.75), 2),
+                "max": round(vals[-1], 2),
+            }
+
+    for t, rec in out.items():
+        sec = sectors.get(t)
+        if not sec:
+            continue
+        val = rec.get("valuation") or {}
+        peer: dict = {"sector": sec, "sector_n": stats[sec]["n"]}
+        for m in ("ev_ebitda", "fcf_yield"):
+            v = val.get(m)
+            st = (stats.get(sec) or {}).get(m)
+            # need a real peer group for a percentile to mean anything
+            if isinstance(v, (int, float)) and st and st["n"] >= 4:
+                vals = by_sec[sec][m]
+                below = sum(1 for x in vals if x < v) / len(vals)
+                peer[m + "_pctile"] = round(below, 3)
+                peer[m + "_n"] = st["n"]
+                # "cheaper" points a DIFFERENT way for the two metrics — a low
+                # EV/EBITDA is cheap, a HIGH FCF yield is cheap.  Normalise here so the
+                # renderer never has to know: higher *_cheap always means cheaper.
+                peer[m + "_cheap"] = round(1.0 - below if m == "ev_ebitda" else below, 3)
+        rec["peer"] = peer
+
+    out["_sectors"] = stats
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--in", dest="inp", default="data/app_data.json")
@@ -475,9 +546,23 @@ def main() -> int:
               file=sys.stderr)
         time.sleep(0.15)
 
+    # sector peer stats — needs data/profiles.json for each ticker's sector
+    try:
+        _prof = json.load(open("data/profiles.json"))
+        _sec = {t: (p or {}).get("sector") for t, p in _prof.items()}
+    except Exception:
+        _sec = {}
+    attach_peers(out, _sec)
+    _n = sum(1 for k in out if not k.startswith("_"))
+    _ranked = sum(1 for k, v in out.items()
+                  if not k.startswith("_")
+                  and (v.get("peer") or {}).get("ev_ebitda_pctile") is not None)
+    print(f"[fundamentals] peers — {len([s for s in _sec.values() if s])} tickers with a "
+          f"sector, {_ranked} companies ranked against it", file=sys.stderr)
+
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     json.dump(out, open(a.out, "w"))
-    print(f"[fundamentals] wrote {a.out} — {len(out)} companies, missing CIK: {missing}", file=sys.stderr)
+    print(f"[fundamentals] wrote {a.out} — {_n} companies, missing CIK: {missing}", file=sys.stderr)
     return 0
 
 

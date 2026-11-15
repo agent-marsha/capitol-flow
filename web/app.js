@@ -1137,7 +1137,7 @@
     var html = '';
     try {
       var ordered = orderCards(cards);
-      var lead = ordered.filter(isStatCard).map(fundCard).filter(Boolean);
+      var lead = ordered.filter(isStatCard).map(function (c) { return fundCard(c, tk); }).filter(Boolean);
       var rest = ordered.filter(function (c) { return !isStatCard(c); }).map(fundCard).filter(Boolean);
       // The valuation pair leads, as its own group, ahead of the rest of the cards.
       if (lead.length) {
@@ -1196,13 +1196,15 @@
     return bigMoney(y);
   }
 
-  function fundCard(c) {
+  function fundCard(c, tk) {
     if (!c || !c.text) return '';
     var head = '<div class="micro fund-head"><span class="fund-emoji" aria-hidden="true">' + esc(c.emoji || '') + '</span>' + esc(c.headline || '') + '</div>';
     if (isStatCard(c)) {
       // The figure is the headline: it sits right under the card title, ahead of the words.
+      var peer = '';
+      try { peer = tk ? peerBlock(c.id, tk) : ''; } catch (e) { peer = ''; }
       return '<article class="fund-card fund-card-stat">' + head + vizStat(c.chart) +
-        '<p class="fund-text">' + esc(c.text) + '</p></article>';
+        '<p class="fund-text">' + esc(c.text) + '</p>' + peer + '</article>';
     }
     var viz = '';
     var ch = c.chart && typeof c.chart === 'object' ? c.chart : {};
@@ -1233,6 +1235,65 @@
       '<div class="display fstat-v" aria-hidden="true">' + esc(value) + '</div>' +
       (sub ? '<div class="fstat-sub" aria-hidden="true">' + esc(sub) + '</div>' : '') +
     '</div>';
+  }
+
+  // Peer comparison for a valuation stat card: a slim min…max strip with the middle half
+  // darker, a median tick and this company's marker, plus one sentence underneath.
+  // The verdict reads the pipeline's `*_cheap` (always higher = cheaper) — never the raw
+  // multiple, because "low is cheap" for EV/EBITDA but "high is cheap" for FCF yield.
+  // Returns '' (card renders exactly as before) whenever there isn't enough to say.
+  var PEER_MIN_N = 4;
+  var PEER_FMT = {
+    ev_ebitda: function (v) { return v.toFixed(1) + 'x'; },
+    fcf_yield: function (v) { return v.toFixed(1) + '%'; }
+  };
+  // Metrics where a HIGHER value means CHEAPER are handled entirely in the pipeline, which
+  // emits `*_cheap` already normalised. No per-metric direction logic belongs here.
+  function peerBlock(metric, tk) {
+    if (!PEER_FMT[metric] || !F || !Object.prototype.hasOwnProperty.call(F, tk)) return '';
+    var f = F[tk], p = f && f.peer;
+    if (!p || typeof p !== 'object' || !p.sector) return '';
+    var cheap = p[metric + '_cheap'], n = p[metric + '_n'];
+    if (!fnum(cheap) || !fnum(n) || n < PEER_MIN_N) return '';
+    var val = f.valuation && f.valuation[metric];
+    var secs = F._sectors && typeof F._sectors === 'object' ? F._sectors : null;
+    var s = secs && Object.prototype.hasOwnProperty.call(secs, p.sector) ? secs[p.sector] : null;
+    var d = s && s[metric];
+    if (!fnum(val) || !d || !fnum(d.median)) return '';
+    if (fnum(d.n) && d.n < PEER_MIN_N) return '';
+
+    // The track is a PERCENTILE scale of the sector: far LEFT = cheapest, far RIGHT =
+    // priciest, middle = the median peer.
+    //
+    // Positioning by raw value looked reasonable but was badly misleading on skewed data.
+    // FCF yield across Communication Services runs 2.0% … 13.0%, so one high outlier
+    // stretched the axis and squashed everyone else into a corner — T (genuinely the 25th
+    // percentile) landed on 0%, and a mid-pack company could read as ~70% of the way
+    // across.  Percentile positioning is outlier-proof and matches what the text says.
+    //
+    // So the middle band and median tick are a FIXED reference frame (the middle half of
+    // peers), and only the dot moves.
+    var BAND_L = 25, BAND_W = 50, MED = 50;
+    // `cheap` = share of peers this company is cheaper than, so the peers that are
+    // cheaper than IT are the remaining (1 - cheap) — they sit to its left.
+    var dotPos = Math.max(0, Math.min(100, (1 - cheap) * 100));
+    var tone = cheap >= 0.75 ? 'buy' : cheap <= 0.25 ? 'sell' : 'mid';
+    var verdict = tone === 'buy' ? 'Among the cheapest' : tone === 'sell' ? 'Among the priciest' : 'Mid-pack';
+    var pct = Math.round(cheap * 100);
+    var fmt = PEER_FMT[metric];
+
+    var strip = '<div class="fpeer-strip" aria-hidden="true">' +
+      '<i class="fpeer-iqr" style="left:' + BAND_L + '%;width:' + BAND_W + '%"></i>' +
+      '<i class="fpeer-med" style="left:' + MED + '%"></i>' +
+      '<i class="fpeer-dot ' + tone + '" style="left:' + dotPos.toFixed(1) + '%"></i>' +
+    '</div>';
+    var line = '<p class="fpeer-line">' +
+      '<span class="fpeer-verdict' + (tone === 'mid' ? '' : ' ' + tone + '-ink') + '">' + verdict + '</span>' +
+      '<span class="sr-only">: </span><span aria-hidden="true"> — </span>' +
+      'cheaper than ' + pct + '% of ' + esc(p.sector) + ' companies' +
+      '<span class="sr-only">, </span><span aria-hidden="true"> · </span>' +
+      'sector median ' + esc(fmt(d.median)) + '</p>';
+    return '<div class="fpeer">' + strip + line + '</div>';
   }
 
   var BARS_MAX = 6;   // most recent years; keeps value labels legible at 390px

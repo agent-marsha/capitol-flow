@@ -458,6 +458,18 @@ th { color: var(--muted); font-weight: 700; letter-spacing: .08em; text-transfor
 }
 .fstat-sub { margin-top: 8px; font-size: 13px; color: var(--muted); }
 
+/* peer strip: the sector's min…max, middle half darker, median tick, this company's dot */
+.fpeer { margin-top: auto; padding-top: 2px; min-width: 0; }
+.fpeer-strip { position: relative; height: 12px; margin: 0 5px; }
+.fpeer-strip::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 1px solid var(--line-2); }
+.fpeer-iqr { position: absolute; top: 4px; height: 4px; background: var(--muted); opacity: .4; border-radius: 1px; }
+.fpeer-med { position: absolute; top: 1px; width: 1px; height: 10px; margin-left: -.5px; background: var(--muted); }
+.fpeer-dot { position: absolute; top: 1px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: var(--ink); border: 2px solid var(--card); box-sizing: border-box; }
+.fpeer-dot.buy { background: var(--buy); }
+.fpeer-dot.sell { background: var(--sell); }
+.fpeer-line { margin: 8px 0 0; font-size: 12px; line-height: 1.45; color: var(--muted); }
+.fpeer-verdict { font-weight: 700; color: var(--ink-2); }
+
 /* bars: one column per year */
 .fbars { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; }
 .fb-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: stretch; }

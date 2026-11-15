@@ -49,6 +49,10 @@ jobs:
         continue-on-error: true
         run: python pipeline/committees.py --out data/committees.json
 
+      - name: Company profiles (SEC SIC sector + industry)
+        continue-on-error: true
+        run: python pipeline/profiles.py --in data/app_data.json --out data/profiles.json
+
       - name: Enrich (prices, news, clusters, oversight)
         run: python pipeline/enrich.py --days 150 --max-tickers 60 --out data/app_data.json
 
@@ -81,7 +85,7 @@ jobs:
         run: |
           git config user.name  "capitol-flow-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add data/house_trades.json data/senate_trades.json data/politicians.json data/committees.json data/sectors.json data/app_data.json data/fundamentals.json || true
+          git add data/house_trades.json data/senate_trades.json data/politicians.json data/committees.json data/profiles.json data/app_data.json data/fundamentals.json || true
           git add web/data/ || true
           git diff --quiet --cached || git commit -m "data: daily refresh $(date -u +%F)"
           git push

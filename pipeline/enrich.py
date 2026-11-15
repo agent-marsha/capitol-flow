@@ -181,29 +181,23 @@ def aggregate_big_money(txs: list[dict]) -> list[dict]:
 
 # --------------------------------------------------------------------- main
 def fetch_sectors(tickers: list[str]) -> dict:
-    """Sector per ticker (cached — the sector of a ticker rarely changes)."""
-    import yfinance as yf
-    cache_path = "data/sectors.json"
-    cache = {}
-    if os.path.exists(cache_path):
-        try:
-            cache = json.load(open(cache_path))
-        except Exception:
-            cache = {}
+    """Sector + industry label per ticker, from data/profiles.json (SEC SIC codes).
+
+    Deliberately NOT Yahoo's `.info`: that endpoint rate-limits bursts, and a failed
+    burst used to blank out every sector — which silently zeroed the committee-oversight
+    flags with it. SEC's submissions API is authoritative and does not behave that way.
+    """
+    try:
+        prof = json.load(open("data/profiles.json"))
+    except Exception:
+        print("[enrich] data/profiles.json missing — sectors unavailable", file=sys.stderr)
+        return {}
     out = {}
     for t in tickers:
-        if cache.get(t, {}).get("sector"):
-            out[t] = cache[t]
-            continue
-        try:
-            info = yf.Ticker(t).info
-            out[t] = {"sector": info.get("sector"), "industry": info.get("industry")}
-        except Exception:
-            out[t] = {"sector": None, "industry": None}
-    try:
-        json.dump(out, open(cache_path, "w"), indent=0)
-    except Exception:
-        pass
+        p = prof.get(t)
+        if p:
+            out[t] = {"sector": p.get("sector"), "industry": p.get("industry"),
+                      "sic": p.get("sic"), "name": p.get("name")}
     return out
 
 

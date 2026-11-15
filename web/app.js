@@ -255,6 +255,17 @@
     var s = D && D.sectors && tk && Object.prototype.hasOwnProperty.call(D.sectors, tk) ? D.sectors[tk] : null;
     return s && s.sector ? String(s.sector) : '';
   }
+  // One-line company profile for the stock page: sector chip + SEC SIC industry. '' when neither exists.
+  function profileLine(tk) {
+    var s = D && D.sectors && tk && Object.prototype.hasOwnProperty.call(D.sectors, tk) ? D.sectors[tk] : null;
+    if (!s) return '';
+    var sec = s.sector ? String(s.sector).trim() : '', ind = s.industry ? String(s.industry).trim() : '';
+    if (!sec && !ind) return '';
+    return '<div class="d-profile">' +
+      (sec ? '<span class="d-sector">' + esc(sec) + '</span>' : '') +
+      (ind ? '<span class="d-industry">' + esc(ind) + '</span>' : '') +
+      '</div>';
+  }
   function memberCmtes(name) {
     var p = polOf(name), m = D && D.member_committees;
     var list = p && p.bioguide && m && Object.prototype.hasOwnProperty.call(m, p.bioguide) ? m[p.bioguide] : null;
@@ -686,7 +697,7 @@
       '<section class="d-hero" aria-labelledby="d-h">' +
         '<div><div class="micro">' + (sig ? '◆ Signal · ' + sig.n_politicians + ' politicians in ' + (D.window_days || 14) + ' days' : 'Stock detail') + '</div>' +
           '<h1 id="d-h" class="d-ticker display">' + esc(tk) + '</h1>' +
-          '<div class="d-name">' + esc(nameOf.get(tk) || '') + '</div></div>' +
+          '<div class="d-name">' + esc(nameOf.get(tk) || '') + '</div>' + profileLine(tk) + '</div>' +
         priceBlock +
       '</section>' +
       '<div class="stats d-stats" role="list">' +

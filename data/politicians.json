@@ -1,0 +1,532 @@
+{
+ "Cleo Fields": {
+  "bioguide": "F000110",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/F000110.jpg",
+  "state": "LA",
+  "state_name": "Louisiana",
+  "party": "Democrat",
+  "district": 6,
+  "chamber": "House",
+  "official_full": "Cleo Fields"
+ },
+ "Hon. Ann Wagner": {
+  "bioguide": "W000812",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/W000812.jpg",
+  "state": "MO",
+  "state_name": "Missouri",
+  "party": "Republican",
+  "district": 2,
+  "chamber": "House",
+  "official_full": "Ann Wagner"
+ },
+ "Hon. Carol Devine Miller": {
+  "bioguide": "M001205",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/M001205.jpg",
+  "state": "WV",
+  "state_name": "West Virginia",
+  "party": "Republican",
+  "district": 1,
+  "chamber": "House",
+  "official_full": "Carol D. Miller"
+ },
+ "Hon. Daniel Meuser": {
+  "bioguide": "M001204",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/M001204.jpg",
+  "state": "PA",
+  "state_name": "Pennsylvania",
+  "party": "Republican",
+  "district": 9,
+  "chamber": "House",
+  "official_full": "Daniel Meuser"
+ },
+ "Hon. Darrell E. Issa": {
+  "bioguide": "I000056",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/I000056.jpg",
+  "state": "CA",
+  "state_name": "California",
+  "party": "Republican",
+  "district": 48,
+  "chamber": "House",
+  "official_full": "Darrell Issa"
+ },
+ "Hon. David J. Taylor": {
+  "bioguide": "T000490",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/T000490.jpg",
+  "state": "OH",
+  "state_name": "Ohio",
+  "party": "Republican",
+  "district": 2,
+  "chamber": "House",
+  "official_full": "David J. Taylor"
+ },
+ "Hon. David Kustoff": {
+  "bioguide": "K000392",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/K000392.jpg",
+  "state": "TN",
+  "state_name": "Tennessee",
+  "party": "Republican",
+  "district": 8,
+  "chamber": "House",
+  "official_full": "David Kustoff"
+ },
+ "Hon. Donald Sternoff Beyer Jr": {
+  "bioguide": "B001292",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/B001292.jpg",
+  "state": "VA",
+  "state_name": "Virginia",
+  "party": "Democrat",
+  "district": 8,
+  "chamber": "House",
+  "official_full": "Donald S. Beyer, Jr."
+ },
+ "Hon. Gilbert Cisneros": {
+  "bioguide": "C001123",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/C001123.jpg",
+  "state": "CA",
+  "state_name": "California",
+  "party": "Democrat",
+  "district": 31,
+  "chamber": "House",
+  "official_full": "Gilbert Ray Cisneros, Jr."
+ },
+ "Hon. James A. Himes": {
+  "bioguide": "H001047",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/H001047.jpg",
+  "state": "CT",
+  "state_name": "Connecticut",
+  "party": "Democrat",
+  "district": 4,
+  "chamber": "House",
+  "official_full": "James A. Himes"
+ },
+ "Hon. Jodey Arrington": {
+  "bioguide": "A000375",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/A000375.jpg",
+  "state": "TX",
+  "state_name": "Texas",
+  "party": "Republican",
+  "district": 19,
+  "chamber": "House",
+  "official_full": "Jodey C. Arrington"
+ },
+ "Hon. John J Mr McGuire III": {
+  "bioguide": "M001239",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/M001239.jpg",
+  "state": "VA",
+  "state_name": "Virginia",
+  "party": "Republican",
+  "district": 5,
+  "chamber": "House",
+  "official_full": "John J. McGuire III"
+ },
+ "Hon. Jonathan Jackson": {
+  "bioguide": "J000309",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/J000309.jpg",
+  "state": "IL",
+  "state_name": "Illinois",
+  "party": "Democrat",
+  "district": 1,
+  "chamber": "House",
+  "official_full": "Jonathan L. Jackson"
+ },
+ "Hon. Josh Gottheimer": {
+  "bioguide": "G000583",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/G000583.jpg",
+  "state": "NJ",
+  "state_name": "New Jersey",
+  "party": "Democrat",
+  "district": 5,
+  "chamber": "House",
+  "official_full": "Josh Gottheimer"
+ },
+ "Hon. Julie Johnson": {
+  "bioguide": "J000310",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/J000310.jpg",
+  "state": "TX",
+  "state_name": "Texas",
+  "party": "Democrat",
+  "district": 32,
+  "chamber": "House",
+  "official_full": "Julie Johnson"
+ },
+ "Hon. Kevin Hern": {
+  "bioguide": "H001082",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/H001082.jpg",
+  "state": "OK",
+  "state_name": "Oklahoma",
+  "party": "Republican",
+  "district": 1,
+  "chamber": "House",
+  "official_full": "Kevin Hern"
+ },
+ "Hon. Laurel Lee": {
+  "bioguide": "L000597",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/L000597.jpg",
+  "state": "FL",
+  "state_name": "Florida",
+  "party": "Republican",
+  "district": 15,
+  "chamber": "House",
+  "official_full": "Laurel M. Lee"
+ },
+ "Hon. Lisa McClain": {
+  "bioguide": "M001136",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/M001136.jpg",
+  "state": "MI",
+  "state_name": "Michigan",
+  "party": "Republican",
+  "district": 9,
+  "chamber": "House",
+  "official_full": "Lisa C. McClain"
+ },
+ "Hon. Lloyd Doggett": {
+  "bioguide": "D000399",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/D000399.jpg",
+  "state": "TX",
+  "state_name": "Texas",
+  "party": "Democrat",
+  "district": 37,
+  "chamber": "House",
+  "official_full": "Lloyd Doggett"
+ },
+ "Hon. Maria Elvira Salazar": {
+  "bioguide": "S000168",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/S000168.jpg",
+  "state": "FL",
+  "state_name": "Florida",
+  "party": "Republican",
+  "district": 27,
+  "chamber": "House",
+  "official_full": "Maria Elvira Salazar"
+ },
+ "Hon. Max Miller": {
+  "bioguide": "M001222",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/M001222.jpg",
+  "state": "OH",
+  "state_name": "Ohio",
+  "party": "Republican",
+  "district": 7,
+  "chamber": "House",
+  "official_full": "Max L. Miller"
+ },
+ "Hon. Michael Rulli": {
+  "bioguide": "R000619",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/R000619.jpg",
+  "state": "OH",
+  "state_name": "Ohio",
+  "party": "Republican",
+  "district": 6,
+  "chamber": "House",
+  "official_full": "Michael A. Rulli"
+ },
+ "Hon. Mike Kelly": {
+  "bioguide": "K000376",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/K000376.jpg",
+  "state": "PA",
+  "state_name": "Pennsylvania",
+  "party": "Republican",
+  "district": 16,
+  "chamber": "House",
+  "official_full": "Mike Kelly"
+ },
+ "Hon. Nancy Pelosi": {
+  "bioguide": "P000197",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/P000197.jpg",
+  "state": "CA",
+  "state_name": "California",
+  "party": "Democrat",
+  "district": 11,
+  "chamber": "House",
+  "official_full": "Nancy Pelosi"
+ },
+ "Hon. Pete Sessions": {
+  "bioguide": "S000250",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/S000250.jpg",
+  "state": "TX",
+  "state_name": "Texas",
+  "party": "Republican",
+  "district": 17,
+  "chamber": "House",
+  "official_full": "Pete Sessions"
+ },
+ "Hon. Richard Dean Dr McCormick": {
+  "bioguide": "M001218",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/M001218.jpg",
+  "state": "GA",
+  "state_name": "Georgia",
+  "party": "Republican",
+  "district": 7,
+  "chamber": "House",
+  "official_full": "Richard McCormick"
+ },
+ "Hon. Richard W. Allen": {
+  "bioguide": "A000372",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/A000372.jpg",
+  "state": "GA",
+  "state_name": "Georgia",
+  "party": "Republican",
+  "district": 12,
+  "chamber": "House",
+  "official_full": "Rick W. Allen"
+ },
+ "Hon. Rick Larsen": {
+  "bioguide": "L000560",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/L000560.jpg",
+  "state": "WA",
+  "state_name": "Washington",
+  "party": "Democrat",
+  "district": 2,
+  "chamber": "House",
+  "official_full": "Rick Larsen"
+ },
+ "Hon. Robert E. Latta": {
+  "bioguide": "L000566",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/L000566.jpg",
+  "state": "OH",
+  "state_name": "Ohio",
+  "party": "Republican",
+  "district": 5,
+  "chamber": "House",
+  "official_full": "Robert E. Latta"
+ },
+ "Hon. Rudy C. Yakym III": {
+  "bioguide": "Y000067",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/Y000067.jpg",
+  "state": "IN",
+  "state_name": "Indiana",
+  "party": "Republican",
+  "district": 2,
+  "chamber": "House",
+  "official_full": "Rudy Yakym III"
+ },
+ "Hon. Scott H. Peters": {
+  "bioguide": "P000608",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/P000608.jpg",
+  "state": "CA",
+  "state_name": "California",
+  "party": "Democrat",
+  "district": 50,
+  "chamber": "House",
+  "official_full": "Scott H. Peters"
+ },
+ "Hon. Sheri Biggs": {
+  "bioguide": "B001325",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/B001325.jpg",
+  "state": "SC",
+  "state_name": "South Carolina",
+  "party": "Republican",
+  "district": 3,
+  "chamber": "House",
+  "official_full": "Sheri Biggs"
+ },
+ "Hon. Suzan K. DelBene": {
+  "bioguide": "D000617",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/D000617.jpg",
+  "state": "WA",
+  "state_name": "Washington",
+  "party": "Democrat",
+  "district": 1,
+  "chamber": "House",
+  "official_full": "Suzan K. DelBene"
+ },
+ "Hon. Thomas H. Kean Jr": {
+  "bioguide": "K000398",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/K000398.jpg",
+  "state": "NJ",
+  "state_name": "New Jersey",
+  "party": "Republican",
+  "district": 7,
+  "chamber": "House",
+  "official_full": "Thomas H. Kean, Jr."
+ },
+ "Hon. Thomas Suozzi": {
+  "bioguide": "S001201",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/S001201.jpg",
+  "state": "NY",
+  "state_name": "New York",
+  "party": "Democrat",
+  "district": 3,
+  "chamber": "House",
+  "official_full": "Thomas R. Suozzi"
+ },
+ "Hon. Vince Fong": {
+  "bioguide": "F000480",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/F000480.jpg",
+  "state": "CA",
+  "state_name": "California",
+  "party": "Republican",
+  "district": 20,
+  "chamber": "House",
+  "official_full": "Vince Fong"
+ },
+ "Sen. A. Mitchell McConnell, Jr.": {
+  "bioguide": "M000355",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/M000355.jpg",
+  "state": "KY",
+  "state_name": "Kentucky",
+  "party": "Republican",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Mitch McConnell"
+ },
+ "Sen. Alan Armstrong": {
+  "bioguide": "A000383",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/A000383.jpg",
+  "state": "OK",
+  "state_name": "Oklahoma",
+  "party": "Republican",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Alan Armstrong"
+ },
+ "Sen. Angus S King, Jr.": {
+  "bioguide": "K000383",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/K000383.jpg",
+  "state": "ME",
+  "state_name": "Maine",
+  "party": "Independent",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Angus S. King, Jr."
+ },
+ "Sen. Bernie Moreno": {
+  "bioguide": "M001242",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/M001242.jpg",
+  "state": "OH",
+  "state_name": "Ohio",
+  "party": "Republican",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Bernie Moreno"
+ },
+ "Sen. Christopher A Coons": {
+  "bioguide": "C001088",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/C001088.jpg",
+  "state": "DE",
+  "state_name": "Delaware",
+  "party": "Democrat",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Christopher A. Coons"
+ },
+ "Sen. Cory A Booker": {
+  "bioguide": "B001288",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/B001288.jpg",
+  "state": "NJ",
+  "state_name": "New Jersey",
+  "party": "Democrat",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Cory A. Booker"
+ },
+ "Sen. David H McCormick": {
+  "bioguide": "M001243",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/M001243.jpg",
+  "state": "PA",
+  "state_name": "Pennsylvania",
+  "party": "Republican",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "David McCormick"
+ },
+ "Sen. Gary C Peters": {
+  "bioguide": "P000595",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/P000595.jpg",
+  "state": "MI",
+  "state_name": "Michigan",
+  "party": "Democrat",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Gary C. Peters"
+ },
+ "Sen. James Conley Justice, II": {
+  "bioguide": "J000312",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/J000312.jpg",
+  "state": "WV",
+  "state_name": "West Virginia",
+  "party": "Republican",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "James C. Justice"
+ },
+ "Sen. Jerry Moran,": {
+  "bioguide": "M000934",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/M000934.jpg",
+  "state": "KS",
+  "state_name": "Kansas",
+  "party": "Republican",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Jerry Moran"
+ },
+ "Sen. John Boozman": {
+  "bioguide": "B001236",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/B001236.jpg",
+  "state": "AR",
+  "state_name": "Arkansas",
+  "party": "Republican",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "John Boozman"
+ },
+ "Sen. John Fetterman": {
+  "bioguide": "F000479",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/F000479.jpg",
+  "state": "PA",
+  "state_name": "Pennsylvania",
+  "party": "Democrat",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "John Fetterman"
+ },
+ "Sen. Mark R Warner": {
+  "bioguide": "W000805",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/W000805.jpg",
+  "state": "VA",
+  "state_name": "Virginia",
+  "party": "Democrat",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Mark R. Warner"
+ },
+ "Sen. Richard Blumenthal": {
+  "bioguide": "B001277",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/B001277.jpg",
+  "state": "CT",
+  "state_name": "Connecticut",
+  "party": "Democrat",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Richard Blumenthal"
+ },
+ "Sen. Rick Scott": {
+  "bioguide": "S001217",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/S001217.jpg",
+  "state": "FL",
+  "state_name": "Florida",
+  "party": "Republican",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Rick Scott"
+ },
+ "Sen. Sheldon Whitehouse": {
+  "bioguide": "W000802",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/W000802.jpg",
+  "state": "RI",
+  "state_name": "Rhode Island",
+  "party": "Democrat",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Sheldon Whitehouse"
+ },
+ "Sen. Shelley M Capito": {
+  "bioguide": "C001047",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/C001047.jpg",
+  "state": "WV",
+  "state_name": "West Virginia",
+  "party": "Republican",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Shelley Moore Capito"
+ }
+}

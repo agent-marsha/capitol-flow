@@ -97,6 +97,19 @@ section.block { padding: 40px 0 8px; }
 .sig-meta .v { font-family: var(--display); font-weight: 800; font-stretch: condensed; font-size: 22px; line-height: 1.1; margin-top: 4px; text-transform: uppercase; }
 .sig-who { color: var(--ink-2); font-size: 13px; line-height: 1.5; border-top: 1px solid var(--line); padding-top: 12px; }
 .sig-who b { color: var(--ink); font-weight: 600; }
+.sig-who .sw { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; margin-right: 2px; vertical-align: middle; }
+.sig-who .sw b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.sig-who .sw-c { margin-left: -6px; }
+.sig-who .pf { width: 20px; height: 20px; font-size: 8px; }
+.sig-who .sw-more { display: none; font-size: 11px; font-weight: 800; letter-spacing: .12em; color: var(--muted); vertical-align: middle; }
+.sig.lead .pf { background: #E6E6EA; color: #3A3A3F; box-shadow: inset 0 0 0 1px #D0D0D4; }
+.sig.lead .pf-img { border-color: #D0D0D4; }
+.sig.lead .sig-who .sw-more { color: #3A3A3F; }
+@media (max-width: 480px) {
+  .sig-who .sw:nth-of-type(n+5) { display: none; }
+  .sig-who .sw:nth-of-type(4) .sw-c { display: none; }
+  .sig-who .sw-more { display: inline; }
+}
 .bias { font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; padding: 5px 8px; border: 1px solid currentColor; border-radius: 2px; white-space: nowrap; }
 .bias.neutral { color: var(--ink); }
 
@@ -238,8 +251,23 @@ section.block { padding: 40px 0 8px; }
 .badge.lg { border: 1px solid var(--ink); color: var(--ink); }
 .badge.cl { border: 1px solid var(--line-2); color: var(--ink-2); }
 .t-asset { color: var(--ink-2); font-size: 13px; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.t-who { font-size: 13px; margin-top: 2px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.t-who { font-size: 13px; margin-top: 6px; color: var(--muted); display: flex; align-items: center; gap: 8px; min-width: 0; }
+.t-who-txt { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .t-who b { color: var(--ink); font-weight: 600; }
+
+/* politician photo: fixed circle, initials underneath, photo on top (removed on error) */
+.pf {
+  position: relative; flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%; overflow: hidden;
+  background: var(--card-2); box-shadow: inset 0 0 0 1px var(--line-2);
+  color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .04em; line-height: 1; user-select: none;
+}
+.pf-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; border-radius: 50%; border: 1px solid var(--line-2); }
+/* seat tag: CA-31 / WV */
+.st {
+  display: inline-block; vertical-align: 1px; margin-left: 2px; padding: 1px 4px; border: 1px solid var(--line-2); border-radius: 2px;
+  font-size: 10px; font-weight: 800; letter-spacing: .12em; line-height: 1.3; color: var(--muted);
+}
 .t-amt { text-align: right; }
 .t-amt .display { font-size: 24px; white-space: nowrap; }
 .trade.large .t-amt .display { font-size: 28px; }
@@ -250,6 +278,7 @@ section.block { padding: 40px 0 8px; }
 @media (max-width: 480px) {
   .trade { grid-template-columns: 40px 1fr; padding-right: 12px; }
   .t-date .dy { font-size: 26px; }
+  .t-who .pf { width: 24px; height: 24px; font-size: 9px; }
   .t-amt { grid-column: 2; text-align: left; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
   .t-amt .since, .t-amt a { margin-top: 0; }
 }

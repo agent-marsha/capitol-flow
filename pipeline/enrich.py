@@ -205,6 +205,15 @@ def main() -> int:
         chamber_counts[t.get("chamber", "?")] = chamber_counts.get(t.get("chamber", "?"), 0) + 1
     print(f"[enrich] chambers: {chamber_counts}", file=sys.stderr)
 
+    # politician roster (state / party / photo), resolved by politicians.py
+    people = {}
+    if os.path.exists("data/politicians.json"):
+        try:
+            people = json.load(open("data/politicians.json"))
+            print(f"[enrich] {len(people)} politicians resolved", file=sys.stderr)
+        except Exception as e:
+            print(f"[enrich] politicians.json unreadable: {e}", file=sys.stderr)
+
     cutoff = (date.today() - timedelta(days=a.days)).isoformat()
     txs = [t for t in txs if (t.get("txn_date") or "") >= cutoff]
     for i, t in enumerate(txs):
@@ -272,6 +281,7 @@ def main() -> int:
         "trades": ordered,
         "clusters": clusters,
         "big_money": big_money,
+        "politicians": people,
         "prices": prices,
         "news": news,
     }

@@ -189,6 +189,49 @@
     return '◆ ' + esc(String(t.txn_type_label || 'Other').toUpperCase());
   }
 
+  // ------------------------------------------------------------------ politician photo + state
+  // D.politicians is optional: every lookup degrades to null and the row renders as before.
+  var badPhoto = new Set(); // photo URLs that failed once — never requested again this session
+  function polOf(name) {
+    var m = D && D.politicians;
+    if (!m || typeof m !== 'object' || !Object.prototype.hasOwnProperty.call(m, name)) return null;
+    var p = m[name];
+    return p && typeof p === 'object' ? p : null;
+  }
+  var NAME_JUNK = /^(hon|sen|rep|dr|mr|mrs|ms|jr|sr|ii|iii|iv)\.?$/i;
+  function initials(name) {
+    var w = String(name || '').replace(/,/g, ' ').split(/\s+/)
+      .filter(function (x) { return x && !NAME_JUNK.test(x) && /[A-Za-z]/.test(x); });
+    if (!w.length) return '?';
+    var a = w[0].replace(/[^A-Za-z]/g, '').charAt(0);
+    var b = w.length > 1 ? w[w.length - 1].replace(/[^A-Za-z]/g, '').charAt(0) : '';
+    return (a + b).toUpperCase() || '?';
+  }
+  // The circle always holds the initials; the photo sits on top. If the image errors it is
+  // removed (see the capture-phase listener in boot) and the initials show through — no
+  // broken-image icon, no size change. The circle's size is fixed in CSS, so nothing shifts.
+  function avatar(name, size) {
+    var p = polOf(name);
+    var url = p && safeUrl(p.photo);
+    var img = url && !badPhoto.has(url)
+      ? '<img class="pf-img" src="' + esc(url) + '" alt="" loading="lazy" decoding="async" width="' + size + '" height="' + size + '">'
+      : '';
+    return '<span class="pf" aria-hidden="true">' + esc(initials(name)) + img + '</span>';
+  }
+  // "CA-31" for a representative, "WV" for a senator. Falls back to the trade's own state_district.
+  function seatTag(t) {
+    var p = polOf(t.politician);
+    var sd = String(t.state_district || '').toUpperCase();
+    var m = /^([A-Z]{2})-?(\d+|AL)$/.exec(sd);
+    var st = p && /^[A-Z]{2}$/.test(p.state || '') ? p.state : (m ? m[1] : (/^[A-Z]{2}$/.test(sd) ? sd : ''));
+    if (!st) return sd ? '<span class="st">' + esc(sd) + '</span>' : '';
+    var senate = p ? p.chamber === 'Senate' : false;
+    var dist = m ? m[2] : (p && p.district != null && p.district !== '' ? String(p.district) : '');
+    var label = senate || !dist ? st : st + '-' + (dist === 'AL' || dist === '0' ? 'AL' : String(+dist < 10 ? '0' + (+dist) : dist));
+    var title = p && p.state_name ? p.state_name + (senate ? ' · Senator' : dist ? ' · District ' + dist : '') : label;
+    return '<span class="st" title="' + esc(title) + '">' + esc(label) + '</span>';
+  }
+
   function tradeRow(t, opt) {
     opt = opt || {};
     var dir = t.direction === 'sell' || t.direction === 'buy' ? t.direction : 'other';
@@ -214,8 +257,8 @@
     if (sig && !opt.hideSignal) badges += '<span class="badge cl" title="Part of a multi-politician cluster">◆ SIGNAL ' + sig + 'P</span>';
 
     var who = [];
-    who.push('<b>' + esc(stripHon(t.politician)) + '</b>');
-    if (t.state_district) who.push(esc(t.state_district));
+    var seat = seatTag(t);
+    who.push('<b>' + esc(stripHon(t.politician)) + '</b>' + (seat ? ' ' + seat : ''));
     if (OWNER[t.owner]) who.push(esc(OWNER[t.owner]));
     if (date && validDate(t.notification_date)) {
       var lag = days(date, t.notification_date);
@@ -235,7 +278,7 @@
       '<div class="t-main">' +
         '<div class="t-line1"><span class="dir ' + dir + '">' + dirLabel(t) + '</span>' + tk + badges + '</div>' +
         '<div class="t-asset" title="' + esc(t.asset_raw) + '">' + esc(assetName(t)) + '</div>' +
-        '<div class="t-who">' + who.join(' · ') + '</div>' +
+        '<div class="t-who">' + avatar(t.politician, 28) + '<span class="t-who-txt">' + who.join(' · ') + '</span></div>' +
       '</div>' +
       '<div class="t-amt"><div class="display" title="' + esc(t.amount_label) + '">' + amtText + '</div>' + since +
         (src ? '<a href="' + esc(src) + '" target="_blank" rel="noopener noreferrer" aria-label="Open the official filing PDF for this trade">FILING ↗</a>' : '') +
@@ -269,7 +312,15 @@
 
   function sigWho(s) {
     var more = s.windows > 1 ? ' <span>· ' + (s.windows - 1) + ' more window' + (s.windows > 2 ? 's' : '') + '</span>' : '';
-    return '<div class="sig-who">' + s.politicians.map(function (p) { return '<b>' + esc(stripHon(p)) + '</b>'; }).join(', ') + more + '</div>';
+    // Photo + name per politician. At narrow widths CSS hides names past the 4th and shows "+N".
+    var ps = s.politicians || [];
+    var extra = ps.length - 4;
+    var rest = extra > 0 ? ps.slice(4).map(stripHon).join(', ') : '';
+    return '<div class="sig-who">' + ps.map(function (p, i) {
+        return '<span class="sw">' + avatar(p, 20) + '<b>' + esc(stripHon(p)) + '</b>' + (i < ps.length - 1 ? '<span class="sw-c">,</span>' : '') + '</span>';
+      }).join(' ') +
+      (extra > 0 ? ' <span class="sw-more" title="' + esc(rest) + '">+' + extra + '</span>' : '') +
+      more + '</div>';
   }
 
   function sigCard(s, i) {
@@ -1200,6 +1251,14 @@
       var app = $('#app');
       app.addEventListener('click', onClick);
       app.addEventListener('input', onInput);
+      // <img> errors don't bubble, so listen in the capture phase. A failed politician photo is
+      // dropped (initials underneath show through) and remembered so later renders skip it.
+      app.addEventListener('error', function (e) {
+        var img = e.target;
+        if (!img || img.tagName !== 'IMG' || !img.classList.contains('pf-img')) return;
+        badPhoto.add(img.getAttribute('src'));
+        img.remove();
+      }, true);
       window.addEventListener('hashchange', route);
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && currentTicker()) location.hash = '#/';

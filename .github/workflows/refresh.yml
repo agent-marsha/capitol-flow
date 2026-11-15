@@ -41,6 +41,10 @@ jobs:
         run: python pipeline/fetch_senate.py --days 150 --out data/senate_trades.json
 
       # ---- Merge both chambers, add prices / news / clusters --------------------
+      - name: Resolve politicians (state, party, photo)
+        continue-on-error: true
+        run: python pipeline/politicians.py --house data/house_trades.json --senate data/senate_trades.json --out data/politicians.json
+
       - name: Enrich (prices, news, clusters)
         run: python pipeline/enrich.py --days 150 --max-tickers 60 --out data/app_data.json
 

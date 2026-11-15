@@ -302,7 +302,7 @@
     var html =
       '<section aria-labelledby="hero-h">' +
         '<h1 id="hero-h" class="hero-title display">Who’s selling. Who’s buying.</h1>' +
-        '<p class="hero-lede">' + T.length + ' trades disclosed by members of the House, ' + esc(span) +
+        '<p class="hero-lede">' + T.length + ' trades disclosed by members of Congress, ' + esc(span) +
           '. A signal fires when two or more politicians trade the same stock within ' + (D.window_days || 14) + ' days.</p>' +
         '<div class="stats" role="list">' +
           '<div class="stat" role="listitem"><div class="micro"><span class="stat-dot" style="background:var(--sell)"></span>Sells</div><div class="display">' + sells.length + '</div><div class="sub">Est. ' + range(sum(sells, 'amount_low'), sum(sells, 'amount_high')) + '</div></div>' +

@@ -111,6 +111,11 @@
   }
 
   // Options are optional too: same fetch → inline-script → {} fallback chain.
+  // One shared load: boot starts it, and options-only stock pages wait on the same promise.
+  var optP = null;
+  function optionsReady() {
+    return optP || (optP = loadOptions().then(function (o) { O = o; return o; }));
+  }
   function loadOptions() {
     if (window.__CAPITOL_OPTIONS__) return Promise.resolve(window.__CAPITOL_OPTIONS__);
     var viaFetch = location.protocol === 'file:'
@@ -774,7 +779,7 @@
         'Totals are summed across the next few expirations, and the put/call ratio uses those same totals. ' +
         '“Days of volume” is open contracts × 100 shares ÷ the stock’s 30-day average daily share volume. ' +
         '<span class="oi-pol-key">⚑︎</span> marks stocks members of Congress have also traded. ' +
-        'Stocks without a page here open on TradingView in a new tab.</p>' +
+        'Every row opens that stock’s page here, with its call and put strikes.</p>' +
     '</section>';
   }
   function oiRow(r) {
@@ -789,13 +794,11 @@
       (nPol ? '. Traded by ' + plural(nPol, 'politician') + ' (' + plural(nTr, 'trade') + ')' : '') +
       (nPol ? '' : '. No congressional activity') +
       (validDate(r.expiry) ? '. Most active expiry ' + mdy(r.expiry) : '') +
-      // untracked tickers have no stock page here — send them to TradingView instead
-      (r.tracked === true ? '. Open detail.' : '. Open ' + r.ticker + ' on TradingView, new tab');
+      '. Open ' + r.ticker + ' detail.';
     var segs = (c ? '<i class="b" style="width:' + cp.toFixed(2) + '%"></i>' : '') +
                (p ? '<i class="s" style="width:' + (100 - cp).toFixed(2) + '%"></i>' : '');
-    var href = r.tracked === true
-      ? '"#/stock/' + encodeURIComponent(r.ticker) + '"'
-      : '"https://www.tradingview.com/symbols/' + encodeURIComponent(r.ticker) + '/" target="_blank" rel="noopener"';
+    // Every row opens this app's stock page — even with no trades or prices, the option chain is there.
+    var href = '"#/stock/' + encodeURIComponent(r.ticker) + '"';
     // The Yahoo link is a sibling of the row link (anchors can't nest). The https quote URL is a
     // Universal Link / App Link, so phones with the Yahoo Finance app open it there.
     var yf = '<a class="oi-yf" href="https://finance.yahoo.com/quote/' + encodeURIComponent(r.ticker) + '/" target="_blank" rel="noopener" ' +
@@ -865,6 +868,15 @@
     var p = D.prices[tk] || {};
     var daily = p.daily || [];
     if (!trades.length && !daily.length) {
+      // No trades, no prices: the page can still stand on its option chain, which needs O.
+      if (O === null) {
+        $('#app').innerHTML = '<div class="loading"><span class="display">Loading ' + esc(tk) + '…</span></div>';
+        optionsReady().then(function () { if (currentTicker() === tk) renderDetail(tk); });
+        return;
+      }
+      var hasOpt = false;
+      try { hasOpt = !!optionsBlock(tk); } catch (e) { hasOpt = false; }
+      if (hasOpt) { renderOptionsOnly(tk); return; }
       $('#app').innerHTML = '<button type="button" class="back" data-action="back">← BACK</button>' +
         '<p class="empty">No trades or prices found for ' + esc(tk) + '.</p>';
       return;
@@ -921,6 +933,27 @@
     mountChart(tk);
     fillOptions();
     fillFundamentals();
+  }
+
+  // A ticker with an option chain but no congressional trades and no price history: header,
+  // the no-price fallback panel and the options section. No trades/news/basics, no zeroed stats.
+  function renderOptionsOnly(tk) {
+    var name = nameOf.get(tk) || '';
+    $('#app').innerHTML =
+      '<button type="button" class="back" data-action="back" aria-label="Back to dashboard">← ALL SIGNALS</button>' +
+      '<section class="d-hero" aria-labelledby="d-h">' +
+        '<div><div class="micro">Stock detail</div>' +
+          '<h1 id="d-h" class="d-ticker display">' + esc(tk) + '</h1>' +
+          (name ? '<div class="d-name">' + esc(name) + '</div>' : '') + profileLine(tk) + '</div>' +
+      '</section>' +
+      '<p class="note d-nocong">No congressional trades disclosed on this ticker in the current window.</p>' +
+      chartFallback(tk) +
+      '<div class="d-cols d-cols-opt">' +
+        '<div id="opt-slot" class="opt-slot" data-opt-tk="' + esc(tk) + '"></div>' +
+      '</div>';
+    document.title = tk + ' — Capitol Flow';
+    window.scrollTo(0, 0);
+    fillOptions();
   }
 
   // Tickers outside the charted set get a calm dead-end-free panel instead of an empty chart:
@@ -1597,8 +1630,7 @@
       F = f;
       try { fillFundamentals(); } catch (e) { /* never break the page */ }
     });
-    loadOptions().then(function (o) {
-      O = o;
+    optionsReady().then(function () {
       try { fillOptions(); } catch (e) { /* never break the page */ }
     });
     loadData().then(function (d) {

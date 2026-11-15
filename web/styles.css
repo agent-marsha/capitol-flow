@@ -602,3 +602,9 @@ section[id] { scroll-margin-top: 64px; }
 .ins-ink { color: var(--ins); }
 .ov-row.ins-row::before { background: var(--ins); }
 .ov-cm b.ins-ink { color: var(--ins); }
+
+/* options-only stock page (no trades, no prices): one muted line where the stats row would be,
+   and the options section full width */
+.d-nocong { margin: 20px 0 0; }
+.d-cols.d-cols-opt { grid-template-columns: 1fr; grid-template-areas: none; }
+.d-cols-opt > .opt-slot { grid-area: auto; }

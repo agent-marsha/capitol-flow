@@ -309,22 +309,31 @@ def build_cards(name: str, s: dict, val: dict | None = None) -> list[dict]:
                       "value": f"${m:,.1f}", "sub": "per $1 it makes in a year"},
         })
 
-    # 7) FCF yield — real cash back per $100 you spend
+    # 7) FCF yield — the cash the BUSINESS MAKES per $100 of value.
+    # NOT cash paid to the owner: the company decides whether to keep it, spend it
+    # or hand some out. Wording must never imply a payout.
     if val and val.get("fcf_yield") is not None:
         y = val["fcf_yield"]
+        mcap = val.get("market_cap")
         if (val.get("fcf") or 0) >= 0:
             text = (f"{name} had {money(val['fcf'])} left in cash after paying for everything. "
-                    f"That even counts new machines and buildings. For every $100 you spend, "
-                    f"you would get about ${y:.0f} back in cash each year.")
+                    f"That even counts new machines and buildings. ")
+            if mcap:
+                text += (f"The whole company costs about {money(mcap)} to buy. So for every $100 "
+                         f"it is worth, it makes about ${y:.0f} of cash in a year. ")
+            else:
+                text += f"So for every $100 it is worth, it makes about ${y:.0f} of cash in a year. "
+            text += ("It may keep that cash. It may spend it. It may hand some to its owners. "
+                     "You only get cash in your hand if the company hands it out.")
         else:
             text = (f"{name} spent more cash than it brought in, by {money(abs(val['fcf']))}. "
-                    "It is not handing cash back to its owners right now.")
+                    "So it has no spare cash to hand out to its owners right now.")
         cards.append({
             "id": "fcf_yield", "emoji": "💵", "rank": 1,
-            "headline": "The real cash you get back",
+            "headline": "The real cash the company makes",
             "text": text,
-            "chart": {"type": "stat", "label": "Cash back each year, for every $100 you spend",
-                      "value": f"${y:,.1f}", "sub": "per $100 you spend, each year"},
+            "chart": {"type": "stat", "label": "Cash it makes each year, per $100 it is worth",
+                      "value": f"${y:,.1f}", "sub": "per $100 of company value, each year"},
         })
 
     return cards

@@ -59,6 +59,7 @@
   var S = {
     feed: { dir: 'all', large: false, sig: false, q: '', limit: 30 },
     big: { sell: 6, buy: 6 },
+    bigAll: false,
     showAllSignals: false,
     tf: 'daily',
     chart: null,
@@ -325,6 +326,7 @@
         '<div class="sec-head"><div><div class="micro">$100K and up</div><h2 id="big-h" class="display">Big money</h2></div>' +
         '<p>Every trade with a disclosed upper bound of $100,000 or more. Sells and buys side by side, newest first.</p></div>' +
         '<div class="duo">' + bigCol('sell', large) + bigCol('buy', large) + '</div>' +
+        bigChartShell(large) +
       '</section>' +
 
       '<section class="block" id="feed" aria-labelledby="feed-h">' +
@@ -345,6 +347,7 @@
       '</section>';
 
     $('#app').innerHTML = html;
+    renderBigChart();
     renderFeed();
     document.title = 'Capitol Flow — Politician Trade Signals';
   }
@@ -366,6 +369,74 @@
       ? '<div style="margin-top:8px"><button type="button" class="btn-ghost" data-action="big-more" data-v="' + dir + '">Show ' + Math.min(10, list.length - n) + ' more ' + (dir === 'sell' ? 'sells' : 'buys') + '</button></div>'
       : '';
     return '<div>' + head + body + more + '</div>';
+  }
+
+  // ---- "Where the big money went": one bar per stock, scaled to the largest estimated total.
+  var BM_TOP = 15;
+  function bigMoneyRows() {
+    var rows = Array.isArray(D.big_money) ? D.big_money : [];
+    return rows.filter(function (r) { return r && r.ticker && (+r.total_est || 0) > 0; });
+  }
+  function plural(n, w) { return n + ' ' + w + (n === 1 ? '' : 's'); }
+
+  function bigChartShell(large) {
+    var rows = bigMoneyRows();
+    if (!rows.length) return '';
+    var buyEst = sum(rows, 'buy_est'), sellEst = sum(rows, 'sell_est');
+    var lgBuys = large.filter(function (t) { return t.direction === 'buy'; });
+    var lgBuysNoTk = lgBuys.filter(function (t) { return !t.ticker; }).length;
+    var note = sellEst > buyEst && lgBuys.length && lgBuysNoTk * 2 > lgBuys.length
+      ? '<p class="bm-note">Most large buys by politicians are bonds and funds, not single stocks (' + lgBuysNoTk + ' of ' + lgBuys.length +
+        ' here have no ticker), so this chart is mostly sales.</p>'
+      : '';
+    return '<div class="bm" aria-labelledby="bm-h">' +
+      '<div class="bm-head"><div><div class="micro">By stock · estimated</div><h3 id="bm-h" class="display">Where the big money went</h3></div>' +
+        '<p>Estimated dollars from trades of $100,000 or more. Sells and buys, by stock.</p></div>' +
+      '<div class="bm-legend" aria-hidden="true"><span></span><span class="bm-keys"><span><i class="sw b"></i>▲ Buys</span><span><i class="sw s"></i>▼ Sells</span></span>' +
+        '<span class="bm-legend-tot">Est. total</span></div>' +
+      '<p class="sr-only">Bar chart of ' + rows.length + ' stocks ranked by estimated dollar volume. Each row is a link that states the estimated total and the buy and sell split.</p>' +
+      '<ol class="bm-rows" id="bm-rows"></ol>' +
+      '<div class="bm-more" id="bm-more"></div>' +
+      '<p class="bm-caveat"><b>All figures are estimates.</b> Disclosures only report dollar ranges (e.g. $500,001 – $1,000,000), so each trade is counted at the midpoint of its range.</p>' +
+      note +
+    '</div>';
+  }
+
+  function bigChartRow(r, max) {
+    var b = Math.max(0, +r.buy_est || 0), s = Math.max(0, +r.sell_est || 0), tot = +r.total_est || (b + s);
+    var nb = +r.n_buy || 0, ns = +r.n_sell || 0;
+    var w = Math.max(1.5, tot / max * 100);
+    var segs = '';
+    if (b) segs += '<i class="b" style="width:' + (b / (b + s) * 100) + '%"></i>';
+    if (s) segs += '<i class="s" style="width:' + (s / (b + s) * 100) + '%"></i>';
+    var label = r.ticker + ': estimated ' + money(tot) + ' total. ' +
+      (b ? 'Buys about ' + money(b) + ' (' + plural(nb, 'trade') + ')' : 'No large buys') + ', ' +
+      (s ? 'sells about ' + money(s) + ' (' + plural(ns, 'trade') + ')' : 'no large sells') + '. Open detail.';
+    return '<li><a class="bm-row" href="#/stock/' + encodeURIComponent(r.ticker) + '" aria-label="' + esc(label) + '">' +
+      '<div class="bm-tk"><div class="display">' + esc(r.ticker) + '</div>' +
+        '<div class="bm-meta" aria-hidden="true">' + plural(nb, 'buy') + ' · ' + plural(ns, 'sell') + '</div></div>' +
+      '<div class="bm-track" aria-hidden="true"><div class="bm-bar" data-w="' + w.toFixed(2) + '">' + segs + '</div></div>' +
+      '<div class="bm-v display" aria-hidden="true">' + money(tot) + '</div>' +
+    '</a></li>';
+  }
+
+  function renderBigChart() {
+    var list = $('#bm-rows'); if (!list) return;
+    var rows = bigMoneyRows();
+    var max = rows.reduce(function (m, r) { return Math.max(m, +r.total_est || 0); }, 0) || 1;
+    var shown = S.bigAll ? rows : rows.slice(0, BM_TOP);
+    var start = list.children.length; // only animate newly added rows
+    list.insertAdjacentHTML('beforeend', shown.slice(start).map(function (r) { return bigChartRow(r, max); }).join(''));
+    $('#bm-more').innerHTML = rows.length > BM_TOP
+      ? '<button type="button" class="btn-ghost" data-action="bm-all" aria-expanded="' + !!S.bigAll + '">' +
+          (S.bigAll ? 'Show top ' + BM_TOP : 'Show all ' + rows.length + ' stocks') + '</button>'
+      : '';
+    var bars = list.querySelectorAll('.bm-bar[data-w]');
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        bars.forEach(function (el) { el.style.width = el.dataset.w + '%'; el.removeAttribute('data-w'); });
+      });
+    });
   }
 
   function feedList() {
@@ -870,6 +941,15 @@
     else if (act === 'toggle-sig') { S.feed.sig = !S.feed.sig; S.feed.limit = 30; renderFeed(); }
     else if (act === 'feed-more') { S.feed.limit += 30; renderFeed(); }
     else if (act === 'big-more') { S.big[a.dataset.v] += 10; S.dashScroll = window.scrollY; renderDashboard(); window.scrollTo(0, S.dashScroll); }
+    else if (act === 'bm-all') {
+      S.bigAll = !S.bigAll;
+      if (!S.bigAll) {
+        var ol = $('#bm-rows');
+        while (ol && ol.children.length > BM_TOP) ol.removeChild(ol.lastElementChild);
+      }
+      renderBigChart();
+      var mb = $('#bm-more button'); if (mb) mb.focus();
+    }
     else if (act === 'toggle-signals') {
       S.showAllSignals = !S.showAllSignals; renderDashboard();
       if (!S.showAllSignals) { var el = $('#signals'); if (el) el.scrollIntoView(); }

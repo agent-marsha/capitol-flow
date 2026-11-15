@@ -136,6 +136,49 @@ def find_clusters(trades: list[dict], window_days: int) -> list[dict]:
     return clusters
 
 
+# ------------------------------------------------------------- big money
+def aggregate_big_money(txs: list[dict]) -> list[dict]:
+    """Per-ticker estimated dollars committed by LARGE trades.
+
+    Disclosure amounts are ranges, so we use the range MIDPOINT and label the
+    result 'estimated'. 'Over $5,000,000' falls back to its low bound.
+    """
+    agg: dict[str, dict] = {}
+    for t in txs:
+        if not t.get("is_large") or not t.get("ticker"):
+            continue
+        lo = t.get("amount_low") or 0
+        hi = t.get("amount_high") or lo
+        mid = (lo + hi) / 2
+        a = agg.setdefault(t["ticker"], {
+            "ticker": t["ticker"], "asset": t.get("asset_raw", ""),
+            "buy_est": 0.0, "sell_est": 0.0, "n_buy": 0, "n_sell": 0,
+            "last_date": "", "politicians": set(),
+        })
+        if t["direction"] == "buy":
+            a["buy_est"] += mid
+            a["n_buy"] += 1
+        elif t["direction"] == "sell":
+            a["sell_est"] += mid
+            a["n_sell"] += 1
+        a["politicians"].add(t["politician"])
+        if (t.get("txn_date") or "") > a["last_date"]:
+            a["last_date"] = t["txn_date"]
+    out = []
+    for a in agg.values():
+        a["politicians"] = sorted(a["politicians"])
+        a["n_politicians"] = len(a["politicians"])
+        a["total_est"] = a["buy_est"] + a["sell_est"]
+        a["net_est"] = a["buy_est"] - a["sell_est"]
+        a["buy_est"] = round(a["buy_est"])
+        a["sell_est"] = round(a["sell_est"])
+        a["total_est"] = round(a["total_est"])
+        a["net_est"] = round(a["net_est"])
+        out.append(a)
+    out.sort(key=lambda x: x["total_est"], reverse=True)
+    return out
+
+
 # --------------------------------------------------------------------- main
 def main() -> int:
     ap = argparse.ArgumentParser()
@@ -168,6 +211,7 @@ def main() -> int:
     ordered = sales + buys + others
 
     clusters = find_clusters(txs, a.window)
+    big_money = aggregate_big_money(txs)
     for c in clusters:
         for tid in c["trades"]:
             for t in txs:
@@ -214,6 +258,7 @@ def main() -> int:
         },
         "trades": ordered,
         "clusters": clusters,
+        "big_money": big_money,
         "prices": prices,
         "news": news,
     }

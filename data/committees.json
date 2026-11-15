@@ -1,0 +1,9450 @@
+{
+ "committees": {
+  "HSAG": {
+   "name": "House Committee on Agriculture",
+   "short": "Agriculture",
+   "type": "house"
+  },
+  "HSAP": {
+   "name": "House Committee on Appropriations",
+   "short": "Appropriations",
+   "type": "house"
+  },
+  "HSAS": {
+   "name": "House Committee on Armed Services",
+   "short": "Armed Services",
+   "type": "house"
+  },
+  "HSBA": {
+   "name": "House Committee on Financial Services",
+   "short": "Financial Services",
+   "type": "house"
+  },
+  "HSBU": {
+   "name": "House Committee on the Budget",
+   "short": "the Budget",
+   "type": "house"
+  },
+  "HSED": {
+   "name": "House Committee on Education and Workforce",
+   "short": "Education and Workforce",
+   "type": "house"
+  },
+  "HSFA": {
+   "name": "House Committee on Foreign Affairs",
+   "short": "Foreign Affairs",
+   "type": "house"
+  },
+  "HSGO": {
+   "name": "House Committee on Oversight and Government Reform",
+   "short": "Oversight and Government Reform",
+   "type": "house"
+  },
+  "HSHA": {
+   "name": "House Committee on House Administration",
+   "short": "House Administration",
+   "type": "house"
+  },
+  "HSHM": {
+   "name": "House Committee on Homeland Security",
+   "short": "Homeland Security",
+   "type": "house"
+  },
+  "HSIF": {
+   "name": "House Committee on Energy and Commerce",
+   "short": "Energy and Commerce",
+   "type": "house"
+  },
+  "HSII": {
+   "name": "House Committee on Natural Resources",
+   "short": "Natural Resources",
+   "type": "house"
+  },
+  "HLIG": {
+   "name": "House Permanent Select Committee on Intelligence",
+   "short": "Intelligence",
+   "type": "house"
+  },
+  "HSJU": {
+   "name": "House Committee on the Judiciary",
+   "short": "Judiciary",
+   "type": "house"
+  },
+  "HSPW": {
+   "name": "House Committee on Transportation and Infrastructure",
+   "short": "Transportation and Infrastructure",
+   "type": "house"
+  },
+  "HSRU": {
+   "name": "House Committee on Rules",
+   "short": "Rules",
+   "type": "house"
+  },
+  "HSSM": {
+   "name": "House Committee on Small Business",
+   "short": "Small Business",
+   "type": "house"
+  },
+  "HSSO": {
+   "name": "House Committee on Ethics",
+   "short": "Ethics",
+   "type": "house"
+  },
+  "HSSY": {
+   "name": "House Committee on Science, Space, and Technology",
+   "short": "Science, Space, and Technology",
+   "type": "house"
+  },
+  "HSVR": {
+   "name": "House Committee on Veterans' Affairs",
+   "short": "Veterans' Affairs",
+   "type": "house"
+  },
+  "HSWM": {
+   "name": "House Committee on Ways and Means",
+   "short": "Ways and Means",
+   "type": "house"
+  },
+  "JCSE": {
+   "name": "Commission on Security and Cooperation in Europe",
+   "short": "Commission on Security and Cooperation in Europe",
+   "type": "joint"
+  },
+  "JSEC": {
+   "name": "Joint Economic Committee",
+   "short": "Joint Economic Committee",
+   "type": "joint"
+  },
+  "JSLC": {
+   "name": "Joint Committee of Congress on the Library",
+   "short": "Joint Committee of Congress on the Library",
+   "type": "joint"
+  },
+  "JSPR": {
+   "name": "Joint Committee on Printing",
+   "short": "Joint Committee on Printing",
+   "type": "joint"
+  },
+  "JSTX": {
+   "name": "Joint Committee on Taxation",
+   "short": "Joint Committee on Taxation",
+   "type": "joint"
+  },
+  "SCNC": {
+   "name": "United States Senate Caucus on International Narcotics Control",
+   "short": "Senate Caucus on International Narcotics Control",
+   "type": "senate"
+  },
+  "SLET": {
+   "name": "Senate Select Committee on Ethics",
+   "short": "Ethics",
+   "type": "senate"
+  },
+  "SLIA": {
+   "name": "Senate Committee on Indian Affairs",
+   "short": "Indian Affairs",
+   "type": "senate"
+  },
+  "SLIN": {
+   "name": "Senate Select Committee on Intelligence",
+   "short": "Intelligence",
+   "type": "senate"
+  },
+  "SPAG": {
+   "name": "Senate Special Committee on Aging",
+   "short": "Aging",
+   "type": "senate"
+  },
+  "SSAF": {
+   "name": "Senate Committee on Agriculture, Nutrition, and Forestry",
+   "short": "Agriculture",
+   "type": "senate"
+  },
+  "SSAP": {
+   "name": "Senate Committee on Appropriations",
+   "short": "Appropriations",
+   "type": "senate"
+  },
+  "SSAS": {
+   "name": "Senate Committee on Armed Services",
+   "short": "Armed Services",
+   "type": "senate"
+  },
+  "SSBK": {
+   "name": "Senate Committee on Banking, Housing, and Urban Affairs",
+   "short": "Banking",
+   "type": "senate"
+  },
+  "SSBU": {
+   "name": "Senate Committee on the Budget",
+   "short": "the Budget",
+   "type": "senate"
+  },
+  "SSCM": {
+   "name": "Senate Committee on Commerce, Science, and Transportation",
+   "short": "Commerce, Science, and Transportation",
+   "type": "senate"
+  },
+  "SSEG": {
+   "name": "Senate Committee on Energy and Natural Resources",
+   "short": "Energy and Natural Resources",
+   "type": "senate"
+  },
+  "SSEV": {
+   "name": "Senate Committee on Environment and Public Works",
+   "short": "Environment and Public Works",
+   "type": "senate"
+  },
+  "SSFI": {
+   "name": "Senate Committee on Finance",
+   "short": "Finance",
+   "type": "senate"
+  },
+  "SSFR": {
+   "name": "Senate Committee on Foreign Relations",
+   "short": "Foreign Relations",
+   "type": "senate"
+  },
+  "SSGA": {
+   "name": "Senate Committee on Homeland Security and Governmental Affairs",
+   "short": "Homeland Security and Governmental Affairs",
+   "type": "senate"
+  },
+  "SSHR": {
+   "name": "Senate Committee on Health, Education, Labor, and Pensions",
+   "short": "Health, Education, Labor",
+   "type": "senate"
+  },
+  "SSJU": {
+   "name": "Senate Committee on the Judiciary",
+   "short": "Judiciary",
+   "type": "senate"
+  },
+  "SSRA": {
+   "name": "Senate Committee on Rules and Administration",
+   "short": "Rules and Administration",
+   "type": "senate"
+  },
+  "SSSB": {
+   "name": "Senate Committee on Small Business and Entrepreneurship",
+   "short": "Small Business and Entrepreneurship",
+   "type": "senate"
+  },
+  "SSVA": {
+   "name": "Senate Committee on Veterans' Affairs",
+   "short": "Veterans' Affairs",
+   "type": "senate"
+  },
+  "HSZS": {
+   "name": "House Select Committee on the Strategic Competition Between the United States and the Chinese Communist Party",
+   "short": "China Competition",
+   "type": "house"
+  },
+  "HSQJ": {
+   "name": "House Select Subcommittee to Investigate the Remaining Questions Surrounding January 6, 2021",
+   "short": "House Select Subcommittee to Investigate the Remaining Questions Surrounding January 6, 2021",
+   "type": "house"
+  }
+ },
+ "members": {
+  "B001236": [
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "JCSE",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "M000355": [
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "JSPR",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "JSLC",
+    "sub": null,
+    "title": "Vice Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   }
+  ],
+  "H001061": [
+   {
+    "code": "SLIA",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "E000295": [
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "H001079": [
+   {
+    "code": "JSLC",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "M001198": [
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "T000278": [
+   {
+    "code": "SPAG",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "J000312": [
+   {
+    "code": "SPAG",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "G000386": [
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "JSTX",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SCNC",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "T000250": [
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": "Ex Officio",
+    "rank": 10
+   }
+  ],
+  "F000463": [
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "JSPR",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "JSLC",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SLET",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "M000934": [
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SLIA",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "K000367": [
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "JSLC",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "B001267": [
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "S001203": [
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SLIA",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "D000563": [
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "B001288": [
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "L000570": [
+   {
+    "code": "SCNC",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SLIA",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "W000790": [
+   {
+    "code": "SPAG",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "W000800": [
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "F000479": [
+   {
+    "code": "JCSE",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "S001150": [
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "S001208": [
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSAF",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "C001035": [
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "M001153": [
+   {
+    "code": "SLIA",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "C001047": [
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "K000393": [
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "H000601": [
+   {
+    "code": "JSPR",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "B001319": [
+   {
+    "code": "JCSE",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "R000605": [
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SLIA",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "JCSE",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "H001104": [
+   {
+    "code": "SPAG",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "G000608": [
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "M001111": [
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   }
+  ],
+  "R000122": [
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": "Ex Officio",
+    "rank": 9
+   }
+  ],
+  "S001181": [
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "JCSE",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SLET",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "M001176": [
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "JSPR",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "C001088": [
+   {
+    "code": "SLET",
+    "sub": null,
+    "title": "Vice Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "S001194": [
+   {
+    "code": "SLIA",
+    "sub": null,
+    "title": "Vice Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SLET",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "B001230": [
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "M001169": [
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "V000128": [
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "H001046": [
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "P000595": [
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "G000555": [
+   {
+    "code": "SPAG",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "O000174": [
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSAP",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "W000437": [
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "JCSE",
+    "sub": null,
+    "title": "Cochairman",
+    "rank": 1
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": "Ex Officio",
+    "rank": 11
+   }
+  ],
+  "C001095": [
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "S001198": [
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "C001096": [
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "S001217": [
+   {
+    "code": "SPAG",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "B001305": [
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "S001227": [
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": "Vice Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "B001299": [
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "S001232": [
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "M001244": [
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SPAG",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "B001277": [
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "SCNC",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "H001042": [
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "K000384": [
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "K000383": [
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "W000817": [
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "SPAG",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "D000622": [
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "R000608": [
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "K000377": [
+   {
+    "code": "SPAG",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSAS",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "S001184": [
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "C000880": [
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "JSTX",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "T000476": [
+   {
+    "code": "JCSE",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "L000571": [
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "R000618": [
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "M001242": [
+   {
+    "code": "SCNC",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "M001243": [
+   {
+    "code": "SPAG",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "W000805": [
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": "Vice Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "C001113": [
+   {
+    "code": "SLIA",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "K000394": [
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SPAG",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "G000574": [
+   {
+    "code": "JCSE",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "B001303": [
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "A000382": [
+   {
+    "code": "SPAG",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "SSBK",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "C001098": [
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "B001243": [
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "Y000064": [
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "C001114": [
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "C000127": [
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SLIA",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "JSTX",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "M000133": [
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "H000273": [
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSCM",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "L000577": [
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "B001261": [
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "R000584": [
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SLET",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SCNC",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "D000618": [
+   {
+    "code": "SLIA",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "C001075": [
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "W000779": [
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "JSTX",
+    "sub": null,
+    "title": null,
+    "rank": 1
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "P000145": [
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "JSPR",
+    "sub": null,
+    "title": null,
+    "rank": 1
+   },
+   {
+    "code": "JSLC",
+    "sub": null,
+    "title": null,
+    "rank": 1
+   },
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSEG",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "W000802": [
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "SCNC",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "JCSE",
+    "sub": null,
+    "title": null,
+    "rank": 1
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "S000033": [
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "SSEV",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "C001056": [
+   {
+    "code": "SCNC",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "JSTX",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "L000575": [
+   {
+    "code": "SLET",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "J000293": [
+   {
+    "code": "SSBU",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SPAG",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "H001076": [
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSVA",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSFI",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "P000603": [
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "SSFR",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "H001089": [
+   {
+    "code": "SSGA",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSJU",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "SSSB",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "A000383": [
+   {
+    "code": "SLIA",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "SSHR",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "S000148": [
+   {
+    "code": "SSRA",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "SLIN",
+    "sub": null,
+    "title": "Ex Officio",
+    "rank": 10
+   }
+  ],
+  "S001213": [
+   {
+    "code": "JSPR",
+    "sub": null,
+    "title": "Vice Chair",
+    "rank": 1
+   },
+   {
+    "code": "JSLC",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSHA",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "M001210": [
+   {
+    "code": "JSPR",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSHA",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "M001211": [
+   {
+    "code": "JSPR",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSHA",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "M001206": [
+   {
+    "code": "HSHA",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "JSPR",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "JSLC",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   }
+  ],
+  "S001185": [
+   {
+    "code": "HSHA",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "JSPR",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "S001195": [
+   {
+    "code": "JSTX",
+    "sub": null,
+    "title": "Vice Chairman",
+    "rank": 1
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   }
+  ],
+  "B001260": [
+   {
+    "code": "JSTX",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   }
+  ],
+  "S001172": [
+   {
+    "code": "JSTX",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "N000015": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "JSTX",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "D000399": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "JSTX",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "V000129": [
+   {
+    "code": "JSLC",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 29
+   }
+  ],
+  "C001126": [
+   {
+    "code": "JSLC",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSHA",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   }
+  ],
+  "J000310": [
+   {
+    "code": "HSHA",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "JSLC",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "S001183": [
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "A000375": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "E000298": [
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "S001199": [
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "M000317": [
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "S000929": [
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "B001292": [
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "M001160": [
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "C001117": [
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "M001241": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "JSEC",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "W000821": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "H001068": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "W000804": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": "Vice Chair",
+    "rank": 2
+   },
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "N000191": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSRU",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "M001177": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "L000273": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSRU",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "G000565": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "S001218": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "R000600": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "H001094": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   }
+  ],
+  "W000806": [
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "M001223": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "F000469": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "G000592": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "S001212": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "T000165": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "D000635": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "B000825": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "H001103": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "B000668": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "R000621": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "K000399": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "A000381": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "H001095": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "E000301": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   }
+  ],
+  "C001129": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "G000605": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "H001096": [
+   {
+    "code": "HSQJ",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "R000620": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "A000369": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "G000606": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "W000798": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "D000624": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "E000235": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   }
+  ],
+  "S001200": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "M001228": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 33
+   }
+  ],
+  "B001285": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "M001240": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 28
+   }
+  ],
+  "L000590": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "C001137": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 29
+   }
+  ],
+  "B001323": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   }
+  ],
+  "H001100": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 27
+   }
+  ],
+  "K000403": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   },
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 32
+   }
+  ],
+  "D000634": [
+   {
+    "code": "HSII",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 28
+   }
+  ],
+  "G000546": [
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "L000560": [
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   }
+  ],
+  "C001087": [
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": "Vice Chair",
+    "rank": 2
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "N000147": [
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   }
+  ],
+  "N000002": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "M001184": [
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "G000559": [
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "P000605": [
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "J000288": [
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "B001291": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "C001072": [
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "R000603": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "T000468": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "B001295": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "M001199": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "W000808": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "D000623": [
+   {
+    "code": "HSSO",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "B001309": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "C001112": [
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   }
+  ],
+  "J000301": [
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "S001211": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "V000133": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "D000629": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "N000026": [
+   {
+    "code": "HSQJ",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "G000586": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "M000871": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "P000614": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "O000086": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "M001196": [
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "B001316": [
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "S001159": [
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "R000579": [
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "K000401": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "S001223": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "F000480": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   }
+  ],
+  "S001221": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   }
+  ],
+  "W000829": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   }
+  ],
+  "F000477": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "B001321": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   }
+  ],
+  "D000530": [
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   }
+  ],
+  "G000598": [
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   }
+  ],
+  "B001327": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 26
+   }
+  ],
+  "P000621": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 26
+   }
+  ],
+  "M001237": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 27
+   }
+  ],
+  "F000483": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 28
+   }
+  ],
+  "T000490": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 28
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 29
+   }
+  ],
+  "G000602": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 29
+   }
+  ],
+  "K000405": [
+   {
+    "code": "HSSO",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 30
+   }
+  ],
+  "F000481": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 30
+   }
+  ],
+  "K000404": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 31
+   }
+  ],
+  "F000476": [
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 31
+   }
+  ],
+  "O000177": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 33
+   }
+  ],
+  "P000622": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 34
+   }
+  ],
+  "F000485": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 35
+   }
+  ],
+  "G000607": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 28
+   },
+   {
+    "code": "HSPW",
+    "sub": null,
+    "title": null,
+    "rank": 36
+   }
+  ],
+  "L000397": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "W000814": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "B001278": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "B001307": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "S001215": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "R000305": [
+   {
+    "code": "HSSO",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "O000019": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "S001226": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "F000459": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "I000056": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "T000478": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "A000380": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "F000472": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 26
+   }
+  ],
+  "S001230": [
+   {
+    "code": "HSSO",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "M001218": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 26
+   }
+  ],
+  "M001238": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   }
+  ],
+  "W000830": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "S001224": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "H001101": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 26
+   }
+  ],
+  "M001232": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   }
+  ],
+  "B001325": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "R000622": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   }
+  ],
+  "M001245": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "H001099": [
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 29
+   }
+  ],
+  "F000454": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "V000139": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   },
+   {
+    "code": "HSSY",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "T000467": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "C001119": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   }
+  ],
+  "L000491": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   }
+  ],
+  "C001059": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "S001189": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": "Vice Chair",
+    "rank": 3
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSRU",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "M000312": [
+   {
+    "code": "HSRU",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "A000370": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "D000616": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "H001081": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "B001313": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "K000388": [
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "B001298": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "D000230": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "T000487": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "B001315": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "S001225": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   }
+  ],
+  "F000446": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   }
+  ],
+  "V000136": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "J000309": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "M001212": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "T000488": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "C001039": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "F000475": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "R000612": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "J000304": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "V000138": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   }
+  ],
+  "D000594": [
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "N000193": [
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   }
+  ],
+  "M001231": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "V000135": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   }
+  ],
+  "N000189": [
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "P000597": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "M001233": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 26
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 27
+   }
+  ],
+  "H001102": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   },
+   {
+    "code": "HSAG",
+    "sub": null,
+    "title": null,
+    "rank": 27
+   }
+  ],
+  "J000289": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   }
+  ],
+  "R000606": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   }
+  ],
+  "B001302": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "C001068": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "L000582": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "R000614": [
+   {
+    "code": "HSRU",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "J000298": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "F000471": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   }
+  ],
+  "C001110": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "C001118": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "S001205": [
+   {
+    "code": "HSRU",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "G000589": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   }
+  ],
+  "M001208": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "B001318": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "L000597": [
+   {
+    "code": "HSHA",
+    "sub": null,
+    "title": "Vice Chair",
+    "rank": 7
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   }
+  ],
+  "K000400": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "M001217": [
+   {
+    "code": "HSQJ",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "F000478": [
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "G000599": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "C001130": [
+   {
+    "code": "HSQJ",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "G000576": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "L000602": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "S001228": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 28
+   }
+  ],
+  "G000603": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   }
+  ],
+  "B001322": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   },
+   {
+    "code": "HSJU",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   }
+  ],
+  "R000575": [
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   }
+  ],
+  "S000510": [
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   }
+  ],
+  "W000795": [
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "C001069": [
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   }
+  ],
+  "T000463": [
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "N000188": [
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "S001196": [
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "K000389": [
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "K000375": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "H001085": [
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "C001121": [
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "B001301": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "J000305": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "F000246": [
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "G000593": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "M000194": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "L000603": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "M001219": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "C001123": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "M001216": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   }
+  ],
+  "G000604": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "H001077": [
+   {
+    "code": "HSQJ",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "T000491": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   }
+  ],
+  "M001239": [
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   }
+  ],
+  "B001324": [
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 26
+   }
+  ],
+  "C001136": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 27
+   }
+  ],
+  "H001098": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSAS",
+    "sub": null,
+    "title": null,
+    "rank": 30
+   }
+  ],
+  "C001053": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   }
+  ],
+  "D000216": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   }
+  ],
+  "R000395": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   }
+  ],
+  "H000874": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   }
+  ],
+  "A000055": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "K000009": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "S001148": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "C000537": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "C001051": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "B000490": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "C000059": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "M001143": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "D000600": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": "Vice Chair",
+    "rank": 7
+   }
+  ],
+  "W000797": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "W000809": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "C001063": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "J000295": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "Q000023": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "H001052": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "M001188": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "P000607": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   }
+  ],
+  "A000371": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "F000462": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "M001194": [
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": "Chairman",
+    "rank": 1
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "W000822": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "R000609": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "T000474": [
+   {
+    "code": "HSHA",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "C001055": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "R000610": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "E000297": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "H001091": [
+   {
+    "code": "HSSO",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "H001090": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "L000595": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   }
+  ],
+  "U000040": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   }
+  ],
+  "C001115": [
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "G000591": [
+   {
+    "code": "HSSO",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   }
+  ],
+  "Z000018": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "L000593": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "C001116": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   }
+  ],
+  "D000631": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   }
+  ],
+  "B000740": [
+   {
+    "code": "HSHA",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   }
+  ],
+  "E000299": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   }
+  ],
+  "M001214": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 26
+   }
+  ],
+  "E000071": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 27
+   }
+  ],
+  "G000600": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 27
+   }
+  ],
+  "C001133": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 28
+   }
+  ],
+  "I000058": [
+   {
+    "code": "HSSO",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 28
+   }
+  ],
+  "E000246": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 29
+   }
+  ],
+  "A000379": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 30
+   }
+  ],
+  "L000598": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 31
+   }
+  ],
+  "S001220": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 32
+   }
+  ],
+  "M001235": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 34
+   }
+  ],
+  "S001229": [
+   {
+    "code": "HSAP",
+    "sub": null,
+    "title": null,
+    "rank": 35
+   }
+  ],
+  "G000597": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSSO",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "T000193": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   }
+  ],
+  "M001157": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": "Vice Chair",
+    "rank": 2
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "P000048": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "R000617": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "K000402": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "B001317": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "M001229": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "C001132": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   }
+  ],
+  "O000175": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   }
+  ],
+  "W000831": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "E000300": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 28
+   }
+  ],
+  "M001246": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "M001230": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   }
+  ],
+  "C001125": [
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   }
+  ],
+  "G000553": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSHM",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "C001108": [
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "L000562": [
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "K000391": [
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "F000450": [
+   {
+    "code": "HSRU",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "M000687": [
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "P000609": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "S000250": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "C001131": [
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "D000032": [
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "T000480": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "S001231": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "L000596": [
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   }
+  ],
+  "L000600": [
+   {
+    "code": "HSRU",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   }
+  ],
+  "P000617": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   }
+  ],
+  "T000481": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "J000311": [
+   {
+    "code": "HSRU",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSGO",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "G000558": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   }
+  ],
+  "P000034": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   }
+  ],
+  "L000566": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   }
+  ],
+  "D000197": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   }
+  ],
+  "G000568": [
+   {
+    "code": "HSQJ",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSHA",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSRU",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "S001145": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "B001257": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "M001163": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "H001067": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "C001066": [
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "C001103": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "T000469": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "C001067": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "D000628": [
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": "Vice Chair",
+    "rank": 8
+   }
+  ],
+  "R000599": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "C001120": [
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "P000608": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "J000302": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "V000131": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "A000372": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "K000385": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "B001306": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "B001300": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "S001216": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "H001086": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "T000482": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "M001215": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "F000468": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "O000172": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "A000148": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "J000307": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   }
+  ],
+  "M001226": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "H001093": [
+   {
+    "code": "HSRU",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   }
+  ],
+  "M001225": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   }
+  ],
+  "L000601": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "M001227": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   }
+  ],
+  "K000398": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 26
+   }
+  ],
+  "R000619": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 27
+   }
+  ],
+  "G000601": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 29
+   }
+  ],
+  "F000482": [
+   {
+    "code": "HSIF",
+    "sub": null,
+    "title": null,
+    "rank": 30
+   }
+  ],
+  "T000460": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "K000376": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "L000557": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "D000096": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "L000585": [
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "S001156": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "D000617": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "C001080": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "H001082": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "M001205": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "B001296": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "K000392": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "E000296": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "F000466": [
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "S001190": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "S001214": [
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "P000613": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "G000585": [
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "F000470": [
+   {
+    "code": "HSRU",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "H001066": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "M001213": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "P000610": [
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "V000134": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "S001201": [
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "Y000067": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "M001222": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 27
+   }
+  ],
+  "B001314": [
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 25
+   }
+  ],
+  "M001224": [
+   {
+    "code": "HSSO",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   },
+   {
+    "code": "HSWM",
+    "sub": null,
+    "title": null,
+    "rank": 26
+   }
+  ],
+  "H001047": [
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "C001091": [
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "B001287": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   }
+  ],
+  "H001072": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "G000583": [
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "W000812": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   },
+   {
+    "code": "HLIG",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "W000187": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   }
+  ],
+  "V000081": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   }
+  ],
+  "S000344": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "H001058": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 12
+   }
+  ],
+  "M001137": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   }
+  ],
+  "B001282": [
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "W000816": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "C001061": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   }
+  ],
+  "E000294": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 8
+   }
+  ],
+  "L000583": [
+   {
+    "code": "HSQJ",
+    "sub": null,
+    "title": "Chair",
+    "rank": 1
+   },
+   {
+    "code": "HSHA",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   }
+  ],
+  "D000626": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "B001281": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "V000130": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ],
+  "G000581": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 13
+   }
+  ],
+  "S001188": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 14
+   }
+  ],
+  "N000190": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSRU",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "M001204": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 16
+   }
+  ],
+  "K000397": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "T000486": [
+   {
+    "code": "HSZS",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "G000587": [
+   {
+    "code": "HSSO",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "W000788": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 19
+   }
+  ],
+  "P000620": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 20
+   }
+  ],
+  "F000474": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "F000110": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   }
+  ],
+  "L000599": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   }
+  ],
+  "B001326": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 22
+   }
+  ],
+  "L000607": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 23
+   }
+  ],
+  "B001328": [
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 24
+   }
+  ],
+  "M001136": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 26
+   }
+  ],
+  "S000168": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 27
+   }
+  ],
+  "M001236": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   },
+   {
+    "code": "HSBA",
+    "sub": null,
+    "title": null,
+    "rank": 30
+   }
+  ],
+  "S000522": [
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   }
+  ],
+  "L000606": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 7
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 17
+   }
+  ],
+  "O000176": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 18
+   }
+  ],
+  "F000484": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 21
+   },
+   {
+    "code": "HSFA",
+    "sub": null,
+    "title": null,
+    "rank": 26
+   }
+  ],
+  "T000472": [
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 5
+   }
+  ],
+  "M001220": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 2
+   },
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 4
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 15
+   }
+  ],
+  "M001234": [
+   {
+    "code": "HSSM",
+    "sub": null,
+    "title": null,
+    "rank": 6
+   },
+   {
+    "code": "HSVR",
+    "sub": null,
+    "title": null,
+    "rank": 10
+   }
+  ],
+  "S000185": [
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": "Ranking Member",
+    "rank": 1
+   },
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 3
+   }
+  ],
+  "O000173": [
+   {
+    "code": "HSBU",
+    "sub": null,
+    "title": null,
+    "rank": 9
+   },
+   {
+    "code": "HSED",
+    "sub": null,
+    "title": null,
+    "rank": 11
+   }
+  ]
+ },
+ "sector_committees": {
+  "Technology": [
+   "SSCM",
+   "HSIF",
+   "SSJU",
+   "HSJU",
+   "HSSY",
+   "HSZS",
+   "SLIN",
+   "HLIG"
+  ],
+  "Communication Services": [
+   "SSCM",
+   "HSIF",
+   "SSJU",
+   "HSJU"
+  ],
+  "Healthcare": [
+   "SSHR",
+   "SSFI",
+   "HSIF",
+   "HSWM",
+   "SPAG"
+  ],
+  "Financial Services": [
+   "SSBK",
+   "HSBA"
+  ],
+  "Energy": [
+   "SSEG",
+   "HSIF",
+   "HSII"
+  ],
+  "Basic Materials": [
+   "SSEG",
+   "HSII",
+   "HSIF"
+  ],
+  "Industrials": [
+   "SSCM",
+   "HSPW",
+   "SSAS",
+   "HSAS",
+   "SSEV"
+  ],
+  "Consumer Cyclical": [
+   "SSCM",
+   "HSIF"
+  ],
+  "Consumer Defensive": [
+   "HSIF",
+   "SSCM"
+  ],
+  "Utilities": [
+   "SSEG",
+   "HSIF",
+   "SSEV"
+  ],
+  "Real Estate": [
+   "SSBK",
+   "HSBA"
+  ]
+ }
+}

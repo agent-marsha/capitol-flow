@@ -10,6 +10,7 @@
   --muted: #8E8E93;
   --buy: #00C805;
   --sell: #FF5000;
+  --ov: #FFC700;   /* committee oversight only — the one 'attention' accent */
   --radius: 4px;
   --display: "Helvetica Neue", "HelveticaNeue-CondensedBold", "Arial Narrow", "Roboto Condensed", "Liberation Sans Narrow", "Nimbus Sans Narrow", sans-serif-condensed, Arial, sans-serif;
   --body: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -153,6 +154,7 @@ section.block { padding: 40px 0 8px; }
   padding: 9px 12px; font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
 }
 .chip[aria-pressed="true"] { border-color: var(--ink); color: var(--ink); }
+.chip-ov[aria-pressed="true"] { border-color: var(--ov); color: var(--ov); }
 .btn-ghost {
   background: transparent; border: 1px solid var(--line-2); border-radius: var(--radius);
   padding: 12px 16px; font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; width: 100%;
@@ -250,6 +252,8 @@ section.block { padding: 40px 0 8px; }
 .badge.vl { background: var(--ink); color: var(--bg); }
 .badge.lg { border: 1px solid var(--ink); color: var(--ink); }
 .badge.cl { border: 1px solid var(--line-2); color: var(--ink-2); }
+.badge.ov { background: var(--ov); color: var(--bg); text-transform: uppercase; white-space: normal; max-width: 100%; cursor: help; }
+.trade.oversight { border-color: rgba(255, 199, 0, .45); }
 .t-asset { color: var(--ink-2); font-size: 13px; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .t-who { font-size: 13px; margin-top: 6px; color: var(--muted); display: flex; align-items: center; gap: 8px; min-width: 0; }
 .t-who-txt { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -475,4 +479,36 @@ section[id] { scroll-margin-top: 64px; }
   .opt-k { font-size: 22px; }
   .opt-oi { font-size: 20px; }
   .opt-extra { display: none; }
+}
+
+/* ---------- committee oversight ---------- */
+.ov-ink { color: var(--ov); }
+.ov-list { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+.ov-row {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) auto; gap: 16px; align-items: center;
+  padding: 12px 14px 12px 16px; border-top: 1px solid var(--line); cursor: help;
+}
+.ov-row:first-child { border-top: 0; }
+.ov-row::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--ov); }
+.ov-row:first-child::before { border-top-left-radius: var(--radius); }
+.ov-row:last-child::before { border-bottom-left-radius: var(--radius); }
+.ov-who { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.ov-who-txt { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ov-who-txt > b { font-size: 14px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ov-cm { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ov-cm b { color: var(--ov); font-weight: 800; }
+.ov-trade { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.ov-amt { display: flex; align-items: baseline; gap: 12px; justify-content: flex-end; white-space: nowrap; }
+.ov-amt .display { font-size: 22px; }
+.ov-ago { font-size: 10px; font-weight: 800; letter-spacing: .12em; color: var(--muted); min-width: 52px; text-align: right; }
+.ov-more { margin-top: 8px; }
+.ov-foot { display: block; margin: 12px 0 0; font-size: 12px; color: var(--muted); max-width: 72ch; }
+.ov-note { margin: 12px 0 14px; font-size: 14px; color: var(--ink-2); }
+.ov-note .ov-foot { margin-top: 4px; }
+@media (max-width: 640px) {
+  .ov-row { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; }
+  .ov-who { grid-column: 1 / -1; }
+  .ov-trade .tk { font-size: 20px; }
+  .ov-amt .display { font-size: 20px; }
+  .ov-ago { min-width: 0; }
 }

@@ -58,7 +58,8 @@
   var signalOf = new Map(); // trade id → max politicians in any cluster containing it
   var signals = [];
   var S = {
-    feed: { dir: 'all', large: false, sig: false, stocks: true, q: '', limit: 30 },
+    feed: { dir: 'all', large: false, sig: false, stocks: true, ov: false, q: '', limit: 30 },
+    showAllOv: false,
     big: { sell: 6, buy: 6 },
     bigAll: false,
     showAllSignals: false,
@@ -232,6 +233,51 @@
     return '<span class="st" title="' + esc(title) + '">' + esc(label) + '</span>';
   }
 
+  // ------------------------------------------------------------------ committee oversight
+  // t.oversight lists the politician's committees whose jurisdiction matches the stock's
+  // sector. The match is a sector heuristic — always worded as "oversees", never more.
+  function hasOv(t) { return Array.isArray(t.oversight) && t.oversight.length > 0; }
+  function cmteName(code) {
+    var m = D && D.committees;
+    var n = m && Object.prototype.hasOwnProperty.call(m, code) ? m[code] : code;
+    return String(n || code || '').replace(/^the\s+/i, '');
+  }
+  // Seniority: Chair > Ranking Member > Vice Chair > other titles > plain seat; then committee rank.
+  function ovWeight(o) {
+    var x = String(o && o.title || '').toLowerCase();
+    return !x ? 9 : /^chair/.test(x) ? 0 : /ranking/.test(x) ? 1 : /vice/.test(x) ? 2 : 3;
+  }
+  function ovRank(o) { return o && o.rank != null && isFinite(o.rank) ? +o.rank : 1e9; }
+  function ovCmp(a, b) { return (ovWeight(a) - ovWeight(b)) || (ovRank(a) - ovRank(b)); }
+  function ovSorted(t) { return (hasOv(t) ? t.oversight.slice() : []).sort(ovCmp); }
+  function ovTop(t) { return ovSorted(t)[0] || null; }
+  function sectorOf(tk) {
+    var s = D && D.sectors && tk && Object.prototype.hasOwnProperty.call(D.sectors, tk) ? D.sectors[tk] : null;
+    return s && s.sector ? String(s.sector) : '';
+  }
+  function memberCmtes(name) {
+    var p = polOf(name), m = D && D.member_committees;
+    var list = p && p.bioguide && m && Object.prototype.hasOwnProperty.call(m, p.bioguide) ? m[p.bioguide] : null;
+    return Array.isArray(list) ? list : [];
+  }
+  function ovTip(t) {
+    var list = ovSorted(t);
+    var names = list.map(function (o) { return cmteName(o.code) + (o.title ? ' (' + o.title + ')' : ''); });
+    var sec = sectorOf(t.ticker);
+    var tip = 'This politician sits on ' + names.join(', ') + ', ' + (list.length > 1 ? 'committees that oversee' : 'a committee that oversees') +
+      ' this stock\'s sector' + (sec ? ' (' + sec + ')' : '') + '.';
+    var all = memberCmtes(t.politician);
+    if (all.length) tip += '\nAll committees: ' + all.map(function (c) { return cmteName(c.code) + (c.title ? ' (' + c.title + ')' : ''); }).join(', ') + '.';
+    return tip + '\nMatched by sector — a guide, not a legal determination.';
+  }
+  function ovLabel(o) { return (o.title ? o.title + ' · ' : '') + cmteName(o.code); }
+  function ovBadge(t) {
+    var top = ovTop(t); if (!top) return '';
+    var extra = t.oversight.length - 1;
+    return '<span class="badge ov" title="' + esc(ovTip(t)) + '">\u26A1\uFE0E ' + esc(ovLabel(top)) + (extra > 0 ? ' +' + extra : '') + '</span>';
+  }
+  var FOOT_OV = 'Committee jurisdiction is matched by sector and is a guide, not a legal determination.';
+
   function tradeRow(t, opt) {
     opt = opt || {};
     var dir = t.direction === 'sell' || t.direction === 'buy' ? t.direction : 'other';
@@ -250,7 +296,8 @@
         '" aria-label="Open ' + esc(t.ticker) + ' detail">' + esc(t.ticker) + '</button>';
     }
 
-    var badges = '';
+    var badges = ovBadge(t);
+    if (badges) cls.push('oversight');
     if (t.is_very_large) badges += '<span class="badge vl" title="Upper bound ≥ $500,000">$500K+</span>';
     else if (t.is_large) badges += '<span class="badge lg" title="Upper bound ≥ $100,000">$100K+</span>';
     var sig = signalOf.get(t.id);
@@ -393,6 +440,8 @@
           : '<p class="empty">No multi-politician clusters in this window.</p>') +
       '</section>' +
 
+      ovSection() +
+
       '<section class="block" id="big" aria-labelledby="big-h">' +
         '<div class="sec-head"><div><div class="micro">$100K and up</div><h2 id="big-h" class="display">Big money</h2></div>' +
         '<p>Stock trades with a disclosed upper bound of $100,000 or more — bonds, funds and similar instruments are left out, since they can\'t be charted. Sells and buys side by side, newest first.</p></div>' +
@@ -410,6 +459,7 @@
           '<button type="button" class="chip" data-action="toggle-large" aria-pressed="' + S.feed.large + '">$100K+ only</button>' +
           '<button type="button" class="chip" data-action="toggle-sig" aria-pressed="' + S.feed.sig + '">◆ Signals only</button>' +
           '<button type="button" class="chip" data-action="toggle-stocks" aria-pressed="' + S.feed.stocks + '">Stocks only</button>' +
+          (ovTrades().length ? '<button type="button" class="chip chip-ov" data-action="toggle-ov" aria-pressed="' + S.feed.ov + '" title="Only trades by politicians whose committee oversees the stock\'s sector">\u26A1\uFE0E Oversight</button>' : '') +
           '<div class="search-wrap"><label class="sr-only" for="q">Search politician, ticker or asset</label>' +
           '<input id="q" class="search" type="search" placeholder="Search politician, ticker, asset" autocomplete="off" value="' + esc(S.feed.q) + '"></div>' +
         '</div>' +
@@ -419,9 +469,72 @@
       '</section>';
 
     $('#app').innerHTML = html;
+    renderOv();
     renderBigChart();
     renderFeed();
     document.title = 'Capitol Flow — Politician Trade Signals';
+  }
+
+  // ---- Committee oversight block: trades where the politician's committee oversees the sector.
+  var OV_TOP = 6;
+  var ovCache = null;
+  function ovTrades() {
+    if (ovCache) return ovCache;
+    ovCache = D.trades.filter(hasOv).sort(function (a, b) {
+      var oa = ovTop(a), ob = ovTop(b);
+      return (ovWeight(oa) - ovWeight(ob)) ||
+        String(b.txn_date).localeCompare(String(a.txn_date)) ||
+        ((b.amount_high || 0) - (a.amount_high || 0));
+    });
+    return ovCache;
+  }
+  function ovSection() {
+    var list = ovTrades();
+    if (!list.length) return '';
+    var pols = new Set(list.map(function (t) { return t.politician; }));
+    return '<section class="block" id="oversight" aria-labelledby="ov-h">' +
+      '<div class="sec-head"><div><div class="micro ov-ink">\u26A1\uFE0E Committee oversight</div><h2 id="ov-h" class="display">They oversee it.</h2></div>' +
+      '<p>These trades were made by politicians whose committee oversees that industry. ' + plural(list.length, 'trade') + ' by ' +
+        plural(pols.size, 'politician') + '. Committee leaders first, then newest.</p></div>' +
+      '<ul class="ov-list" id="ov-list"></ul>' +
+      '<div class="ov-more" id="ov-more"></div>' +
+      '<p class="ov-foot">' + FOOT_OV + '</p>' +
+    '</section>';
+  }
+  function ovRow(t) {
+    var top = ovTop(t);
+    var dir = t.direction === 'sell' || t.direction === 'buy' ? t.direction : 'other';
+    var extra = t.oversight.length - 1;
+    var cm = '<span class="ov-cm">' + (top.title ? '<b>' + esc(top.title) + '</b> · ' : '') + esc(cmteName(top.code)) +
+      (extra > 0 ? ' +' + extra : '') + '</span>';
+    var tk = t.ticker
+      ? '<button type="button" class="tk' + (hasPrices(t.ticker) ? '' : ' nochart') + '" data-tk="' + esc(t.ticker) + '" aria-label="Open ' + esc(t.ticker) + ' detail">' + esc(t.ticker) + '</button>'
+      : '<span class="tk none">No ticker</span>';
+    var when = validDate(t.txn_date) ? '<span class="ov-ago" title="' + mdy(t.txn_date) + '">' + ago(t.txn_date) + '</span>' : '';
+    return '<li class="ov-row ' + dir + '" title="' + esc(ovTip(t)) + '">' +
+      '<div class="ov-who">' + avatar(t.politician, 28) + '<div class="ov-who-txt"><b>' + esc(stripHon(t.politician).replace(/[\s,]+$/, '')) + '</b>' + cm + '</div></div>' +
+      '<div class="ov-trade"><span class="dir ' + dir + '">' + dirLabel(t) + '</span>' + tk + '</div>' +
+      '<div class="ov-amt"><span class="display" title="' + esc(t.amount_label) + '">' + range(t.amount_low, t.amount_high) + '</span>' + when + '</div>' +
+    '</li>';
+  }
+  function renderOv() {
+    var ul = $('#ov-list'); if (!ul) return;
+    var list = ovTrades();
+    var shown = S.showAllOv ? list : list.slice(0, OV_TOP);
+    ul.innerHTML = shown.map(ovRow).join('');
+    $('#ov-more').innerHTML = list.length > OV_TOP
+      ? '<button type="button" class="btn-ghost" data-action="ov-all" aria-expanded="' + !!S.showAllOv + '">' +
+          (S.showAllOv ? 'Show fewer' : 'Show all ' + list.length + ' oversight trades') + '</button>'
+      : '';
+  }
+  function detailOvNote(trades) {
+    var n = trades.filter(hasOv).length;
+    if (!n) return '';
+    var m = trades.length, sec = sectorOf(trades[0].ticker);
+    var who = n === 1 ? 'a politician whose committee oversees' : 'politicians whose committee oversees';
+    var lead = m === 1 ? 'This trade was' : n === m ? 'All ' + m + ' of these trades were' : n + ' of these ' + m + ' trades ' + (n === 1 ? 'was' : 'were');
+    return '<p class="ov-note"><span class="ov-ink">\u26A1\uFE0E</span> ' + lead + ' made by ' + who + ' this sector' + (sec ? ' (' + esc(sec) + ')' : '') + '. ' +
+      '<span class="ov-foot">' + FOOT_OV + '</span></p>';
   }
 
   function segBtn(v, label) {
@@ -517,6 +630,7 @@
       if (f.dir !== 'all' && t.direction !== f.dir) return false;
       if (f.large && !t.is_large) return false;
       if (f.sig && !signalOf.has(t.id)) return false;
+      if (f.ov && !hasOv(t)) return false;
       // bonds, funds and CDs carry no ticker — no chart, no stock signal
       if (f.stocks && !t.ticker) return false;
       if (q) {
@@ -537,6 +651,7 @@
     document.querySelectorAll('[data-action="dir"]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === S.feed.dir)); });
     document.querySelectorAll('[data-action="toggle-large"]').forEach(function (b) { b.setAttribute('aria-pressed', String(S.feed.large)); });
     document.querySelectorAll('[data-action="toggle-sig"]').forEach(function (b) { b.setAttribute('aria-pressed', String(S.feed.sig)); });
+    document.querySelectorAll('[data-action="toggle-ov"]').forEach(function (b) { b.setAttribute('aria-pressed', String(S.feed.ov)); });
     document.querySelectorAll('[data-action="toggle-stocks"]').forEach(function (b) { b.setAttribute('aria-pressed', String(S.feed.stocks)); });
   }
 
@@ -601,6 +716,7 @@
 
       '<div class="d-cols">' +
         '<section class="block" aria-labelledby="who-h"><div class="micro">Who traded ' + esc(tk) + '</div><h3 id="who-h" class="display">The trades</h3>' +
+          detailOvNote(trades) +
           (trades.length ? '<ul class="trades">' + trades.map(function (t) { return tradeRow(t, { since: true }); }).join('') + '</ul>' : '<p class="empty">No disclosed trades.</p>') +
         '</section>' +
         '<div id="opt-slot" class="opt-slot" data-opt-tk="' + esc(tk) + '"></div>' +
@@ -1200,6 +1316,12 @@
     else if (act === 'dir') { S.feed.dir = a.dataset.v; S.feed.limit = 30; renderFeed(); }
     else if (act === 'toggle-large') { S.feed.large = !S.feed.large; S.feed.limit = 30; renderFeed(); }
     else if (act === 'toggle-sig') { S.feed.sig = !S.feed.sig; S.feed.limit = 30; renderFeed(); }
+    else if (act === 'toggle-ov') { S.feed.ov = !S.feed.ov; S.feed.limit = 30; renderFeed(); }
+    else if (act === 'ov-all') {
+      S.showAllOv = !S.showAllOv; renderOv();
+      var ob = $('#ov-more button'); if (ob) ob.focus();
+      if (!S.showAllOv) { var os = $('#oversight'); if (os && os.getBoundingClientRect().top < 0) os.scrollIntoView(); }
+    }
     else if (act === 'toggle-stocks') { S.feed.stocks = !S.feed.stocks; S.feed.limit = 30; renderFeed(); }
     else if (act === 'feed-more') { S.feed.limit += 30; renderFeed(); }
     else if (act === 'big-more') { S.big[a.dataset.v] += 10; S.dashScroll = window.scrollY; renderDashboard(); window.scrollTo(0, S.dashScroll); }

@@ -180,6 +180,68 @@ def aggregate_big_money(txs: list[dict]) -> list[dict]:
 
 
 # --------------------------------------------------------------------- main
+def fetch_sectors(tickers: list[str]) -> dict:
+    """Sector per ticker (cached — the sector of a ticker rarely changes)."""
+    import yfinance as yf
+    cache_path = "data/sectors.json"
+    cache = {}
+    if os.path.exists(cache_path):
+        try:
+            cache = json.load(open(cache_path))
+        except Exception:
+            cache = {}
+    out = {}
+    for t in tickers:
+        if cache.get(t, {}).get("sector"):
+            out[t] = cache[t]
+            continue
+        try:
+            info = yf.Ticker(t).info
+            out[t] = {"sector": info.get("sector"), "industry": info.get("industry")}
+        except Exception:
+            out[t] = {"sector": None, "industry": None}
+    try:
+        json.dump(out, open(cache_path, "w"), indent=0)
+    except Exception:
+        pass
+    return out
+
+
+def load_committees() -> dict:
+    try:
+        return json.load(open("data/committees.json"))
+    except Exception:
+        return {}
+
+
+# ------------------------------------------------------------- oversight
+def attach_oversight(txs: list[dict], people: dict, com: dict, sectors: dict) -> None:
+    """Flag trades where the politician sits on a committee that oversees the sector.
+
+    This is the sharpest signal in the app: not "a politician traded X" but "the
+    politician who helps oversee X's industry traded X".
+    """
+    members = com.get("members") or {}
+    sec_map = com.get("sector_committees") or {}
+    for t in txs:
+        t["oversight"] = []
+        bio = (people.get(t.get("politician")) or {}).get("bioguide")
+        ticker = t.get("ticker")
+        if not bio or not ticker:
+            continue
+        sector = (sectors.get(ticker) or {}).get("sector")
+        relevant = set(sec_map.get(sector or "", []))
+        if not relevant:
+            continue
+        for seat in members.get(bio, []):
+            if seat.get("code") in relevant:
+                t["oversight"].append({
+                    "code": seat["code"],
+                    "title": seat.get("title"),
+                    "rank": seat.get("rank"),
+                })
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--in", dest="inp", default="data/house_trades.json")
@@ -267,6 +329,20 @@ def main() -> int:
     print("[enrich] fetching news...", file=sys.stderr)
     news = fetch_news(tickers)
 
+    print("[enrich] resolving sectors + committee oversight...", file=sys.stderr)
+    sectors = fetch_sectors(tickers)
+    com = load_committees()
+    attach_oversight(txs, people, com, sectors)
+    n_over = sum(1 for t in txs if t.get("oversight"))
+    print(f"[enrich] oversight: {n_over} of {len(txs)} trades involve a committee that "
+          f"oversees the stock's sector", file=sys.stderr)
+    member_committees = {
+        v["bioguide"]: [{"code": s["code"], "title": s.get("title")}
+                        for s in (com.get("members") or {}).get(v["bioguide"], [])]
+        for v in (people or {}).values() if v.get("bioguide")
+    }
+    committee_names = {k: v.get("short") for k, v in (com.get("committees") or {}).items()}
+
     bundle = {
         "generated": datetime.utcnow().isoformat() + "Z",
         "source": " · ".join(s for s in sources if s),
@@ -282,6 +358,9 @@ def main() -> int:
         "clusters": clusters,
         "big_money": big_money,
         "politicians": people,
+        "committees": committee_names,
+        "member_committees": member_committees,
+        "sectors": sectors,
         "prices": prices,
         "news": news,
     }

@@ -62,6 +62,8 @@
     showAllOv: false,
     big: { sell: 6, buy: 6 },
     bigAll: false,
+    oiSort: 'size',
+    oiAll: false,
     showAllSignals: false,
     tf: 'daily',
     chart: null,
@@ -500,6 +502,8 @@
         bigChartShell(large) +
       '</section>' +
 
+      oiSection() +
+
       '<section class="block" id="feed" aria-labelledby="feed-h">' +
         '<div class="sec-head"><div><div class="micro">All disclosures</div><h2 id="feed-h" class="display">The feed</h2></div>' +
         '<p>Stock trades, sales first. Tap a ticker for the chart, the trades and the news. Turn off "Stocks only" to include bonds and funds.</p></div>' +
@@ -522,6 +526,7 @@
     $('#app').innerHTML = html;
     renderOv();
     renderBigChart();
+    renderOi();
     renderFeed();
     document.title = 'Capitol Flow — Politician Trade Signals';
   }
@@ -728,6 +733,86 @@
         bars.forEach(function (el) { el.style.width = el.dataset.w + '%'; el.removeAttribute('data-w'); });
       });
     });
+  }
+
+  // ---- "Where the options are": option open interest per tracked stock, two rankings.
+  // Size = raw open contracts (mostly tracks market cap). Loading = open interest as days of
+  // the stock's own average daily share volume, which surfaces unusually option-heavy names.
+  var OI_TOP = 10;
+  function isNum(v) { return typeof v === 'number' && isFinite(v); }
+  function oiRows() {
+    var rows = Array.isArray(D.oi_board) ? D.oi_board : [];
+    rows = rows.filter(function (r) { return r && r.ticker && isNum(r.total_oi) && r.total_oi > 0; });
+    if (S.oiSort === 'loading') {
+      return rows.slice().sort(function (a, b) {
+        var x = isNum(a.oi_days_of_volume) ? a.oi_days_of_volume : -1, y = isNum(b.oi_days_of_volume) ? b.oi_days_of_volume : -1;
+        return (y - x) || (b.total_oi - a.total_oi);
+      });
+    }
+    return rows.slice().sort(function (a, b) { return b.total_oi - a.total_oi; });
+  }
+  function oiFmt(n) {
+    if (n >= 1e6 || Math.round(n / 1e3) >= 1000) return (n / 1e6).toFixed(1) + 'M';
+    if (n >= 1e3) return Math.round(n / 1e3) + 'K';
+    return String(n);
+  }
+  function pcRead(r) { return r < 0.7 ? 'call-heavy' : r > 1.3 ? 'put-heavy' : 'balanced'; }
+  function oiSection() {
+    var rows = oiRows();
+    if (!rows.length) return '';
+    return '<section class="block" id="oi" aria-labelledby="oi-h">' +
+      '<div class="sec-head"><div><div class="micro">Option open interest</div><h2 id="oi-h" class="display">Where the options are.</h2></div>' +
+      '<p>How much is still riding on each stock in the options market. The biggest piles often act like price walls.</p></div>' +
+      '<div class="controls oi-controls" role="group" aria-label="Rank stocks by">' +
+        '<button type="button" class="chip" data-action="oi-sort" data-v="size" aria-pressed="' + (S.oiSort === 'size') + '">By size</button>' +
+        '<button type="button" class="chip" data-action="oi-sort" data-v="loading" aria-pressed="' + (S.oiSort === 'loading') + '">By loading</button>' +
+      '</div>' +
+      '<p class="oi-why">By size favours the megacaps; by loading shows which stocks are unusually option-heavy for how much they trade.</p>' +
+      '<ol class="oi-rows" id="oi-rows"></ol>' +
+      '<div class="bm-more" id="oi-more"></div>' +
+      '<p class="bm-caveat"><b>Open interest is positioning, not a prediction.</b> It counts option contracts still open; it says nothing about which way a stock will move. ' +
+        'Totals are summed across the next few expirations, and the put/call ratio uses those same totals. ' +
+        '“Days of volume” is open contracts × 100 shares ÷ the stock’s 30-day average daily share volume. ' +
+        '<span class="oi-pol-key">⚑︎</span> marks stocks members of Congress have also traded.</p>' +
+    '</section>';
+  }
+  function oiRow(r) {
+    var c = isNum(r.call_oi) && r.call_oi > 0 ? r.call_oi : 0, p = isNum(r.put_oi) && r.put_oi > 0 ? r.put_oi : 0;
+    var cp = c + p ? c / (c + p) * 100 : 0;
+    var hasPc = isNum(r.pc_ratio), hasDays = isNum(r.oi_days_of_volume);
+    var nPol = +r.n_politicians || 0, nTr = +r.n_trades || 0;
+    var label = r.ticker + ': ' + oiFmt(r.total_oi) + ' open option contracts' +
+      (c + p ? ', ' + Math.round(cp) + '% calls, ' + Math.round(100 - cp) + '% puts' : '') +
+      (hasPc ? '. Put/call ratio ' + r.pc_ratio.toFixed(2) + ', ' + pcRead(r.pc_ratio) : '') +
+      (hasDays ? '. ' + r.oi_days_of_volume.toFixed(1) + ' days of average volume' : '') +
+      (nPol ? '. Traded by ' + plural(nPol, 'politician') + ' (' + plural(nTr, 'trade') + ')' : '') +
+      (validDate(r.expiry) ? '. Most active expiry ' + mdy(r.expiry) : '') + '. Open detail.';
+    var segs = (c ? '<i class="b" style="width:' + cp.toFixed(2) + '%"></i>' : '') +
+               (p ? '<i class="s" style="width:' + (100 - cp).toFixed(2) + '%"></i>' : '');
+    return '<li><a class="oi-row' + (nPol ? ' pol' : '') + '" href="#/stock/' + encodeURIComponent(r.ticker) + '" aria-label="' + esc(label) + '">' +
+      '<div class="oi-tk"><div class="display">' + esc(r.ticker) + '</div>' +
+        (r.sector ? '<div class="bm-meta oi-sec" aria-hidden="true">' + esc(r.sector) + '</div>' : '') + '</div>' +
+      '<div class="oi-cell oi-tot" aria-hidden="true"><span class="display">' + oiFmt(r.total_oi) + '</span><span class="oi-lab">Contracts</span></div>' +
+      '<div class="oi-split" aria-hidden="true">' +
+        (c + p ? '<div class="oi-bar">' + segs + '</div>' +
+          '<div class="oi-ends"><span class="buy-ink">▲ calls ' + Math.round(cp) + '%</span><span class="sell-ink">▼ puts ' + Math.round(100 - cp) + '%</span></div>' : '') +
+      '</div>' +
+      '<div class="oi-cell oi-pc" aria-hidden="true">' +
+        (hasPc ? '<span class="display">' + r.pc_ratio.toFixed(2) + '</span><span class="oi-lab">P/C · ' + pcRead(r.pc_ratio) + '</span>' : '') + '</div>' +
+      '<div class="oi-cell oi-days" aria-hidden="true"><span class="display">' + (hasDays ? r.oi_days_of_volume.toFixed(1) : '—') + '</span><span class="oi-lab">Days of vol</span></div>' +
+      '<div class="oi-pol" aria-hidden="true">' +
+        (nPol ? '<span class="badge oi-badge">⚑︎ ' + plural(nPol, 'politician').toUpperCase() + ' · ' + plural(nTr, 'trade').toUpperCase() + '</span>' : '') + '</div>' +
+    '</a></li>';
+  }
+  function renderOi() {
+    var ol = $('#oi-rows'); if (!ol) return;
+    var rows = oiRows();
+    ol.innerHTML = (S.oiAll ? rows : rows.slice(0, OI_TOP)).map(oiRow).join('');
+    document.querySelectorAll('[data-action="oi-sort"]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === S.oiSort)); });
+    $('#oi-more').innerHTML = rows.length > OI_TOP
+      ? '<button type="button" class="btn-ghost" data-action="oi-all" aria-expanded="' + !!S.oiAll + '">' +
+          (S.oiAll ? 'Show top ' + OI_TOP : 'Show all ' + rows.length + ' stocks') + '</button>'
+      : '';
   }
 
   function feedList() {
@@ -1440,6 +1525,15 @@
       }
       renderBigChart();
       var mb = $('#bm-more button'); if (mb) mb.focus();
+    }
+    else if (act === 'oi-sort') {
+      if (S.oiSort === a.dataset.v) return;
+      S.oiSort = a.dataset.v; renderOi();
+    }
+    else if (act === 'oi-all') {
+      S.oiAll = !S.oiAll; renderOi();
+      var ib = $('#oi-more button'); if (ib) ib.focus();
+      if (!S.oiAll) { var oe = $('#oi'); if (oe && oe.getBoundingClientRect().top < 0) oe.scrollIntoView(); }
     }
     else if (act === 'toggle-signals') {
       S.showAllSignals = !S.showAllSignals; renderDashboard();

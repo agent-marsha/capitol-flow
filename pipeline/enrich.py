@@ -244,6 +244,58 @@ def attach_oversight(txs: list[dict], people: dict, com: dict, sectors: dict,
                 })
 
 
+# --------------------------------------------------- open-interest board
+def build_oi_board(tickers: list[str], options: dict, prices: dict,
+                   sectors: dict, txs: list[dict]) -> list[dict]:
+    """Rank the tracked stocks by total open interest in their option market.
+
+    Absolute open interest largely measures market cap, so each row also carries a
+    RELATIVE figure — open interest expressed as days of the stock's own average daily
+    share volume — which is what separates "big because it's Apple" from "unusually
+    loaded".  We also cross-reference the app's core signal: how many politicians
+    traded that ticker.
+    """
+    from collections import Counter, defaultdict
+    trades_n: Counter = Counter()
+    pols: dict = defaultdict(set)
+    for t in txs:
+        tk = t.get("ticker")
+        if tk:
+            trades_n[tk] += 1
+            if t.get("politician"):
+                pols[tk].add(t["politician"])
+
+    board = []
+    for tk in tickers:
+        o = options.get(tk) or {}
+        call = o.get("call_oi") or 0
+        put = o.get("put_oi") or 0
+        total = call + put
+        if total <= 0:
+            continue
+        daily = (prices.get(tk) or {}).get("daily") or []
+        vols = [b.get("v") or 0 for b in daily[-30:]]
+        adv = sum(vols) / len(vols) if vols else 0
+        # contracts control 100 shares each; compare to average daily share volume
+        days = round((total * 100) / adv, 1) if adv > 0 else None
+        board.append({
+            "ticker": tk,
+            "sector": (sectors.get(tk) or {}).get("sector"),
+            "call_oi": call,
+            "put_oi": put,
+            "total_oi": total,
+            "pc_ratio": round(put / call, 2) if call else None,
+            "expiry": o.get("expiry"),
+            "dte": o.get("dte"),
+            "adv": int(adv),
+            "oi_days_of_volume": days,
+            "n_trades": trades_n.get(tk, 0),
+            "n_politicians": len(pols.get(tk, ())),
+        })
+    board.sort(key=lambda r: -r["total_oi"])
+    return board
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--in", dest="inp", default="data/house_trades.json")
@@ -350,6 +402,17 @@ def main() -> int:
     }
     committee_names = {k: v.get("short") for k, v in (com.get("committees") or {}).items()}
 
+    # dashboard board: stocks by total option open interest
+    try:
+        options = json.load(open("data/options.json"))
+    except Exception:
+        options = {}
+        print("[enrich] data/options.json missing — OI board unavailable", file=sys.stderr)
+    oi_board = build_oi_board(tickers, options, prices, sectors, txs)
+    if oi_board:
+        tops = ", ".join(f"{r['ticker']} {r['total_oi']:,}" for r in oi_board[:3])
+        print(f"[enrich] OI board: {len(oi_board)} tickers (top: {tops})", file=sys.stderr)
+
     bundle = {
         "generated": datetime.utcnow().isoformat() + "Z",
         "source": " · ".join(s for s in sources if s),
@@ -369,6 +432,7 @@ def main() -> int:
         "member_committees": member_committees,
         "insiders": insiders,
         "sectors": sectors,
+        "oi_board": oi_board,
         "prices": prices,
         "news": news,
     }

@@ -57,18 +57,19 @@ jobs:
         continue-on-error: true
         run: python pipeline/insiders.py --in data/app_data.json --out data/insiders.json
 
-      - name: Enrich (prices, news, clusters, oversight, insiders)
+      # Options must run BEFORE enrich: enrich builds the dashboard's open-interest board
+      # from it.
+      - name: Options read (Yahoo chains)
+        continue-on-error: true
+        run: python pipeline/fetch_options.py --max 60 --top 10 --out data/options.json
+
+      - name: Enrich (prices, news, clusters, oversight, insiders, OI board)
         run: python pipeline/enrich.py --days 150 --max-tickers 60 --out data/app_data.json
 
       # ---- Plain-English fundamentals from SEC EDGAR (10-K XBRL) ----------------
       - name: Fundamentals (SEC EDGAR)
         continue-on-error: true
         run: python pipeline/fundamentals.py --max 60 --out data/fundamentals.json
-
-      # ---- Options: highest open-interest strikes + TradingView links -----------
-      - name: Options read (Yahoo chains)
-        continue-on-error: true
-        run: python pipeline/fetch_options.py --max 60 --top 4 --out data/options.json
 
       # ---- Publish the data into the static site --------------------------------
       - name: Copy data into the site (JSON + inline fallbacks)

@@ -221,6 +221,54 @@ section.block { padding: 40px 0 8px; }
 }
 @media (prefers-reduced-motion: reduce) { .bm-bar { transition: none; } }
 
+/* ---------- option open interest board ---------- */
+.oi-controls { margin: 4px 0 8px; }
+.oi-why { margin: 0 0 16px; font-size: 13px; color: var(--muted); max-width: 72ch; }
+.oi-rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.oi-row {
+  display: grid; align-items: center; gap: 8px 20px;
+  grid-template-columns: 140px 92px minmax(0, 1fr) 104px 76px 200px;
+  grid-template-areas: "tk tot split pc days pol";
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 12px 14px; color: var(--ink); text-decoration: none; min-height: 60px; transition: border-color .12s;
+}
+.oi-row:hover { border-color: var(--ink-2); }
+.oi-tk { grid-area: tk; min-width: 0; }
+.oi-tk .display { font-size: 26px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.oi-sec { overflow: hidden; text-overflow: ellipsis; }
+.oi-cell { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.oi-cell .display { font-size: 22px; }
+.oi-lab { font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.oi-tot { grid-area: tot; }
+.oi-pc { grid-area: pc; }
+.oi-days { grid-area: days; }
+.oi-split { grid-area: split; min-width: 0; }
+.oi-bar { display: flex; gap: 2px; height: 12px; }
+.oi-bar i { display: block; height: 100%; min-width: 2px; }
+.oi-bar .b { background: var(--buy); border-radius: 2px 0 0 2px; }
+.oi-bar .s { background: var(--sell); border-radius: 0 2px 2px 0; }
+.oi-bar i:only-child { border-radius: 2px; }
+.oi-ends { display: flex; justify-content: space-between; gap: 8px; margin-top: 6px; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+.oi-pol { grid-area: pol; display: flex; justify-content: flex-end; min-width: 0; }
+.oi-badge { background: var(--ink); color: var(--bg); white-space: normal; }
+.oi-pol-key { color: var(--ink); }
+@media (max-width: 1100px) {
+  .oi-row { grid-template-columns: 96px 76px minmax(0, 1fr) 96px 68px; grid-template-areas: "tk tot split pc days" "pol pol pol pol pol"; }
+  .oi-pol { justify-content: flex-start; }
+  .oi-pol:empty { display: none; }
+}
+@media (max-width: 640px) {
+  .oi-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; padding: 12px;
+    grid-template-areas: "tk tk tk" "tot pc days" "split split split" "pol pol pol";
+  }
+  .oi-tk { display: flex; align-items: baseline; gap: 10px; }
+  .oi-tk .bm-meta { display: block; margin: 0; }
+  .oi-tk .display { font-size: 22px; }
+  .oi-cell .display { font-size: 18px; }
+  .oi-split:empty { display: none; }
+}
+
 /* ---------- trade rows ---------- */
 .trades { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .trade {

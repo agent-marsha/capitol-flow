@@ -176,9 +176,9 @@ def build_cards(name: str, s: dict) -> list[dict]:
         updown = ""
         if grew is not None:
             if grew >= 1:
-                updown = f" That is up {grew:.0f} out of 100 from the year before."
+                updown = f" That is up {grew:.0f}% from the year before."
             elif grew <= -1:
-                updown = f" That is down {abs(grew):.0f} out of 100 from the year before."
+                updown = f" That is down {abs(grew):.0f}% from the year before."
             else:
                 updown = " That is about the same as the year before."
         cards.append({

@@ -58,7 +58,7 @@
   var signalOf = new Map(); // trade id → max politicians in any cluster containing it
   var signals = [];
   var S = {
-    feed: { dir: 'all', large: false, sig: false, q: '', limit: 30 },
+    feed: { dir: 'all', large: false, sig: false, stocks: true, q: '', limit: 30 },
     big: { sell: 6, buy: 6 },
     bigAll: false,
     showAllSignals: false,
@@ -351,13 +351,14 @@
 
       '<section class="block" id="feed" aria-labelledby="feed-h">' +
         '<div class="sec-head"><div><div class="micro">All disclosures</div><h2 id="feed-h" class="display">The feed</h2></div>' +
-        '<p>Sales lead, newest first, then purchases. Tap a ticker for the chart, the trades and the news.</p></div>' +
+        '<p>Stock trades, sales first. Tap a ticker for the chart, the trades and the news. Turn off "Stocks only" to include bonds and funds.</p></div>' +
         '<div class="controls">' +
           '<div class="seg" role="group" aria-label="Filter by direction">' +
             segBtn('all', 'All') + segBtn('sell', '▼ Sells') + segBtn('buy', '▲ Buys') +
           '</div>' +
           '<button type="button" class="chip" data-action="toggle-large" aria-pressed="' + S.feed.large + '">$100K+ only</button>' +
           '<button type="button" class="chip" data-action="toggle-sig" aria-pressed="' + S.feed.sig + '">◆ Signals only</button>' +
+          '<button type="button" class="chip" data-action="toggle-stocks" aria-pressed="' + S.feed.stocks + '">Stocks only</button>' +
           '<div class="search-wrap"><label class="sr-only" for="q">Search politician, ticker or asset</label>' +
           '<input id="q" class="search" type="search" placeholder="Search politician, ticker, asset" autocomplete="off" value="' + esc(S.feed.q) + '"></div>' +
         '</div>' +
@@ -465,6 +466,8 @@
       if (f.dir !== 'all' && t.direction !== f.dir) return false;
       if (f.large && !t.is_large) return false;
       if (f.sig && !signalOf.has(t.id)) return false;
+      // bonds, funds and CDs carry no ticker — no chart, no stock signal
+      if (f.stocks && !t.ticker) return false;
       if (q) {
         var hay = (t.politician + ' ' + (t.ticker || '') + ' ' + t.asset_raw + ' ' + (t.state_district || '')).toLowerCase();
         if (hay.indexOf(q) === -1) return false;
@@ -483,6 +486,7 @@
     document.querySelectorAll('[data-action="dir"]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === S.feed.dir)); });
     document.querySelectorAll('[data-action="toggle-large"]').forEach(function (b) { b.setAttribute('aria-pressed', String(S.feed.large)); });
     document.querySelectorAll('[data-action="toggle-sig"]').forEach(function (b) { b.setAttribute('aria-pressed', String(S.feed.sig)); });
+    document.querySelectorAll('[data-action="toggle-stocks"]').forEach(function (b) { b.setAttribute('aria-pressed', String(S.feed.stocks)); });
   }
 
   // ------------------------------------------------------------------ detail
@@ -1145,6 +1149,7 @@
     else if (act === 'dir') { S.feed.dir = a.dataset.v; S.feed.limit = 30; renderFeed(); }
     else if (act === 'toggle-large') { S.feed.large = !S.feed.large; S.feed.limit = 30; renderFeed(); }
     else if (act === 'toggle-sig') { S.feed.sig = !S.feed.sig; S.feed.limit = 30; renderFeed(); }
+    else if (act === 'toggle-stocks') { S.feed.stocks = !S.feed.stocks; S.feed.limit = 30; renderFeed(); }
     else if (act === 'feed-more') { S.feed.limit += 30; renderFeed(); }
     else if (act === 'big-more') { S.big[a.dataset.v] += 10; S.dashScroll = window.scrollY; renderDashboard(); window.scrollTo(0, S.dashScroll); }
     else if (act === 'bm-all') {

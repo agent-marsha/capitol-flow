@@ -191,6 +191,36 @@ _GENERIC = {"international", "american", "general", "national", "united", "advan
             "global", "new", "first", "the", "walt"}
 
 
+_SUFFIX_RE = re.compile(
+    r"[,.]?\s*(Inc|Incorporated|Corp|Corporation|Companies|Company|Co|plc|PLC|Ltd|Limited"
+    r"|L\.?L\.?C|N\.?V|S\.?A|P\.?L\.?C)\.?(/\s*[A-Za-z]{2})?\s*$", re.I)
+
+
+def clean_name(raw: str, ticker: str) -> str:
+    """Normalise an SEC entity name for display.
+
+    SEC names are inconsistent: some are ALL CAPS, some carry a stray legal suffix
+    ("Wells Fargo & Company/Mn"), some have run-on whitespace. Title-casing blindly
+    breaks acronyms ("AT&T" -> "At&T"), so only multi-word all-caps names are
+    title-cased, and tokens that are acronym-shaped are left alone.
+    """
+    n = re.sub(r"\s+", " ", (raw or "").strip())
+    # SEC names can stack suffixes ("... COMPANIES INC.") — strip repeatedly.
+    for _ in range(3):
+        stripped = _SUFFIX_RE.sub("", n).strip(" ,.-/")
+        if stripped == n:
+            break
+        n = stripped
+    n = re.sub(r"[\s&]+$", "", n).strip()
+    letters = [c for c in n if c.isalpha()]
+    if " " in n and letters and sum(c.isupper() for c in letters) / len(letters) >= 0.8:
+        n = " ".join(w if ("&" in w or not re.search(r"[AEIOUaeiou]", w)) else w.capitalize()
+                     for w in n.split())
+    n = re.sub(r"\bMc([a-z])", lambda m: "Mc" + m.group(1).upper(), n)   # Mclennan -> McLennan
+    n = re.sub(r"\bO'([a-z])", lambda m: "O'" + m.group(1).upper(), n)   # O'brien -> O'Brien
+    return n.strip() or ticker
+
+
 def short_name(name: str, ticker: str) -> str:
     """A short, kid-friendly name — long names inflate the reading level and read badly."""
     n = re.sub(r"\s*[/.]?\s*(com|corp|co|de)\s*$", "", name, flags=re.I).strip(" ,./")
@@ -296,17 +326,24 @@ def build_cards(name: str, s: dict, val: dict | None = None) -> list[dict]:
                       "points": [{"x": "In the bank", "y": c}, {"x": "Owes", "y": d}]},
         })
 
-    # 6) EV/EBITDA — the price of the whole company per $1 of yearly profit
+    # 6) EV/EBITDA — the price of the whole business per $1 of OPERATING earnings.
+    # Careful with wording:
+    #   * "makes" would imply profit. EBITDA is NOT profit — it ignores the bank
+    #     (interest), the tax office, AND the wear on machines (depreciation and
+    #     amortisation). Apple's EBITDA is 171.5B vs 132.2B real profit.
+    #   * It must name all four exclusions, not just two.
+    #   * EV is the company PLUS its bills, not what the shares cost.
     if val and val.get("ev_ebitda"):
         m = val["ev_ebitda"]
         cards.append({
             "id": "ev_ebitda", "emoji": "🏷️", "rank": 2,
             "headline": "What it costs to buy the whole company",
-            "text": (f"To buy all of {name} would cost about {money(val['ev'])}. "
-                     f"Each year it makes about {money(val['ebitda'])} before the bank and taxes get paid. "
-                     f"So you would pay about ${m:,.0f} for every $1 it makes."),
-            "chart": {"type": "stat", "label": "You pay, for each $1 it makes",
-                      "value": f"${m:,.1f}", "sub": "per $1 it makes in a year"},
+            "text": (f"To buy all of {name} — the company and its bills together — would cost about {money(val['ev'])}. "
+                     f"Each year it brings in about {money(val['ebitda'])} before it pays the bank, the tax office, "
+                     f"and the wear on its machines. So the price is about ${m:,.0f} for every $1 it brings in. "
+                     "That $1 is not profit. After all of that gets paid, less is left."),
+            "chart": {"type": "stat", "label": "The price, for each $1 it brings in",
+                      "value": f"${m:,.1f}", "sub": "before bank, tax and machine wear"},
         })
 
     # 7) FCF yield — the cash the BUSINESS MAKES per $100 of value.
@@ -410,11 +447,7 @@ def main() -> int:
             missing.append(t)
             time.sleep(0.4)
             continue
-        name = (f.get("entityName") or t).strip()
-        if name.isupper():
-            name = name.title()
-        name = re.sub(r"[,.]?\s*(Inc|Incorporated|Corp|Corporation|Co|Company|plc|PLC|Ltd|Limited|LLC|N\.V|S\.A)\.?$",
-                      "", name, flags=re.I).strip(" ,.") or t
+        name = clean_name(f.get("entityName") or t, t)
         s = {k: annual_series(f, v) for k, v in CONCEPTS.items()}
         if not s["revenue"]:
             # some filers only tag revenue under a bank/insurance concept

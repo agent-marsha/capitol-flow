@@ -265,15 +265,45 @@
     return s && s.sector ? String(s.sector) : '';
   }
   // One-line company profile for the stock page: sector chip + SEC SIC industry. '' when neither exists.
+  // D.sectors stays authoritative; the company record (D.companies) only fills what it lacks.
   function profileLine(tk) {
     var s = D && D.sectors && tk && Object.prototype.hasOwnProperty.call(D.sectors, tk) ? D.sectors[tk] : null;
-    if (!s) return '';
-    var sec = s.sector ? String(s.sector).trim() : '', ind = s.industry ? String(s.industry).trim() : '';
+    var c = companyOf(tk);
+    if (!s && !c) return '';
+    var sec = coStr(s && s.sector) || coStr(c && c.sector), ind = coStr(s && s.industry) || coStr(c && c.industry);
     if (!sec && !ind) return '';
     return '<div class="d-profile">' +
       (sec ? '<span class="d-sector">' + esc(sec) + '</span>' : '') +
       (ind ? '<span class="d-industry">' + esc(ind) + '</span>' : '') +
       '</div>';
+  }
+  // ------------------------------------------------------------------ company record
+  // D.companies is optional: every lookup degrades to null/'' and the page renders as before.
+  function coStr(v) {
+    var x = v == null ? '' : String(v).trim();
+    return x && x.toLowerCase() !== 'null' && x.toLowerCase() !== 'undefined' ? x : '';
+  }
+  function companyOf(tk) {
+    var m = D && D.companies;
+    if (!m || typeof m !== 'object' || !tk || !Object.prototype.hasOwnProperty.call(m, tk)) return null;
+    var c = m[tk];
+    return c && typeof c === 'object' ? c : null;
+  }
+  // Company name for the stock page: the company record first, the congressional filing second.
+  function coNameOf(tk) {
+    var c = companyOf(tk);
+    return coStr(c && c.name) || nameOf.get(tk) || '';
+  }
+  // ABOUT: the supplied description, verbatim. '' when there is none — the profile line
+  // above already carries the sector/industry, so nothing else is repeated here.
+  function aboutBlock(tk) {
+    var c = companyOf(tk), d = coStr(c && c.description);
+    if (!d) return '';
+    var generic = c.description_from === 'sic';
+    return '<section class="d-about' + (generic ? ' d-about-generic' : '') + '" aria-labelledby="about-h">' +
+      '<div id="about-h" class="micro">About</div>' +
+      '<p class="d-desc">' + esc(d) + '</p>' +
+    '</section>';
   }
   function memberCmtes(name) {
     var p = polOf(name), m = D && D.member_committees;
@@ -1133,8 +1163,12 @@
       var hasOpt = false;
       try { hasOpt = !!optionsBlock(tk); } catch (e) { hasOpt = false; }
       if (hasOpt) { renderOptionsOnly(tk); return; }
+      // Nothing else to show: the company record (when there is one) is the whole page.
+      var known = !!companyOf(tk) || !!nameOf.get(tk);
       $('#app').innerHTML = '<button type="button" class="back" data-action="back">← BACK</button>' +
-        '<p class="empty">No trades or prices found for ' + esc(tk) + '.</p>';
+        (known ? bareHero(tk) : '') +
+        '<p class="empty' + (known ? ' d-nocong' : '') + '">No trades or prices found for ' + esc(tk) + '.</p>';
+      if (known) { document.title = tk + ' — Capitol Flow'; window.scrollTo(0, 0); }
       return;
     }
     var sells = trades.filter(function (t) { return t.direction === 'sell'; });
@@ -1157,9 +1191,10 @@
       '<section class="d-hero" aria-labelledby="d-h">' +
         '<div><div class="micro">' + (sig ? '◆ Signal · ' + sig.n_politicians + ' politicians in ' + (D.window_days || 14) + ' days' : 'Stock detail') + '</div>' +
           '<h1 id="d-h" class="d-ticker display">' + esc(tk) + '</h1>' +
-          '<div class="d-name">' + esc(nameOf.get(tk) || '') + '</div>' + profileLine(tk) + '</div>' +
+          '<div class="d-name">' + esc(coNameOf(tk)) + '</div>' + profileLine(tk) + '</div>' +
         priceBlock +
       '</section>' +
+      aboutBlock(tk) +
       '<div class="stats d-stats" role="list">' +
         '<div class="stat" role="listitem"><div class="micro">Politicians</div><div class="display">' + pols.size + '</div></div>' +
         '<div class="stat" role="listitem"><div class="micro"><span class="stat-dot" style="background:var(--sell)"></span>Sells</div><div class="display">' + sells.length + '</div><div class="sub">Est. ' + range(sum(sells, 'amount_low'), sum(sells, 'amount_high')) + '</div></div>' +
@@ -1197,14 +1232,9 @@
   // the slot is always emitted and fillFundamentals() leaves it empty when there's nothing
   // to show. No trades/news, no zeroed stats.
   function renderOptionsOnly(tk) {
-    var name = nameOf.get(tk) || '';
     $('#app').innerHTML =
       '<button type="button" class="back" data-action="back" aria-label="Back to dashboard">← ALL SIGNALS</button>' +
-      '<section class="d-hero" aria-labelledby="d-h">' +
-        '<div><div class="micro">Stock detail</div>' +
-          '<h1 id="d-h" class="d-ticker display">' + esc(tk) + '</h1>' +
-          (name ? '<div class="d-name">' + esc(name) + '</div>' : '') + profileLine(tk) + '</div>' +
-      '</section>' +
+      bareHero(tk) +
       '<p class="note d-nocong">No congressional trades disclosed on this ticker in the current window.</p>' +
       chartFallback(tk) +
       '<div class="d-cols d-cols-opt">' +
@@ -1215,6 +1245,17 @@
     window.scrollTo(0, 0);
     fillOptions();
     fillFundamentals();
+  }
+
+  // Header for pages without a price block: ticker, name, profile line, ABOUT.
+  function bareHero(tk) {
+    var name = coNameOf(tk);
+    return '<section class="d-hero" aria-labelledby="d-h">' +
+        '<div><div class="micro">Stock detail</div>' +
+          '<h1 id="d-h" class="d-ticker display">' + esc(tk) + '</h1>' +
+          (name ? '<div class="d-name">' + esc(name) + '</div>' : '') + profileLine(tk) + '</div>' +
+      '</section>' +
+      aboutBlock(tk);
   }
 
   // Tickers outside the charted set get a calm dead-end-free panel instead of an empty chart:
@@ -1338,7 +1379,13 @@
     return '<div class="opt-col ' + side + '" role="group" aria-labelledby="' + id + '">' +
       '<div class="opt-col-head ' + (isCall ? 'buy-ink' : 'sell-ink') + '">' +
         '<h4 id="' + id + '" class="display">' + (isCall ? 'Calls' : 'Puts') + '</h4>' +
-        '<span class="micro">' + (isCall ? 'Bets it goes up' : 'Bets it goes down') + '</span>' +
+        // Describes the INSTRUMENT, not the position.  "Bets it goes up / goes down" used to
+        // sit here and directly contradicted this section's own caveat two lines below:
+        // "open interest ... can't tell you whether those contracts were bought or sold."
+        // A call is a right to buy and a put a right to sell — that is true of the contract
+        // regardless of which side of it anyone is on.  (Chinese walls: the leaderboard
+        // columns are labelled the same way, for the same reason.)
+        '<span class="micro">' + (isCall ? 'Right to buy' : 'Right to sell') + '</span>' +
       '</div>' +
       '<div class="opt-legend micro" aria-hidden="true"><span>Strike</span><span>Open interest</span></div>' +
       (list.length

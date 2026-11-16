@@ -448,6 +448,19 @@ def main() -> int:
         tops = ", ".join(f"{r['ticker']} {r['total_oi']:,}" for r in oi_board[:3])
         print(f"[enrich] OI board: {len(oi_board)} tickers (top: {tops})", file=sys.stderr)
 
+    # company identities + descriptions, so a stock page always says WHAT the company is.
+    # Produced by fetch_companies.py; absent on a first run, which is fine — the stock page
+    # just falls back to the name it reads from congressional filings.
+    try:
+        companies = json.load(open("data/companies.json"))
+    except Exception:
+        companies = {}
+        print("[enrich] data/companies.json missing — stock pages will show bare tickers",
+              file=sys.stderr)
+    if companies:
+        named = sum(1 for v in companies.values() if v.get("name"))
+        print(f"[enrich] companies: {len(companies)} tickers, {named} named", file=sys.stderr)
+
     bundle = {
         "generated": datetime.utcnow().isoformat() + "Z",
         "source": " · ".join(s for s in sources if s),
@@ -468,8 +481,10 @@ def main() -> int:
         "insiders": insiders,
         "sectors": sectors,
         "oi_board": oi_board,
-        # cross-ticker top-50 leaderboard, computed in fetch_options from the full chains
+        # cross-ticker top-100 leaderboard, computed in fetch_options from the full chains
         "top_oi": options.get("_top_oi"),
+        # company identities + plain descriptions for every stock page (fetch_companies.py)
+        "companies": companies,
         "prices": prices,
         "news": news,
     }

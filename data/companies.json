@@ -1,0 +1,2387 @@
+{
+"AAL": {
+"ticker": "AAL",
+"name": "American Airlines Group Inc.",
+"description": "American Airlines Group Inc., through its subsidiaries, operates as a network air carrier in the United States, Latin America, Atlantic, and Pacific.",
+"sector": "Industrials",
+"industry": "Airlines",
+"sic": "4512",
+"source": "sec+yahoo"
+},
+"AAPL": {
+"ticker": "AAPL",
+"name": "Apple Inc.",
+"description": "Apple Inc. designs, manufactures, and markets smartphones, personal computers, tablets, wearables, and accessories.",
+"sector": "Technology",
+"industry": "Consumer Electronics",
+"sic": "3571",
+"source": "sec+yahoo"
+},
+"ABBV": {
+"ticker": "ABBV",
+"name": "AbbVie Inc.",
+"description": "AbbVie Inc., a research-based biopharmaceutical company, engages in the research and development, manufacturing, commercializing, and sale of medicines and therapies worldwide.",
+"sector": "Healthcare",
+"industry": "Drug Manufacturers - General",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"ABT": {
+"ticker": "ABT",
+"name": "Abbott Laboratories",
+"description": "Abbott Laboratories, together with its subsidiaries, discovers, develops, manufactures, and sells health care products worldwide. It operates in four segments: Established Pharmaceutical Products, Diagnostic Products, Nutritional Products, and Medical Devices.",
+"sector": "Healthcare",
+"industry": "Medical Devices",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"ADBE": {
+"ticker": "ADBE",
+"name": "Adobe Inc.",
+"description": "Adobe Inc. operates as a technology company worldwide. The Digital Media segment offers products and services that enable individuals, teams, and enterprises to create, publish, and promote content.",
+"sector": "Technology",
+"industry": "Software - Application",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"ADI": {
+"ticker": "ADI",
+"name": "Analog Devices, Inc.",
+"description": "Analog Devices, Inc. engages in the design, manufacture, testing, and marketing of integrated circuits (ICs), software, and subsystems products in the United States, rest of North and South America, Europe, Japan, China, and rest of Asia.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"AEIS": {
+"ticker": "AEIS",
+"name": "Advanced Energy Industries, Inc.",
+"description": "Advanced Energy Industries, Inc. provides precision power conversion, measurement, and control solutions in the United States, Asia, Europe, and internationally.",
+"sector": "Industrials",
+"industry": "Electrical Equipment & Parts",
+"sic": "3679",
+"source": "sec+yahoo"
+},
+"AI": {
+"ticker": "AI",
+"name": "C3.ai, Inc.",
+"description": "C3.ai, Inc. operates as an enterprise artificial intelligence application software company in North America, Europe, the Middle East, Africa, the Asia Pacific, and internationally.",
+"sector": "Technology",
+"industry": "Software - Infrastructure",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"ALGM": {
+"ticker": "ALGM",
+"name": "Allegro MicroSystems, Inc.",
+"description": "Allegro MicroSystems, Inc., together with its subsidiaries, designs, develops, manufactures, and markets sensor integrated circuits (ICs) and application-specific power ICs for sensing, motion control, and power management functions of complex electromechanical or power conversion systems.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"ALKS": {
+"ticker": "ALKS",
+"name": "Alkermes plc",
+"description": "Alkermes plc, a biopharmaceutical company, engages in the research, development, and commercialization of pharmaceutical products to address unmet medical needs of patients in therapeutic areas in the United States, Ireland, and internationally.",
+"sector": "Healthcare",
+"industry": "Drug Manufacturers - Specialty & Generic",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"ALNY": {
+"ticker": "ALNY",
+"name": "Alnylam Pharmaceuticals, Inc.",
+"description": "Alnylam Pharmaceuticals, Inc. discovers, develops, manufactures, and commercializes therapeutics based on ribonucleic acid interference in the United States, Europe, and internationally.",
+"sector": "Healthcare",
+"industry": "Biotechnology",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"AMAT": {
+"ticker": "AMAT",
+"name": "Applied Materials, Inc.",
+"description": "Applied Materials, Inc. provides materials engineering solutions, equipment, services, and software to the semiconductor and related industries in the United States, China, Korea, Taiwan, Japan, Southeast Asia, Europe, and internationally.",
+"sector": "Technology",
+"industry": "Semiconductor Equipment & Materials",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"AMC": {
+"ticker": "AMC",
+"name": "AMC Entertainment Holdings, Inc.",
+"description": "AMC Entertainment Holdings, Inc. engages in the theatrical exhibition business in the United States and internationally. It owns, operates, or has interests in theatres.",
+"sector": "Communication Services",
+"industry": "Entertainment",
+"sic": "7830",
+"source": "sec+yahoo"
+},
+"AMD": {
+"ticker": "AMD",
+"name": "Advanced Micro Devices, Inc.",
+"description": "Advanced Micro Devices, Inc. operates as a semiconductor company internationally. It operates in three segments: Data Center, Client and Gaming, and Embedded.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"AMGN": {
+"ticker": "AMGN",
+"name": "Amgen Inc.",
+"description": "Amgen Inc. discovers, develops, manufactures, and delivers human therapeutics worldwide.",
+"sector": "Healthcare",
+"industry": "Drug Manufacturers - General",
+"sic": "2836",
+"source": "sec+yahoo"
+},
+"AMZN": {
+"ticker": "AMZN",
+"name": "Amazon.com, Inc.",
+"description": "Amazon.com, Inc. engages in the retail sale of consumer products, advertising, and subscriptions service through online and physical stores in North America and internationally. The company operates through three segments: North America, International, and Amazon Web Services (AWS).",
+"sector": "Consumer Cyclical",
+"industry": "Internet Retail",
+"sic": "5961",
+"source": "sec+yahoo"
+},
+"APP": {
+"ticker": "APP",
+"name": "AppLovin Corporation",
+"description": "AppLovin Corporation provides end-to-end artificial intelligence-powered advertising solutions for businesses in the United States and internationally. It operates through two segments, Advertising and Apps.",
+"sector": "Communication Services",
+"industry": "Advertising Agencies",
+"sic": "7370",
+"source": "sec+yahoo"
+},
+"APTV": {
+"ticker": "APTV",
+"name": "Aptiv PLC",
+"description": "Aptiv PLC, an industrial technology company, provides hardware and software solutions to support automotive and other industries in North America, Europe, the Middle East, Africa, the Asia Pacific, and South America.",
+"sector": "Consumer Cyclical",
+"industry": "Auto Parts",
+"sic": "3714",
+"source": "sec+yahoo"
+},
+"ARE": {
+"ticker": "ARE",
+"name": "Alexandria Real Estate Equities, Inc.",
+"description": "Alexandria Real Estate Equities, Inc., is a mission-driven life science REIT. The firm is pioneered the life science real estate niche.",
+"sector": "Real Estate",
+"industry": "REIT - Office",
+"sic": "6798",
+"source": "sec+yahoo"
+},
+"ARGX": {
+"ticker": "ARGX",
+"name": "argenx SE",
+"description": "argenx SE, a commercial-stage biopharma company, develops various therapies for the treatment of autoimmune diseases in the United States, Japan, China, the Netherlands, and internationally.",
+"sector": "Healthcare",
+"industry": "Biotechnology",
+"sic": "2836",
+"source": "sec+yahoo"
+},
+"ARM": {
+"ticker": "ARM",
+"name": "Arm Holdings plc",
+"description": "Arm Holdings plc researches, develops, licenses, and markets central processing unit (CPU) intellectual property (IP), graphics processing unit IP, systems IP, compute subsystems (CSS), and associated software, tools and related services.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"ASML": {
+"ticker": "ASML",
+"name": "ASML Holding N.V.",
+"description": "ASML Holding N.V. provides lithography solutions for the development, production, marketing, sales, upgrading, and servicing of advanced semiconductor equipment systems. The company offers lithography, metrology, and inspection systems.",
+"sector": "Technology",
+"industry": "Semiconductor Equipment & Materials",
+"sic": "3559",
+"source": "sec+yahoo"
+},
+"ATRC": {
+"ticker": "ATRC",
+"name": "AtriCure, Inc.",
+"description": "AtriCure, Inc. engages in the development, manufacture, and sale of devices for surgical ablation of cardiac tissue, exclusion of the left atrial appendage, and temporarily blocking pain by ablating peripheral nerves to medical centers in the United States, the Asia-Pacific, and internationally.",
+"sector": "Healthcare",
+"industry": "Medical Instruments & Supplies",
+"sic": "3841",
+"source": "sec+yahoo"
+},
+"AVGO": {
+"ticker": "AVGO",
+"name": "Broadcom Inc.",
+"description": "Broadcom Inc. designs, develops, and supplies various semiconductor devices and infrastructure software solutions internationally. The company operates in two segments: Semiconductor Solutions and Infrastructure Software.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"AVUV": {
+"ticker": "AVUV",
+"name": "Avantis US Small Cap Value ETF",
+"description": "The fund invests primarily in a diverse group of U.S. small cap companies across market sectors and industry groups. Under normal market conditions, it will invest at least 80% of its assets in securities of small capitalization companies located in the United States.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"AXP": {
+"ticker": "AXP",
+"name": "American Express Company",
+"description": "American Express Company, together with its subsidiaries, operates as an integrated payments company in the United States, Europe, the Middle East and Africa, the Asia Pacific, Australia, New Zealand, Latin America, Canada, the Caribbean, and internationally. It operates through four segments: U.S.",
+"sector": "Financial Services",
+"industry": "Credit Services",
+"sic": "6199",
+"source": "sec+yahoo"
+},
+"AZO": {
+"ticker": "AZO",
+"name": "AutoZone, Inc.",
+"description": "AutoZone, Inc. operates as a retailer and distributor of automotive replacement parts and accessories in the Americas.",
+"sector": "Consumer Cyclical",
+"industry": "Auto Parts",
+"sic": "5531",
+"source": "sec+yahoo"
+},
+"BA": {
+"ticker": "BA",
+"name": "The Boeing Company",
+"description": "The Boeing Company, together with its subsidiaries, designs, develops, manufactures, sells, services, and supports commercial jetliners, military aircraft, satellites, missile defense, human space flight and launch systems, and services worldwide.",
+"sector": "Industrials",
+"industry": "Aerospace & Defense",
+"sic": "3721",
+"source": "sec+yahoo"
+},
+"BAC": {
+"ticker": "BAC",
+"name": "Bank of America Corporation",
+"description": "Bank of America Corporation, through its subsidiaries, provides various financial products and services for individual consumers, small and middle-market businesses, institutional investors, large corporations, and governments worldwide.",
+"sector": "Financial Services",
+"industry": "Banks - Diversified",
+"sic": "6021",
+"source": "sec+yahoo"
+},
+"BBIO": {
+"ticker": "BBIO",
+"name": "BridgeBio Pharma, Inc.",
+"description": "BridgeBio Pharma, Inc., a biopharmaceutical company, discovers, develops, and delivers medicines for patients with genetic diseases.",
+"sector": "Healthcare",
+"industry": "Biotechnology",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"BCPC": {
+"ticker": "BCPC",
+"name": "Balchem Corporation",
+"description": "Balchem Corporation develops, manufactures, and distributes specialty performance ingredients and products for the nutritional, food, pharmaceutical, animal health, medical device sterilization, plant nutrition, and industrial markets worldwide.",
+"sector": "Basic Materials",
+"industry": "Specialty Chemicals",
+"sic": "2800",
+"source": "sec+yahoo"
+},
+"BEP": {
+"ticker": "BEP",
+"name": "Brookfield Renewable Partners L.P.",
+"description": "Brookfield Renewable Partners L.P. owns a portfolio of renewable power generating facilities in the North America, Colombia, and Brazil.",
+"sector": "Utilities",
+"industry": "Utilities - Renewable",
+"sic": "4911",
+"source": "sec+yahoo"
+},
+"BHE": {
+"ticker": "BHE",
+"name": "Benchmark Electronics, Inc.",
+"description": "Benchmark Electronics, Inc., together with its subsidiaries, offers product design, engineering services, technology solutions, and manufacturing services in the Americas, Asia, and Europe.",
+"sector": "Technology",
+"industry": "Electronic Components",
+"sic": "3672",
+"source": "sec+yahoo"
+},
+"BIIB": {
+"ticker": "BIIB",
+"name": "Biogen Inc.",
+"description": "Biogen Inc. discovers, develops, manufactures, and delivers therapies in the United States, Europe, Germany, Asia, and internationally.",
+"sector": "Healthcare",
+"industry": "Drug Manufacturers - General",
+"sic": "2836",
+"source": "sec+yahoo"
+},
+"BNPQF": {
+"ticker": "BNPQF",
+"name": "BNP Paribas SA",
+"description": "BNP Paribas SA provides various banking and financial products and services in Europe, the Middle East, Africa, the Americas, and the Asia Pacific. It operates through three divisions: Corporate & Institutional Banking; Commercial, Personal Banking & Services; and Investment & Protection Services.",
+"sector": "Financial Services",
+"industry": "Banks - Regional",
+"sic": null,
+"source": "yahoo"
+},
+"BNS": {
+"ticker": "BNS",
+"name": "The Bank of Nova Scotia",
+"description": "The Bank of Nova Scotia provides various banking products and services in Canada, the United States, Mexico, Peru, Chile, Colombia, the Caribbean and Central America, and internationally.",
+"sector": "Financial Services",
+"industry": "Banks - Diversified",
+"sic": "6022",
+"source": "sec+yahoo"
+},
+"BSX": {
+"ticker": "BSX",
+"name": "Boston Scientific Corporation",
+"description": "Boston Scientific Corporation develops, manufactures, and markets medical devices for use in various interventional medical specialties worldwide. The company operates in two segments, MedSurg and Cardiovascular.",
+"sector": "Healthcare",
+"industry": "Medical Devices",
+"sic": "3841",
+"source": "sec+yahoo"
+},
+"C": {
+"ticker": "C",
+"name": "Citigroup Inc.",
+"description": "Citigroup Inc., a diversified financial service holding company, provides various financial products and services to consumers, corporations, governments, and institutions. It operates through five segments: Services, Markets, Banking, U.S.",
+"sector": "Financial Services",
+"industry": "Banks - Diversified",
+"sic": "6021",
+"source": "sec+yahoo"
+},
+"CACI": {
+"ticker": "CACI",
+"name": "CACI International Inc",
+"description": "CACI International Inc, through its subsidiaries, provides expertise and technology solutions in the United States, the United Kingdom, continental Europe, and internationally.",
+"sector": "Technology",
+"industry": "Information Technology Services",
+"sic": "7373",
+"source": "sec+yahoo"
+},
+"CAT": {
+"ticker": "CAT",
+"name": "Caterpillar Inc.",
+"description": "Caterpillar Inc. provides construction and mining equipment, off-highway diesel and natural gas engines, industrial gas turbines, and diesel-electric locomotives in the United States and internationally.",
+"sector": "Industrials",
+"industry": "Farm & Heavy Construction Machinery",
+"sic": "3531",
+"source": "sec+yahoo"
+},
+"CB": {
+"ticker": "CB",
+"name": "Chubb Limited",
+"description": "Chubb Limited provides insurance and reinsurance products worldwide.",
+"sector": "Financial Services",
+"industry": "Insurance - Property & Casualty",
+"sic": "6331",
+"source": "sec+yahoo"
+},
+"CBOE": {
+"ticker": "CBOE",
+"name": "Cboe Global Markets, Inc.",
+"description": "Cboe Global Markets, Inc., through its subsidiaries, operates as a derivatives and securities exchange network that delivers trading, clearing, and investment solutions in the United States and internationally.",
+"sector": "Financial Services",
+"industry": "Financial Data & Stock Exchanges",
+"sic": "6200",
+"source": "sec+yahoo"
+},
+"CCI": {
+"ticker": "CCI",
+"name": "Crown Castle Inc.",
+"description": "Crown Castle owns, operates and leases approximately 40,000 cell towers across the U.S.",
+"sector": "Real Estate",
+"industry": "REIT - Specialty",
+"sic": "6798",
+"source": "sec+yahoo"
+},
+"CCL": {
+"ticker": "CCL",
+"name": "Carnival Corporation Ltd.",
+"description": "Carnival Corporation Ltd., a cruise company, provides leisure travel services. The company operates through four segments: North America Cruise Operations, Europe Cruise Operations, Cruise Support, and Tour and Other.",
+"sector": "Consumer Cyclical",
+"industry": "Travel Services",
+"sic": "4400",
+"source": "sec+yahoo"
+},
+"CDNS": {
+"ticker": "CDNS",
+"name": "Cadence Design Systems, Inc.",
+"description": "Cadence Design Systems, Inc. develops computational, AI-driven software, hardware, and silicon intellectual property products and solutions.",
+"sector": "Technology",
+"industry": "Software - Application",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"CEG": {
+"ticker": "CEG",
+"name": "Constellation Energy Corporation",
+"description": "Constellation Energy Corporation produces and sells energy products and services in the United States. The company operates through five segments: Mid-Atlantic, Midwest, New York, ERCOT, and Other Power Regions.",
+"sector": "Utilities",
+"industry": "Utilities - Independent Power Producers",
+"sic": "4911",
+"source": "sec+yahoo"
+},
+"CF": {
+"ticker": "CF",
+"name": "CF Industries Holdings, Inc.",
+"description": "CF Industries Holdings, Inc., together with its subsidiaries, engages in the production of ammonia in North America, Europe, and internationally. It operates through Ammonia, Granular Urea, UAN, AN, and Other segments.",
+"sector": "Basic Materials",
+"industry": "Agricultural Inputs",
+"sic": "2870",
+"source": "sec+yahoo"
+},
+"CIEN": {
+"ticker": "CIEN",
+"name": "Ciena Corporation",
+"description": "Ciena Corporation, a network technology company, provides hardware, software, and services for various network operators in the Americas, Europe, the Middle East, Africa, the Asia Pacific, Japan, and India.",
+"sector": "Technology",
+"industry": "Communication Equipment",
+"sic": "3661",
+"source": "sec+yahoo"
+},
+"CINF": {
+"ticker": "CINF",
+"name": "Cincinnati Financial Corporation",
+"description": "Cincinnati Financial Corporation provides property casualty insurance products in the United States. The company operates through five segments: Commercial Lines Insurance, Personal Lines Insurance, Excess and Surplus Lines Insurance, Life Insurance, and Investments.",
+"sector": "Financial Services",
+"industry": "Insurance - Property & Casualty",
+"sic": "6331",
+"source": "sec+yahoo"
+},
+"CL": {
+"ticker": "CL",
+"name": "Colgate-Palmolive Company",
+"description": "Colgate-Palmolive Company, together with its subsidiaries, manufactures and sells consumer products in the United States and internationally. It operates through two segments: Oral, Personal and Home Care; and Pet Nutrition.",
+"sector": "Consumer Defensive",
+"industry": "Household & Personal Products",
+"sic": "2844",
+"source": "sec+yahoo"
+},
+"CMBS": {
+"ticker": "CMBS",
+"name": "iShares CMBS ETF",
+"description": "The index measures the performance of investment-grade commercial mortgage-backed securities (\"CMBS\"), which are classes of securities (known as \"certificates\") that represent interests in \"pools\" of commercial mortgages.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"CMCSA": {
+"ticker": "CMCSA",
+"name": "Comcast Corporation",
+"description": "Comcast Corporation operates as a media and technology company worldwide. The company operates through Residential Connectivity & Platforms, Business Services Connectivity, Media, Studios, and Theme Parks segments.",
+"sector": "Communication Services",
+"industry": "Telecom Services",
+"sic": "4841",
+"source": "sec+yahoo"
+},
+"CMG": {
+"ticker": "CMG",
+"name": "Chipotle Mexican Grill, Inc.",
+"description": "Chipotle Mexican Grill, Inc., together with its subsidiaries, owns and operates Chipotle Mexican Grill restaurants. The company sells food and beverages, such as burritos, burrito bowls, quesadillas, tacos, and salads, as well as kids' meals, chips, and sides.",
+"sector": "Consumer Cyclical",
+"industry": "Restaurants",
+"sic": "5812",
+"source": "sec+yahoo"
+},
+"CMS": {
+"ticker": "CMS",
+"name": "CMS Energy Corporation",
+"description": "CMS Energy Corporation operates as an energy company primarily in Michigan. The company operates through three segments: Electric Utility; Gas Utility; and NorthStar Clean Energy.",
+"sector": "Utilities",
+"industry": "Utilities - Regulated Electric",
+"sic": "4931",
+"source": "sec+yahoo"
+},
+"CNP": {
+"ticker": "CNP",
+"name": "CenterPoint Energy, Inc.",
+"description": "CenterPoint Energy, Inc. operates as a public utility holding company in the United States. The company operates through Electric; Natural Gas; and Corporate and Other segments.",
+"sector": "Utilities",
+"industry": "Utilities - Regulated Electric",
+"sic": "4911",
+"source": "sec+yahoo"
+},
+"COCO": {
+"ticker": "COCO",
+"name": "The Vita Coco Company, Inc.",
+"description": "The Vita Coco Company, Inc. develops, manufactures, markets, and distributes coconut water products under the Vita Coco brand name in the United States, Canada, Europe, the Middle East, Africa, and the Asia Pacific.",
+"sector": "Consumer Defensive",
+"industry": "Beverages - Non-Alcoholic",
+"sic": "2080",
+"source": "sec+yahoo"
+},
+"COHR": {
+"ticker": "COHR",
+"name": "Coherent Corp.",
+"description": "Coherent Corp. develops, manufactures, and markets lasers, transceivers, other optical and optoelectronic devices, modules, and systems worldwide.",
+"sector": "Technology",
+"industry": "Scientific & Technical Instruments",
+"sic": "3827",
+"source": "sec+yahoo"
+},
+"COIN": {
+"ticker": "COIN",
+"name": "Coinbase Global, Inc.",
+"description": "Coinbase Global, Inc. operates platform for crypto assets in the United States and internationally.",
+"sector": "Financial Services",
+"industry": "Financial Data & Stock Exchanges",
+"sic": "6199",
+"source": "sec+yahoo"
+},
+"COO": {
+"ticker": "COO",
+"name": "The Cooper Companies, Inc.",
+"description": "The Cooper Companies, Inc., together with its subsidiaries, develops, manufactures, and markets contact lens wearers. The company operates in two segments, CooperVision and CooperSurgical.",
+"sector": "Healthcare",
+"industry": "Medical Instruments & Supplies",
+"sic": "3851",
+"source": "sec+yahoo"
+},
+"COST": {
+"ticker": "COST",
+"name": "Costco Wholesale Corporation",
+"description": "Costco Wholesale Corporation, together with its subsidiaries, engages in the operation of membership warehouses in the United States, Puerto Rico, Canada, Mexico, Japan, the United Kingdom, Korea, Australia, Taiwan, China, Spain, France, Sweden, Iceland, and New Zealand.",
+"sector": "Consumer Defensive",
+"industry": "Discount Stores",
+"sic": "5331",
+"source": "sec+yahoo"
+},
+"CPB": {
+"ticker": "CPB",
+"name": "The Campbell's Company",
+"description": "The Campbell's Company, together with its subsidiaries, engages in the manufacture and marketing of food and beverage products in the United States and internationally. It operates through Meals & Beverages, and Snacks segments.",
+"sector": "Consumer Defensive",
+"industry": "Packaged Foods",
+"sic": "2000",
+"source": "sec+yahoo"
+},
+"CR": {
+"ticker": "CR",
+"name": "Crane Company",
+"description": "Crane Company, together with its subsidiaries, engages in the manufacture and sale of engineered industrial products in the United States, Canada, the United Kingdom, Continental Europe, and internationally.",
+"sector": "Industrials",
+"industry": "Specialty Industrial Machinery",
+"sic": "3490",
+"source": "sec+yahoo"
+},
+"CRM": {
+"ticker": "CRM",
+"name": "Salesforce, Inc.",
+"description": "Salesforce, Inc. provides customer relationship management technology services that connect companies and customers together in the United States, Europe, and the Asia Pacific.",
+"sector": "Technology",
+"industry": "Software - Application",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"CRWD": {
+"ticker": "CRWD",
+"name": "CrowdStrike Holdings, Inc.",
+"description": "CrowdStrike Holdings, Inc. provides cybersecurity solutions in the United States and internationally. Its unified platform provides cloud-delivered protection of endpoints, cloud workloads, identity, and data through a software as a service (SaaS) subscription-based model.",
+"sector": "Technology",
+"industry": "Software - Infrastructure",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"CSCO": {
+"ticker": "CSCO",
+"name": "Cisco Systems, Inc.",
+"description": "Cisco Systems, Inc. designs, develops, and sells technologies to power, help, secure, and draw insights from the internet in the Americas, Europe, the Middle East, Africa, the Asia Pacific, Japan, and China.",
+"sector": "Technology",
+"industry": "Communication Equipment",
+"sic": "3576",
+"source": "sec+yahoo"
+},
+"CSX": {
+"ticker": "CSX",
+"name": "CSX Corporation",
+"description": "CSX Corporation, together with its subsidiaries, provides rail-based freight transportation services in the United States and Canada. It operates through two segments: rail and trucking.",
+"sector": "Industrials",
+"industry": "Railroads",
+"sic": "4011",
+"source": "sec+yahoo"
+},
+"CTVA": {
+"ticker": "CTVA",
+"name": "Corteva, Inc.",
+"description": "Corteva, Inc. operates as a pure-play agriculture company in the United States, Canada, the Middle East, Africa, Europe, Latin America, and Asia.",
+"sector": "Basic Materials",
+"industry": "Agricultural Inputs",
+"sic": "0100",
+"source": "sec+yahoo"
+},
+"CVX": {
+"ticker": "CVX",
+"name": "Chevron Corporation",
+"description": "Chevron Corporation, through its subsidiaries, engages in the integrated energy and chemicals operations. It operates through Upstream and Downstream segments.",
+"sector": "Energy",
+"industry": "Oil & Gas Integrated",
+"sic": "2911",
+"source": "sec+yahoo"
+},
+"CXT": {
+"ticker": "CXT",
+"name": "Crane NXT, Co.",
+"description": "Crane NXT, Co. operates as an industrial technology company that provides technology solutions to secure, detect, and authenticate customers' important assets. The company operates through Crane Payment Innovations; and Security and Authentication Technologies segments.",
+"sector": "Industrials",
+"industry": "Business Equipment & Supplies",
+"sic": "3490",
+"source": "sec+yahoo"
+},
+"CYTK": {
+"ticker": "CYTK",
+"name": "Cytokinetics, Incorporated",
+"description": "Cytokinetics, Incorporated, a biopharmaceutical company, focuses on discovering, developing, and commercializing novel muscle activators and muscle inhibitors as potential treatments for debilitating diseases in the United States.",
+"sector": "Healthcare",
+"industry": "Biotechnology",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"DAL": {
+"ticker": "DAL",
+"name": "Delta Air Lines, Inc.",
+"description": "Delta Air Lines, Inc. provides scheduled air transportation for passengers and cargo in the United States and internationally. The company operates through two segments, Airline and Refinery.",
+"sector": "Industrials",
+"industry": "Airlines",
+"sic": "4512",
+"source": "sec+yahoo"
+},
+"DDOG": {
+"ticker": "DDOG",
+"name": "Datadog, Inc.",
+"description": "Datadog, Inc. operates an observability and security platform for cloud applications in the United States and internationally.",
+"sector": "Technology",
+"industry": "Software - Application",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"DECK": {
+"ticker": "DECK",
+"name": "Deckers Outdoor Corporation",
+"description": "Deckers Outdoor Corporation, together with its subsidiaries, designs, markets, and distributes footwear, apparel, and accessories for casual lifestyle use and high-performance activities in the United States and internationally.",
+"sector": "Consumer Cyclical",
+"industry": "Footwear & Accessories",
+"sic": "3021",
+"source": "sec+yahoo"
+},
+"DHR": {
+"ticker": "DHR",
+"name": "Danaher Corporation",
+"description": "Danaher Corporation designs, manufactures, and markets professional, medical, research, and industrial products and services in the United States, China, and internationally. The company operates through Biotechnology, Life Sciences, and Diagnostics segments.",
+"sector": "Healthcare",
+"industry": "Diagnostics & Research",
+"sic": "3823",
+"source": "sec+yahoo"
+},
+"DIS": {
+"ticker": "DIS",
+"name": "The Walt Disney Company",
+"description": "The Walt Disney Company operates as an entertainment company in Americas, Europe, and the Asia Pacific. It operates in three segments: Entertainment, Sports, and Experiences.",
+"sector": "Communication Services",
+"industry": "Entertainment",
+"sic": "7990",
+"source": "sec+yahoo"
+},
+"DKNG": {
+"ticker": "DKNG",
+"name": "DraftKings Inc.",
+"description": "DraftKings Inc. operates as a digital sports entertainment and gaming company in the United States and internationally. The company offers online and retail sports betting, daily fantasy sports, digital lottery couriers, prediction markets, and other products, as well as retails sportsbooks.",
+"sector": "Consumer Cyclical",
+"industry": "Gambling",
+"sic": "7990",
+"source": "sec+yahoo"
+},
+"DPZ": {
+"ticker": "DPZ",
+"name": "Domino's Pizza, Inc.",
+"description": "Domino's Pizza, Inc. operates as a pizza company worldwide. The company operates through three segments: U.S.",
+"sector": "Consumer Cyclical",
+"industry": "Restaurants",
+"sic": "5140",
+"source": "sec+yahoo"
+},
+"DVN": {
+"ticker": "DVN",
+"name": "Devon Energy Corporation",
+"description": "Devon Energy Corporation, an independent energy company, engages in the exploration, development, and production of oil, natural gas, and natural gas liquids in the United States.",
+"sector": "Energy",
+"industry": "Oil & Gas E&P",
+"sic": "1311",
+"source": "sec+yahoo"
+},
+"EFA": {
+"ticker": "EFA",
+"name": "iShares MSCI EAFE ETF",
+"description": "The fund generally will invest at least 80% of its assets in the component securities of its underlying index and in investments that have economic characteristics that are substantially identical to the component securities of its underlying index.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"EIX": {
+"ticker": "EIX",
+"name": "Edison International",
+"description": "Edison International, through its subsidiaries, engages in the generation and distribution of electric power. The company supplies and delivers through its electrical infrastructure to an approximately 50,000 square-mile area of southern, central, and coastal California.",
+"sector": "Utilities",
+"industry": "Utilities - Regulated Electric",
+"sic": "4911",
+"source": "sec+yahoo"
+},
+"EL": {
+"ticker": "EL",
+"name": "The Est\u00e9e Lauder Companies Inc.",
+"description": "The Est\u00e9e Lauder Companies Inc. manufactures, markets, and sells skin care, makeup, fragrance, and hair care products worldwide.",
+"sector": "Consumer Defensive",
+"industry": "Household & Personal Products",
+"sic": "2844",
+"source": "sec+yahoo"
+},
+"EMR": {
+"ticker": "EMR",
+"name": "Emerson Electric Co.",
+"description": "Emerson Electric Co., a technology and software company, provides various solutions in the Americas, Asia, the Middle East, Africa, and Europe.",
+"sector": "Industrials",
+"industry": "Specialty Industrial Machinery",
+"sic": "3600",
+"source": "sec+yahoo"
+},
+"ENGQF": {
+"ticker": "ENGQF",
+"name": "Engie SA",
+"description": "Engie SA engages in renewables and decentralized and low-carbon energy networks in France, Europe, North America, Asia, the Middle East, Oceania, South America, Africa, and internationally.",
+"sector": "Utilities",
+"industry": "Utilities - Diversified",
+"sic": null,
+"source": "yahoo"
+},
+"EPAC": {
+"ticker": "EPAC",
+"name": "Enerpac Tool Group Corp.",
+"description": "Enerpac Tool Group Corp. manufactures and sells a range of industrial products and solutions in the United States, Germany, Australia, Canada, China, Saudi Arabia, Brazil, France, the United Kingdom, and internationally.",
+"sector": "Industrials",
+"industry": "Specialty Industrial Machinery",
+"sic": "3590",
+"source": "sec+yahoo"
+},
+"ESAB": {
+"ticker": "ESAB",
+"name": "ESAB Corporation",
+"description": "ESAB Corporation engages in the formulation, development, manufacture, and supply of consumable products and equipment for use in cutting, joining, automated welding, and gas control equipment. It offers its products through independent distributors and direct salespeople.",
+"sector": "Industrials",
+"industry": "Metal Fabrication",
+"sic": "3569",
+"source": "sec+yahoo"
+},
+"ETN": {
+"ticker": "ETN",
+"name": "Eaton Corporation plc",
+"description": "Eaton Corporation plc operates as a power management company in the United States, Canada, Latin America, Europe, and the Asia Pacific. It operates through Electrical Americas, Electrical Global, Aerospace, Vehicle, and eMobility segments.",
+"sector": "Industrials",
+"industry": "Specialty Industrial Machinery",
+"sic": "3590",
+"source": "sec+yahoo"
+},
+"F": {
+"ticker": "F",
+"name": "Ford Motor Company",
+"description": "Ford Motor Company develops, delivers, and services Ford trucks, sport utility vehicles, commercial vans and cars, and Lincoln luxury vehicles in the United States, Canada, the United Kingdom, Mexico, and internationally.",
+"sector": "Consumer Cyclical",
+"industry": "Auto Manufacturers",
+"sic": "3711",
+"source": "sec+yahoo"
+},
+"FDX": {
+"ticker": "FDX",
+"name": "FedEx Corporation",
+"description": "FedEx Corporation, together with its subsidiaries, provides transportation, e-commerce, and business services in the United States and internationally. The company operates through two segments, Express U.S.",
+"sector": "Industrials",
+"industry": "Integrated Freight & Logistics",
+"sic": "4513",
+"source": "sec+yahoo"
+},
+"FIS": {
+"ticker": "FIS",
+"name": "Fidelity National Information Services, Inc.",
+"description": "Fidelity National Information Services, Inc. provides solutions to financial institutions, businesses, and developers worldwide. The company operates through Banking Solutions, Capital Market Solutions, and Corporate and Other segments.",
+"sector": "Technology",
+"industry": "Information Technology Services",
+"sic": "7389",
+"source": "sec+yahoo"
+},
+"FITB": {
+"ticker": "FITB",
+"name": "Fifth Third Bancorp",
+"description": "Fifth Third Bancorp operates as the bank holding company for Fifth Third Bank, National Association that provides a range of financial products and services in the United States.",
+"sector": "Financial Services",
+"industry": "Banks - Regional",
+"sic": "6022",
+"source": "sec+yahoo"
+},
+"FMAO": {
+"ticker": "FMAO",
+"name": "Farmers & Merchants Bancorp, Inc.",
+"description": "Farmers & Merchants Bancorp, Inc. operates as the bank holding company for The Farmers & Merchants State Bank that provides commercial banking services to individuals and small businesses in Northwest Ohio, Northeast Indiana, and Southeast Michigan.",
+"sector": "Financial Services",
+"industry": "Banks - Regional",
+"sic": "6035",
+"source": "sec+yahoo"
+},
+"FOXA": {
+"ticker": "FOXA",
+"name": "Fox Corporation",
+"description": "Fox Corporation operates as a news, sports, and entertainment company in the United States. It operates in two segments, Cable Network Programming and Television.",
+"sector": "Communication Services",
+"industry": "Entertainment",
+"sic": "4833",
+"source": "sec+yahoo"
+},
+"FSLR": {
+"ticker": "FSLR",
+"name": "First Solar, Inc.",
+"description": "First Solar, Inc., a solar technology company, provides photovoltaic (PV) solar energy solutions in the United States, France, India, Chile, and internationally.",
+"sector": "Technology",
+"industry": "Solar",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"FSS": {
+"ticker": "FSS",
+"name": "Federal Signal Corporation",
+"description": "Federal Signal Corporation designs, manufactures, and supplies a suite of products and integrated solutions for municipal, governmental, industrial, and commercial customers in the United States, Canada, Europe, and internationally.",
+"sector": "Industrials",
+"industry": "Farm & Heavy Construction Machinery",
+"sic": "3711",
+"source": "sec+yahoo"
+},
+"FTGC": {
+"ticker": "FTGC",
+"name": "First Trust Global Tactical Commodity Strategy Fund",
+"description": "The fund is an actively managed exchange-traded fund (\"ETF\") that seeks to achieve attractive risk adjusted returns by investing in commodity futures contracts, exchange-traded commodity linked instruments, and commodity linked total return swaps (collectively, \"Commodities Instruments\") through a wholly-owned subsidiary of the fund organized under the laws of the Cayman Islands (the \"Subsidiary\").",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"GE": {
+"ticker": "GE",
+"name": "GE Aerospace",
+"description": "General Electric Company, doing business as GE Aerospace, designs and produces commercial and defense aircraft engines, integrated engine components, electric power, and aircraft systems. The company operates through two segments, Commercial Engines & Services, and Defense & Propulsion Technologies.",
+"sector": "Industrials",
+"industry": "Aerospace & Defense",
+"sic": "3600",
+"source": "sec+yahoo"
+},
+"GH": {
+"ticker": "GH",
+"name": "Guardant Health, Inc.",
+"description": "Guardant Health, Inc., a precision oncology company, provides blood and tissue tests, and data sets in the United States and internationally.",
+"sector": "Healthcare",
+"industry": "Diagnostics & Research",
+"sic": "8071",
+"source": "sec+yahoo"
+},
+"GIGB": {
+"ticker": "GIGB",
+"name": "Goldman Sachs Access Investment Grade Corporate Bond ETF",
+"description": "The fund seeks to achieve its investment objective by investing at least 80% of its assets (exclusive of collateral held from securities lending) in securities included in its underlying index.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"GIS": {
+"ticker": "GIS",
+"name": "General Mills, Inc.",
+"description": "General Mills, Inc. manufactures and markets branded consumer food in the United States and internationally. The company operates through four segments: North America Retail; International; North America Pet; and North America Foodservice.",
+"sector": "Consumer Defensive",
+"industry": "Packaged Foods",
+"sic": "2040",
+"source": "sec+yahoo"
+},
+"GLW": {
+"ticker": "GLW",
+"name": "Corning Incorporated",
+"description": "Corning Incorporated operates in optical communications, display, specialty materials, automotive, and life sciences businesses in the United States, Canada, Mexico, Japan, Taiwan, China, South Korea, Germany, and internationally.",
+"sector": "Technology",
+"industry": "Electronic Components",
+"sic": "3357",
+"source": "sec+yahoo"
+},
+"GME": {
+"ticker": "GME",
+"name": "GameStop Corp.",
+"description": "GameStop Corp., a specialty retailer, provides games, collectibles, and entertainment products through its stores and e-commerce platforms in United States, Australia and Europe.",
+"sector": "Consumer Cyclical",
+"industry": "Specialty Retail",
+"sic": "5734",
+"source": "sec+yahoo"
+},
+"GMED": {
+"ticker": "GMED",
+"name": "Globus Medical, Inc.",
+"description": "Globus Medical, Inc. develops and commercializes healthcare solutions for patients with musculoskeletal disorders in the United States and internationally.",
+"sector": "Healthcare",
+"industry": "Medical Devices",
+"sic": "3841",
+"source": "sec+yahoo"
+},
+"GOOG": {
+"ticker": "GOOG",
+"name": "Alphabet Inc.",
+"description": "Alphabet Inc. offers various products and platforms in the United States, Europe, the Middle East, Africa, the Asia-Pacific, Canada, and Latin America. It operates through Google Services, Google Cloud, and Other Bets segments.",
+"sector": "Communication Services",
+"industry": "Internet Content & Information",
+"sic": "7370",
+"source": "sec+yahoo"
+},
+"GOOGL": {
+"ticker": "GOOGL",
+"name": "Alphabet Inc.",
+"description": "Alphabet Inc. offers various products and platforms in the United States, Europe, the Middle East, Africa, the Asia-Pacific, Canada, and Latin America. It operates through Google Services, Google Cloud, and Other Bets segments.",
+"sector": "Communication Services",
+"industry": "Internet Content & Information",
+"sic": "7370",
+"source": "sec+yahoo"
+},
+"GS": {
+"ticker": "GS",
+"name": "The Goldman Sachs Group, Inc.",
+"description": "The Goldman Sachs Group, Inc., a financial institution, provides a range of financial services for corporations, financial institutions, governments, and individuals in the Americas, Europe, the Middle East, Africa, and Asia.",
+"sector": "Financial Services",
+"industry": "Capital Markets",
+"sic": "6211",
+"source": "sec+yahoo"
+},
+"GTES": {
+"ticker": "GTES",
+"name": "Gates Industrial Corporation Ltd.",
+"description": "Gates Industrial Corporation Ltd. manufactures and sells engineered power transmission and fluid power solutions in the United States, rest of North America, South America, the United Kingdom, Luxembourg, rest of Europe, the Middle East, Africa, India, East Asia, and Greater China.",
+"sector": "Industrials",
+"industry": "Specialty Industrial Machinery",
+"sic": "3560",
+"source": "sec+yahoo"
+},
+"HALO": {
+"ticker": "HALO",
+"name": "Halozyme Therapeutics, Inc.",
+"description": "Halozyme Therapeutics, Inc., a biopharmaceutical company, researches, develops, and commercializes of proprietary enzymes and devices in the United States, Switzerland, Belgium, Japan, and internationally.",
+"sector": "Healthcare",
+"industry": "Biotechnology",
+"sic": "2836",
+"source": "sec+yahoo"
+},
+"HD": {
+"ticker": "HD",
+"name": "The Home Depot, Inc.",
+"description": "The Home Depot, Inc. operates as a home improvement retailer in the United States and internationally. It sells various building materials, home improvement products, lawn and garden products, and d\u00e9cor products, as well as facilities maintenance, repair, and operations products.",
+"sector": "Consumer Cyclical",
+"industry": "Home Improvement Retail",
+"sic": "5211",
+"source": "sec+yahoo"
+},
+"HON": {
+"ticker": "HON",
+"name": "Honeywell International Inc.",
+"description": "Honeywell International Inc. engages in the industrial automation, building automation, and energy and sustainability solutions businesses in the United States, Europe, and internationally.",
+"sector": "Industrials",
+"industry": "Conglomerates",
+"sic": "3724",
+"source": "sec+yahoo"
+},
+"HONA": {
+"ticker": "HONA",
+"name": "Honeywell Aerospace Inc.",
+"description": "Honeywell Aerospace Inc. supplies mission critical systems and technologies that enable the production, maintenance, and safe operation of aerospace and defense platforms. It operates through three segments: Electronic Solutions (ES), Engines & Power Systems (E&PS), and Control Systems (CS).",
+"sector": "Industrials",
+"industry": "Aerospace & Defense",
+"sic": "3724",
+"source": "sec+yahoo"
+},
+"HOOD": {
+"ticker": "HOOD",
+"name": "Robinhood Markets, Inc.",
+"description": "Robinhood Markets, Inc. operates financial services platform in the United States. The company's platform allows users to invest in stocks, exchange-traded funds (ETFs), and American depository receipts.",
+"sector": "Financial Services",
+"industry": "Capital Markets",
+"sic": "6211",
+"source": "sec+yahoo"
+},
+"IBM": {
+"ticker": "IBM",
+"name": "International Business Machines Corporation",
+"description": "International Business Machines Corporation, together with its subsidiaries, provides integrated solutions and services in the Americas, Europe, the Middle East, Africa, and the Asia Pacific. It operates through Software, Consulting, Infrastructure, and Financing segments.",
+"sector": "Technology",
+"industry": "Information Technology Services",
+"sic": "3570",
+"source": "sec+yahoo"
+},
+"IBP": {
+"ticker": "IBP",
+"name": "Installed Building Products, Inc.",
+"description": "Installed Building Products, Inc., together with its subsidiaries, engages in the installation of insulation for residential and commercial builders in the United States. It operates through three segments: Installation, Distribution, and Manufacturing Operations.",
+"sector": "Consumer Cyclical",
+"industry": "Residential Construction",
+"sic": "1520",
+"source": "sec+yahoo"
+},
+"IBRX": {
+"ticker": "IBRX",
+"name": "ImmunityBio, Inc.",
+"description": "ImmunityBio, Inc., a biotechnology company, focuses on innovating, developing, and commercializing next-generation immunotherapies designed to activate the patient's immune system and deliver durable protection against cancer and infectious diseases.",
+"sector": "Healthcare",
+"industry": "Biotechnology",
+"sic": "2836",
+"source": "sec+yahoo"
+},
+"IEF": {
+"ticker": "IEF",
+"name": "iShares 7-10 Year Treasury Bond ETF",
+"description": "The underlying index consists of publicly-issued U.S. Treasury securities that have a remaining maturity of greater than or equal to seven years and less than ten years and have $300 million or more of outstanding face value, excluding amounts held by the Federal Reserve System (the \u201cFed\u201d).",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"IGV": {
+"ticker": "IGV",
+"name": "iShares Expanded Tech-Software Sector ETF",
+"description": "The fund generally will invest at least 80% of its assets in the component securities of its underlying index and in investments that have economic characteristics that are substantially identical to the component securities of its underlying index.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"IJR": {
+"ticker": "IJR",
+"name": "iShares Core S&P Small-Cap ETF",
+"description": "The fund seeks to track the investment results of the S&P SmallCap 600 (the \u201cunderlying index\u201d), which measures the performance of the small-capitalization sector of the U.S. equity market, as determined by S&P Dow Jones Indices LLC (the \u201cindex provider\u201d or \u201cSPDJI\u201d).",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"ILMN": {
+"ticker": "ILMN",
+"name": "Illumina, Inc.",
+"description": "Illumina, Inc. provides sequencing- and array-based solutions for genetic and genomic analysis in the Americas, Europe, Greater China, the Asia Pacific, the Middle East, and Africa.",
+"sector": "Healthcare",
+"industry": "Diagnostics & Research",
+"sic": "3826",
+"source": "sec+yahoo"
+},
+"INTC": {
+"ticker": "INTC",
+"name": "Intel Corporation",
+"description": "Intel Corporation designs, develops, manufactures, markets, sells, and services computing and related end products and services in the United States, Ireland, Israel, and internationally. It operates through three segments: CCG, DCAI, and Intel Foundry.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"INTU": {
+"ticker": "INTU",
+"name": "Intuit Inc.",
+"description": "Intuit Inc. provides financial management, payments and capital, compliance, and marketing products and services in the United States. The company operates in two segments: Global Business Solutions and Consumer.",
+"sector": "Technology",
+"industry": "Software - Application",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"IONQ": {
+"ticker": "IONQ",
+"name": "IonQ, Inc.",
+"description": "IonQ, Inc. develops quantum computing systems in the United States, Switzerland, and Internationally. It sells access to quantum computers of various qubit capacities.",
+"sector": "Technology",
+"industry": "Computer Hardware",
+"sic": "7373",
+"source": "sec+yahoo"
+},
+"IQV": {
+"ticker": "IQV",
+"name": "IQVIA Holdings Inc.",
+"description": "IQVIA Holdings Inc. provides clinical research services, commercial insights, and healthcare intelligence to the life sciences and healthcare industries in the Americas, Europe, Africa, and the Asia-Pacific.",
+"sector": "Healthcare",
+"industry": "Diagnostics & Research",
+"sic": "8731",
+"source": "sec+yahoo"
+},
+"ITT": {
+"ticker": "ITT",
+"name": "ITT Inc.",
+"description": "ITT Inc., together with its subsidiaries, manufactures and sells engineered critical components and customized technology solutions for the transportation, industrial, and energy markets.",
+"sector": "Industrials",
+"industry": "Specialty Industrial Machinery",
+"sic": "3561",
+"source": "sec+yahoo"
+},
+"ITW": {
+"ticker": "ITW",
+"name": "Illinois Tool Works Inc.",
+"description": "Illinois Tool Works Inc. provides industrial products and equipment in North America, Europe, the Middle East, Africa, the Asia Pacific, and South America.",
+"sector": "Industrials",
+"industry": "Specialty Industrial Machinery",
+"sic": "3560",
+"source": "sec+yahoo"
+},
+"IVV": {
+"ticker": "IVV",
+"name": "iShares Core S&P 500 ETF",
+"description": "The fund seeks to track the investment results of the S&P 500 (the \u201cunderlying index\u201d), which measures the performance of the large-capitalization sector of the U.S. equity market, as determined by S&P Dow Jones Indices LLC (the \u201cindex provider\u201d or \u201cSPDJI\u201d).",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"JD": {
+"ticker": "JD",
+"name": "JD.com, Inc.",
+"description": "JD.com, Inc. operates as a supply chain-based technology and service provider in the People's Republic of China and Europe. It operates through three segments: JD Retail, JD Logistics, and New Businesses.",
+"sector": "Consumer Cyclical",
+"industry": "Internet Retail",
+"sic": "5990",
+"source": "sec+yahoo"
+},
+"JMBS": {
+"ticker": "JMBS",
+"name": "Janus Henderson Mortgage-Backed Securities ETF",
+"description": "The fund seeks to achieve its investment objective by investing mainly in mortgage-related instruments.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"JNJ": {
+"ticker": "JNJ",
+"name": "Johnson & Johnson",
+"description": "Johnson & Johnson, together with its subsidiaries, engages in the research and development, manufacture, and sale of a range of products in the healthcare field worldwide. It operates in two segments, Innovative Medicine and MedTech.",
+"sector": "Healthcare",
+"industry": "Drug Manufacturers - General",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"JPM": {
+"ticker": "JPM",
+"name": "JPMorgan Chase & Co.",
+"description": "JPMorgan Chase & Co. operates as a bank and financial holding company in the United States, rest of North America, Europe, the Middle East, Africa, the Asia Pacific, Latin America, and the Caribbean.",
+"sector": "Financial Services",
+"industry": "Banks - Diversified",
+"sic": "6021",
+"source": "sec+yahoo"
+},
+"KO": {
+"ticker": "KO",
+"name": "The Coca-Cola Company",
+"description": "The Coca-Cola Company, a beverage company, manufactures and sells various nonalcoholic beverages in the United States and internationally.",
+"sector": "Consumer Defensive",
+"industry": "Beverages - Non-Alcoholic",
+"sic": "2080",
+"source": "sec+yahoo"
+},
+"KR": {
+"ticker": "KR",
+"name": "The Kroger Co.",
+"description": "The Kroger Co. operates as a food and drug retailer in the United States. The company operates combination food and drug stores, multi-department stores, marketplace stores, and price impact warehouses.",
+"sector": "Consumer Defensive",
+"industry": "Grocery Stores",
+"sic": "5411",
+"source": "sec+yahoo"
+},
+"LCID": {
+"ticker": "LCID",
+"name": "Lucid Group, Inc.",
+"description": "Lucid Group, Inc., a technology company, designs, develops, manufactures, and sells electric vehicles (EV), EV powertrains, and battery systems. The company provides Lucid Air sedan and Lucid Gravity SUV.",
+"sector": "Consumer Cyclical",
+"industry": "Auto Manufacturers",
+"sic": "3711",
+"source": "sec+yahoo"
+},
+"LIN": {
+"ticker": "LIN",
+"name": "Linde plc",
+"description": "Linde plc operates as an industrial gas company worldwide. The company offers atmospheric gases, including oxygen, nitrogen, argon, and rare gases; and process gases, such as hydrogen, helium, carbon dioxide, carbon monoxide, electronic gases, specialty gases, and acetylene.",
+"sector": "Basic Materials",
+"industry": "Specialty Chemicals",
+"sic": "2810",
+"source": "sec+yahoo"
+},
+"LITE": {
+"ticker": "LITE",
+"name": "Lumentum Holdings Inc.",
+"description": "Lumentum Holdings Inc. manufactures and sells optical and photonic products in the Americas, the Asia-Pacific, Europe, the Middle East, and Africa. It offers component products, including semiconductor laser chips, laser sub-assemblies, line subsystems, and wavelength management systems.",
+"sector": "Technology",
+"industry": "Communication Equipment",
+"sic": "3669",
+"source": "sec+yahoo"
+},
+"LLY": {
+"ticker": "LLY",
+"name": "Eli Lilly and Company",
+"description": "Eli Lilly and Company discovers, develops, manufactures, and markets human pharmaceutical products in the United States, Europe, China, Japan, and internationally.",
+"sector": "Healthcare",
+"industry": "Drug Manufacturers - General",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"LMT": {
+"ticker": "LMT",
+"name": "Lockheed Martin Corporation",
+"description": "Lockheed Martin Corporation, an aerospace and defense company, engages in the research, design, development, manufacture, integration, and sustainment of technology systems, products, and services in the United States, Europe, Asia, the Middle East, and internationally.",
+"sector": "Industrials",
+"industry": "Aerospace & Defense",
+"sic": "3760",
+"source": "sec+yahoo"
+},
+"LNT": {
+"ticker": "LNT",
+"name": "Alliant Energy Corporation",
+"description": "Alliant Energy Corporation operates as a utility holding company that provides regulated electric and natural gas services in the United States. It operates through IPL and WPL segments.",
+"sector": "Utilities",
+"industry": "Utilities - Regulated Electric",
+"sic": "4931",
+"source": "sec+yahoo"
+},
+"LNTH": {
+"ticker": "LNTH",
+"name": "Lantheus Holdings, Inc.",
+"description": "Lantheus Holdings, Inc. develops, manufactures, and commercializes diagnostic and therapeutic products that assist clinicians in diagnosis and treatment of heart, cancer, and other diseases worldwide.",
+"sector": "Healthcare",
+"industry": "Drug Manufacturers - Specialty & Generic",
+"sic": "2835",
+"source": "sec+yahoo"
+},
+"LOW": {
+"ticker": "LOW",
+"name": "Lowe's Companies, Inc.",
+"description": "Lowe's Companies, Inc., together with its subsidiaries, operates as a home improvement retailer in the United States and Canada. It provides a line of products for construction, maintenance, repair, remodeling, and decorating.",
+"sector": "Consumer Cyclical",
+"industry": "Home Improvement Retail",
+"sic": "5211",
+"source": "sec+yahoo"
+},
+"LRCX": {
+"ticker": "LRCX",
+"name": "Lam Research Corporation",
+"description": "Lam Research Corporation designs, manufactures, markets, refurbishes, and services semiconductor processing equipment used in the fabrication of integrated circuits in the United States, China, Korea, Taiwan, Japan, Southeast Asia, and Europe.",
+"sector": "Technology",
+"industry": "Semiconductor Equipment & Materials",
+"sic": "3559",
+"source": "sec+yahoo"
+},
+"MA": {
+"ticker": "MA",
+"name": "Mastercard Incorporated",
+"description": "Mastercard Incorporated, a technology company, provides transaction processing and other payment-related products and services in the United States and internationally.",
+"sector": "Financial Services",
+"industry": "Credit Services",
+"sic": "7389",
+"source": "sec+yahoo"
+},
+"MARA": {
+"ticker": "MARA",
+"name": "MARA Holdings, Inc.",
+"description": "MARA Holdings, Inc. operates as an energy and digital infrastructure company in North America, the Middle East, Europe, and Latin America.",
+"sector": "Financial Services",
+"industry": "Capital Markets",
+"sic": "6199",
+"source": "sec+yahoo"
+},
+"MBB": {
+"ticker": "MBB",
+"name": "iShares MBS ETF",
+"description": "The fund will invest at least 80% of its assets in the component securities of the underlying index and TBAs that have economic characteristics that are substantially identical to the economic characteristics of the component securities of the index, and the fund will invest at least 90% of its assets in fixed income securities of the types included in the underlying index that BFA believes will help the fund track the index.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"MBGL": {
+"ticker": "MBGL",
+"name": "Mobility Global, Inc.",
+"description": "Mobility Global, Inc. provides automotive data, insights, and technology solutions in the United States and internationally. It operates in two segments, CARFAX and Business-to-Business (B2B).",
+"sector": "Technology",
+"industry": "Software - Infrastructure",
+"sic": "7389",
+"source": "sec+yahoo"
+},
+"MCD": {
+"ticker": "MCD",
+"name": "McDonald's Corporation",
+"description": "McDonald's Corporation owns, operates, and franchises restaurants under the McDonald's brand in the United States and internationally.",
+"sector": "Consumer Cyclical",
+"industry": "Restaurants",
+"sic": "5812",
+"source": "sec+yahoo"
+},
+"MCHP": {
+"ticker": "MCHP",
+"name": "Microchip Technology Incorporated",
+"description": "Microchip Technology Incorporated develops, manufactures, and sells smart, connected, and secure embedded control solutions in the Americas, Europe, and Asia. It operates in two segments, Semiconductor Products and Technology Licensing.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"MDLZ": {
+"ticker": "MDLZ",
+"name": "Mondelez International, Inc.",
+"description": "Mondelez International, Inc., through its subsidiaries, manufactures, markets, and sells snack food and beverage products in Latin America, North America, Asia, the Middle East, Africa, and Europe.",
+"sector": "Consumer Defensive",
+"industry": "Confectioners",
+"sic": "2000",
+"source": "sec+yahoo"
+},
+"META": {
+"ticker": "META",
+"name": "Meta Platforms, Inc.",
+"description": "Meta Platforms, Inc. engages in the development of products that enable people to connect and share with friends and family through mobile devices, personal computers, virtual reality (VR) headsets, and AI glasses in the United States, Canada, Europe, Asia-Pacific, and internationally.",
+"sector": "Communication Services",
+"industry": "Internet Content & Information",
+"sic": "7370",
+"source": "sec+yahoo"
+},
+"MICR": {
+"ticker": "MICR",
+"name": "MICRON SOLUTIONS INC",
+"description": "Micron Solutions, Inc. operates as a contract manufacturer for the medical device, defense, and life sciences markets. It offers precision machining, thermoplastic injection molding, mold making products; sensors; orthopedic implants and devices; and diagnostic test kits.",
+"sector": "Healthcare",
+"industry": "Medical Devices",
+"sic": null,
+"source": "yahoo"
+},
+"MPC": {
+"ticker": "MPC",
+"name": "Marathon Petroleum Corporation",
+"description": "Marathon Petroleum Corporation, together with its subsidiaries, operates as an integrated downstream energy company in the United States. The company operates through three segments: Refining & Marketing; Midstream; and Renewable Diesel.",
+"sector": "Energy",
+"industry": "Oil & Gas Refining & Marketing",
+"sic": "2911",
+"source": "sec+yahoo"
+},
+"MRAAF": {
+"ticker": "MRAAF",
+"name": "Murata Manufacturing Co., Ltd.",
+"description": "Murata Manufacturing Co., Ltd. develops, manufactures, and sells ceramic-based passive electronic components and solutions in Japan, North America, and South America, Europe, China, Asia, and internationally. It operates through three segments: Components, Devices & Modules, and Other.",
+"sector": "Technology",
+"industry": "Electronic Components",
+"sic": null,
+"source": "yahoo"
+},
+"MRK": {
+"ticker": "MRK",
+"name": "Merck & Co., Inc.",
+"description": "Merck & Co., Inc. operates as a healthcare company worldwide.",
+"sector": "Healthcare",
+"industry": "Drug Manufacturers - General",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"MRNA": {
+"ticker": "MRNA",
+"name": "Moderna, Inc.",
+"description": "Moderna, Inc., a biotechnology company, provides messenger RNA medicines in the United States, Europe, and internationally.",
+"sector": "Healthcare",
+"industry": "Biotechnology",
+"sic": "2836",
+"source": "sec+yahoo"
+},
+"MRSH": {
+"ticker": "MRSH",
+"name": "Marsh & McLennan Companies, Inc.",
+"description": "Marsh & McLennan Companies, Inc., a professional services company, provides advisory services and insurance solutions to clients in the areas of risk, strategy, and people worldwide. The company operates through Risk and Insurance Services, and Consulting segments.",
+"sector": "Financial Services",
+"industry": "Insurance Brokers",
+"sic": "6411",
+"source": "sec+yahoo"
+},
+"MRVL": {
+"ticker": "MRVL",
+"name": "Marvell Technology, Inc.",
+"description": "Marvell Technology, Inc., together with its subsidiaries, provides data infrastructure semiconductor solutions and spanning the data center core to network edge in the United States, Argentina, China, India, Israel, Japan, Singapore, South Korea, Taiwan, Vietnam, and internationally.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"MS": {
+"ticker": "MS",
+"name": "Morgan Stanley",
+"description": "Morgan Stanley, a financial holding company, provides various financial products and services to corporations, governments, financial institutions, and individuals in the Americas, Asia, Europe, the Middle East, and Africa.",
+"sector": "Financial Services",
+"industry": "Capital Markets",
+"sic": "6211",
+"source": "sec+yahoo"
+},
+"MSFT": {
+"ticker": "MSFT",
+"name": "Microsoft Corporation",
+"description": "Microsoft Corporation, a technology company, develops and supports a portfolio of technology solutions for individuals and businesses worldwide.",
+"sector": "Technology",
+"industry": "Software - Infrastructure",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"MSTR": {
+"ticker": "MSTR",
+"name": "Strategy Inc",
+"description": "Strategy Inc, together with its subsidiaries, operates as a bitcoin treasury company in the United States, Europe, the Middle East, Africa, and internationally.",
+"sector": "Technology",
+"industry": "Software - Application",
+"sic": "6199",
+"source": "sec+yahoo"
+},
+"MU": {
+"ticker": "MU",
+"name": "Micron Technology, Inc.",
+"description": "Micron Technology, Inc. engages in the provision of semiconductor memory and storage products in the United States, Taiwan, Mainland China, other Asia Pacific countries, Japan, Europe, and internationally.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"NEE": {
+"ticker": "NEE",
+"name": "NextEra Energy, Inc.",
+"description": "NextEra Energy, Inc., through its subsidiaries, generates, stores, transmits, distributes, and sells electric power to retail and wholesale customers in North America. It operates through Florida Power & Light Company (FPL) and NEER segments.",
+"sector": "Utilities",
+"industry": "Utilities - Regulated Electric",
+"sic": "4911",
+"source": "sec+yahoo"
+},
+"NFLX": {
+"ticker": "NFLX",
+"name": "Netflix, Inc.",
+"description": "Netflix, Inc. provides entertainment services worldwide. The company offers television (TV) series, documentaries, feature films, games, and live programming across various genres and languages.",
+"sector": "Communication Services",
+"industry": "Entertainment",
+"sic": "7841",
+"source": "sec+yahoo"
+},
+"NG": {
+"ticker": "NG",
+"name": "NovaGold Resources Inc.",
+"description": "NovaGold Resources Inc. operates in the gold mining industry, focusing on the exploration and development of gold mineral properties in the United States.",
+"sector": "Basic Materials",
+"industry": "Gold",
+"sic": "1040",
+"source": "sec+yahoo"
+},
+"NIO": {
+"ticker": "NIO",
+"name": "NIO Inc.",
+"description": "NIO Inc. designs, develops, manufactures, and sells smart electric vehicles in China, Europe, and internationally. It offers five and six-seater electric SUVs, as well as smart electric sedans.",
+"sector": "Consumer Cyclical",
+"industry": "Auto Manufacturers",
+"sic": "3711",
+"source": "sec+yahoo"
+},
+"NKE": {
+"ticker": "NKE",
+"name": "NIKE, Inc.",
+"description": "NIKE, Inc., together with its subsidiaries, designs, develops, markets, and sells athletic footwear, apparel, equipment, accessories, and services for men, women, and kids in North America, Europe, the Middle East, Africa, Greater China, the Asia Pacific, and Latin America.",
+"sector": "Consumer Cyclical",
+"industry": "Footwear & Accessories",
+"sic": "3021",
+"source": "sec+yahoo"
+},
+"NOKBF": {
+"ticker": "NOKBF",
+"name": "Nokia Oyj",
+"description": "Nokia Oyj, together with its subsidiaries, provides mobile, fixed, and cloud network solutions in North and Latin America, Greater China, India, Asia Pacific, Europe, the Middle East, and Africa.",
+"sector": "Technology",
+"industry": "Communication Equipment",
+"sic": "3663",
+"source": "sec+yahoo"
+},
+"NOW": {
+"ticker": "NOW",
+"name": "ServiceNow, Inc.",
+"description": "ServiceNow, Inc. provides cloud-based solution for digital workflows in the North America, Brazil, Europe, the Middle East and Africa, Asia Pacific, and internationally.",
+"sector": "Technology",
+"industry": "Software - Application",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"NVDA": {
+"ticker": "NVDA",
+"name": "NVIDIA Corporation",
+"description": "NVIDIA Corporation operates as a data center scale AI infrastructure company in the United States, Taiwan, China, Hong Kong, Europe, and internationally. It operates through Compute & Networking, and Graphics segments.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"NVO": {
+"ticker": "NVO",
+"name": "Novo Nordisk A/S",
+"description": "Novo Nordisk A/S, together with its subsidiaries, engages in the research and development, manufacture, and distribution of pharmaceutical products. It operates through two segments, Obesity and Diabetes Care, and Rare Disease.",
+"sector": "Healthcare",
+"industry": "Drug Manufacturers - General",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"NVS": {
+"ticker": "NVS",
+"name": "Novartis AG",
+"description": "Novartis AG researches, develops, manufactures, distributes, markets, and sells pharmaceutical medicines in Switzerland and internationally.",
+"sector": "Healthcare",
+"industry": "Drug Manufacturers - General",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"NXPI": {
+"ticker": "NXPI",
+"name": "NXP Semiconductors N.V.",
+"description": "NXP Semiconductors N.V. provides semiconductor products in the United States, Germany, Japan, South Korea, Taiwan, Singapore, the Netherlands, Mainland China, Hong Kong, and internationally.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"O": {
+"ticker": "O",
+"name": "Realty Income Corporation",
+"description": "Realty Income Corporation, an S&P 500 company, is real estate partner to the world's leading companies. Founded in 1969, they serve their clients as a full-service real estate capital provider.",
+"sector": "Real Estate",
+"industry": "REIT - Retail",
+"sic": "6798",
+"source": "sec+yahoo"
+},
+"OKE": {
+"ticker": "OKE",
+"name": "ONEOK, Inc.",
+"description": "ONEOK, Inc. operates as a midstream service provider of gathering, processing, fractionation, transportation, storage, and marine export services in the United States.",
+"sector": "Energy",
+"industry": "Oil & Gas Midstream",
+"sic": "4923",
+"source": "sec+yahoo"
+},
+"OKTA": {
+"ticker": "OKTA",
+"name": "Okta, Inc.",
+"description": "Okta, Inc. operates as an identity partner in the United States and internationally.",
+"sector": "Technology",
+"industry": "Software - Infrastructure",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"OLN": {
+"ticker": "OLN",
+"name": "Olin Corporation",
+"description": "Olin Corporation manufactures and distributes chemical products in the United States, Europe, Asia Pacific, the Middle East, Africa, and India Middle East, Africa, India, Latin America, and Canada. It operates through three segments: Chlor Alkali Products and Vinyls; Epoxy; and Winchester.",
+"sector": "Basic Materials",
+"industry": "Chemicals",
+"sic": "2800",
+"source": "sec+yahoo"
+},
+"ON": {
+"ticker": "ON",
+"name": "ON Semiconductor Corporation",
+"description": "ON Semiconductor Corporation provides intelligent sensing and power solutions in Hong Kong, Singapore, the United Kingdom, the United States, and internationally. It operates through three segments: Power Solutions Group, Analog and Mixed-Signal Group, and Intelligent Sensing Group.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"ORCL": {
+"ticker": "ORCL",
+"name": "Oracle Corporation",
+"description": "Oracle Corporation offers products and services that build, run and support enterprise information technology frameworks worldwide.",
+"sector": "Technology",
+"industry": "Software - Infrastructure",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"ORLY": {
+"ticker": "ORLY",
+"name": "O'Reilly Automotive, Inc.",
+"description": "O'Reilly Automotive, Inc., together with its subsidiaries, operates as a retailer and supplier of automotive aftermarket parts, tools, supplies, equipment, and accessories in the United States, Puerto Rico, Mexico, and Canada.",
+"sector": "Consumer Cyclical",
+"industry": "Auto Parts",
+"sic": "5531",
+"source": "sec+yahoo"
+},
+"OTIS": {
+"ticker": "OTIS",
+"name": "Otis Worldwide Corporation",
+"description": "Otis Worldwide Corporation engages in manufacturing, installation, and servicing of elevators and escalators in the United States, China, and internationally. The company operates in two segments, New Equipment and Service.",
+"sector": "Industrials",
+"industry": "Specialty Industrial Machinery",
+"sic": "3600",
+"source": "sec+yahoo"
+},
+"OXM": {
+"ticker": "OXM",
+"name": "Oxford Industries, Inc.",
+"description": "Oxford Industries, Inc., an apparel company, designs, sources, markets, and distributes lifestyle products worldwide.",
+"sector": "Consumer Cyclical",
+"industry": "Apparel Manufacturing",
+"sic": "2320",
+"source": "sec+yahoo"
+},
+"PALL": {
+"ticker": "PALL",
+"name": "abrdn Physical Palladium Shares ETF",
+"description": "The fund is designed for investors who want a cost-effective and convenient way to invest in palladium with minimal credit risk.",
+"sector": null,
+"industry": "Commodity Contracts Brokers & Dealers",
+"sic": "6221",
+"source": "sec+yahoo"
+},
+"PBA": {
+"ticker": "PBA",
+"name": "Pembina Pipeline Corporation",
+"description": "Pembina Pipeline Corporation provides energy transportation and midstream services. It operates through three segments: Pipelines, Facilities, and Marketing & New Ventures.",
+"sector": "Energy",
+"industry": "Oil & Gas Midstream",
+"sic": "1382",
+"source": "sec+yahoo"
+},
+"PEP": {
+"ticker": "PEP",
+"name": "PepsiCo, Inc.",
+"description": "PepsiCo, Inc. engages in the manufacture, marketing, distribution, and sale of various beverages and convenient foods worldwide.",
+"sector": "Consumer Defensive",
+"industry": "Beverages - Non-Alcoholic",
+"sic": "2080",
+"source": "sec+yahoo"
+},
+"PFE": {
+"ticker": "PFE",
+"name": "Pfizer Inc.",
+"description": "Pfizer Inc. discovers, develops, manufactures, markets, distributes, and sells biopharmaceutical products in the United States and internationally. It operates in three segments: Biopharma, PC1, and Pfizer Ignite.",
+"sector": "Healthcare",
+"industry": "Drug Manufacturers - General",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"PG": {
+"ticker": "PG",
+"name": "The Procter & Gamble Company",
+"description": "The Procter & Gamble Company provides branded consumer packaged goods worldwide. It operates through five segments: Beauty; Grooming; Health Care; Fabric & Home Care; and Baby, Feminine & Family Care.",
+"sector": "Consumer Defensive",
+"industry": "Household & Personal Products",
+"sic": "2840",
+"source": "sec+yahoo"
+},
+"PLD": {
+"ticker": "PLD",
+"name": "Prologis, Inc.",
+"description": "Prologis, Inc. don't just lead the industry, they define it. The firm creates the intelligent infrastructure that powers global commerce, seamlessly connecting the digital and physical worlds.",
+"sector": "Real Estate",
+"industry": "REIT - Industrial",
+"sic": "6798",
+"source": "sec+yahoo"
+},
+"PLTR": {
+"ticker": "PLTR",
+"name": "Palantir Technologies Inc.",
+"description": "Palantir Technologies Inc. builds and deploys software platforms for the intelligence community to assist in counterterrorism investigations and operations in the United States, the United Kingdom, and internationally.",
+"sector": "Technology",
+"industry": "Software - Infrastructure",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"PODD": {
+"ticker": "PODD",
+"name": "Insulet Corporation",
+"description": "Insulet Corporation develops, manufactures, and sells insulin delivery systems for people with insulin-dependent diabetes in the United States and internationally.",
+"sector": "Healthcare",
+"industry": "Medical Devices",
+"sic": "3841",
+"source": "sec+yahoo"
+},
+"PPG": {
+"ticker": "PPG",
+"name": "PPG Industries, Inc.",
+"description": "PPG Industries, Inc. manufactures and distributes paints, coatings, and specialty materials in the United States, Canada, the Asia Pacific, Latin America, Europe, the Middle East, and Africa.",
+"sector": "Basic Materials",
+"industry": "Specialty Chemicals",
+"sic": "2851",
+"source": "sec+yahoo"
+},
+"PRAX": {
+"ticker": "PRAX",
+"name": "Praxis Precision Medicines, Inc.",
+"description": "Praxis Precision Medicines, Inc., a clinical-stage biopharmaceutical company, engages in the development of therapies for central nervous system (CNS) disorders characterized by neuronal excitation-inhibition imbalance in the United States.",
+"sector": "Healthcare",
+"industry": "Biotechnology",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"PRGS": {
+"ticker": "PRGS",
+"name": "Progress Software Corporation",
+"description": "Progress Software Corporation provides software products that develops, deploys, and manages artificial intelligence (AI) powered applications and digital experiences in the United States and internationally.",
+"sector": "Technology",
+"industry": "Software - Infrastructure",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"PTC": {
+"ticker": "PTC",
+"name": "PTC Inc.",
+"description": "PTC Inc. operates as software company in the Americas, Europe, and the Asia Pacific.",
+"sector": "Technology",
+"industry": "Software - Application",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"PTON": {
+"ticker": "PTON",
+"name": "Peloton Interactive, Inc.",
+"description": "Peloton Interactive, Inc. provides fitness and wellness products and services in North America and internationally.",
+"sector": "Consumer Cyclical",
+"industry": "Leisure",
+"sic": "3949",
+"source": "sec+yahoo"
+},
+"PYPL": {
+"ticker": "PYPL",
+"name": "PayPal Holdings, Inc.",
+"description": "PayPal Holdings, Inc. operates a technology platform that enables digital payments for merchants and consumers worldwide.",
+"sector": "Financial Services",
+"industry": "Credit Services",
+"sic": "7389",
+"source": "sec+yahoo"
+},
+"QBTS": {
+"ticker": "QBTS",
+"name": "D-Wave Quantum Inc.",
+"description": "D-Wave Quantum Inc. engages in the development and delivery of quantum computing systems, software, and services worldwide.",
+"sector": "Technology",
+"industry": "Computer Hardware",
+"sic": "7374",
+"source": "sec+yahoo"
+},
+"QCOM": {
+"ticker": "QCOM",
+"name": "QUALCOMM Incorporated",
+"description": "QUALCOMM Incorporated engages in the development and commercialization of foundational technologies for the wireless industry in China, the United States, South Korea, and internationally.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3663",
+"source": "sec+yahoo"
+},
+"RA": {
+"ticker": "RA",
+"name": "Brookfield Real Assets Income Fund Inc.",
+"description": "Brookfield Real Assets Income Fund Inc. is a closed ended fixed income mutual fund launched and managed by Brookfield Investment Management Inc. The fund is co-managed by Schroder Investment Management North America Inc.",
+"sector": "Financial Services",
+"industry": "Asset Management",
+"sic": null,
+"source": "yahoo"
+},
+"RARE": {
+"ticker": "RARE",
+"name": "Ultragenyx Pharmaceutical Inc.",
+"description": "Ultragenyx Pharmaceutical Inc., a biopharmaceutical company, focuses on the identification, acquisition, development, and commercialization of novel products for the treatment of rare and ultra-rare genetic diseases in North America, Latin America, Europe, the Middle East, Africa, and the Asia-Pacific.",
+"sector": "Healthcare",
+"industry": "Biotechnology",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"RBC": {
+"ticker": "RBC",
+"name": "RBC Bearings Incorporated",
+"description": "RBC Bearings Incorporated manufactures and markets engineered precision bearings, components, and systems in the United States and internationally. It operates through two segments: Aerospace/Defense and Industrial.",
+"sector": "Industrials",
+"industry": "Tools & Accessories",
+"sic": "3562",
+"source": "sec+yahoo"
+},
+"RBLX": {
+"ticker": "RBLX",
+"name": "Roblox Corporation",
+"description": "Roblox Corporation operates an immersive platform for connection and communication in the United States and internationally.",
+"sector": "Communication Services",
+"industry": "Electronic Gaming & Multimedia",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"REZI": {
+"ticker": "REZI",
+"name": "Resideo Technologies, Inc.",
+"description": "Resideo Technologies, Inc. develops, manufactures, sells, and distributes comfort, energy management, and safety and security solutions in the United States, Europe, and internationally. The company operates through Products and Solutions segment.",
+"sector": "Industrials",
+"industry": "Industrial Distribution",
+"sic": "5072",
+"source": "sec+yahoo"
+},
+"RGTI": {
+"ticker": "RGTI",
+"name": "Rigetti Computing, Inc.",
+"description": "Rigetti Computing, Inc., through its subsidiaries, builds and operates quantum computers and the superconducting quantum processors the United States, the United Kingdom, rest of Europe, Asia, and internationally.",
+"sector": "Technology",
+"industry": "Computer Hardware",
+"sic": "7371",
+"source": "sec+yahoo"
+},
+"RH": {
+"ticker": "RH",
+"name": "RH",
+"description": "RH, together with its subsidiaries, operates as a retailer and lifestyle brand in the home furnishings market in the United States, Canada, the United Kingdom, Germany, Belgium, and Spain. The company operates in three segments: RH Segment, Waterworks, and Real Estate.",
+"sector": "Consumer Cyclical",
+"industry": "Specialty Retail",
+"sic": "5712",
+"source": "sec+yahoo"
+},
+"RIG": {
+"ticker": "RIG",
+"name": "Transocean Ltd.",
+"description": "Transocean Ltd., together with its subsidiaries, provides offshore contract drilling services for oil and gas wells in Switzerland and internationally. The company contracts mobile offshore drilling rigs, related equipment, and work crews to drill oil and gas wells.",
+"sector": "Energy",
+"industry": "Oil & Gas Drilling",
+"sic": "1381",
+"source": "sec+yahoo"
+},
+"RIOT": {
+"ticker": "RIOT",
+"name": "Riot Platforms, Inc.",
+"description": "Riot Platforms, Inc., together with its subsidiaries, operates as a Bitcoin mining company in the United States. It operates in two segments, Bitcoin Mining and Engineering.",
+"sector": "Financial Services",
+"industry": "Capital Markets",
+"sic": "6199",
+"source": "sec+yahoo"
+},
+"RIVN": {
+"ticker": "RIVN",
+"name": "Rivian Automotive, Inc.",
+"description": "Rivian Automotive, Inc., together with its subsidiaries, develops, manufactures, and sells category-defining electric vehicles. It operates through two segments, Automotive, and Software and Services.",
+"sector": "Consumer Cyclical",
+"industry": "Auto Manufacturers",
+"sic": "3711",
+"source": "sec+yahoo"
+},
+"ROK": {
+"ticker": "ROK",
+"name": "Rockwell Automation, Inc.",
+"description": "Rockwell Automation, Inc., together with its subsidiaries, provides industrial automation and digital transformation solutions in North America, Europe, the Middle East, Africa, the Asia Pacific, and Latin America.",
+"sector": "Industrials",
+"industry": "Specialty Industrial Machinery",
+"sic": "3829",
+"source": "sec+yahoo"
+},
+"ROL": {
+"ticker": "ROL",
+"name": "Rollins, Inc.",
+"description": "Rollins, Inc., through its subsidiaries, provides pest and wildlife control services and protection to residential and commercial customers in the United States and internationally.",
+"sector": "Consumer Cyclical",
+"industry": "Personal Services",
+"sic": "7340",
+"source": "sec+yahoo"
+},
+"RPM": {
+"ticker": "RPM",
+"name": "RPM International Inc.",
+"description": "RPM International Inc. provides specialty chemicals for the construction, industrial, specialty, and consumer markets. It operates through CPG, PCG, and Consumer segments.",
+"sector": "Basic Materials",
+"industry": "Specialty Chemicals",
+"sic": "2851",
+"source": "sec+yahoo"
+},
+"RVTY": {
+"ticker": "RVTY",
+"name": "Revvity, Inc.",
+"description": "Revvity, Inc. provides health sciences solutions, technologies, and services.",
+"sector": "Healthcare",
+"industry": "Diagnostics & Research",
+"sic": "3826",
+"source": "sec+yahoo"
+},
+"SARO": {
+"ticker": "SARO",
+"name": "StandardAero, Inc.",
+"description": "StandardAero, Inc. provides aerospace engine aftermarket services for fixed and rotary wing aircraft in the United States, Canada, the United Kingdom, Rest of Europe, Asia, and internationally. It operates in two segments, Engine Services and Component Repair Services.",
+"sector": "Industrials",
+"industry": "Aerospace & Defense",
+"sic": "3724",
+"source": "sec+yahoo"
+},
+"SBUX": {
+"ticker": "SBUX",
+"name": "Starbucks Corporation",
+"description": "Starbucks Corporation, together with its subsidiaries, operates as a roaster, marketer, and retailer of coffee internationally. The company operates through three segments: North America, International, and Channel Development.",
+"sector": "Consumer Cyclical",
+"industry": "Restaurants",
+"sic": "5810",
+"source": "sec+yahoo"
+},
+"SHOP": {
+"ticker": "SHOP",
+"name": "Shopify Inc.",
+"description": "Shopify Inc., a commerce technology company, provides tools to start, scale, market, and run a business of various sizes in Canada, the United States, Europe, the Middle East, Africa, the Asia Pacific, and Latin America.",
+"sector": "Technology",
+"industry": "Software - Application",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"SHW": {
+"ticker": "SHW",
+"name": "The Sherwin-Williams Company",
+"description": "The Sherwin-Williams Company engages in the development, manufacture, distribution, and sale of paint, coatings, and related products to professional, industrial, commercial and retail customers.",
+"sector": "Basic Materials",
+"industry": "Specialty Chemicals",
+"sic": "5200",
+"source": "sec+yahoo"
+},
+"SMCI": {
+"ticker": "SMCI",
+"name": "Super Micro Computer, Inc.",
+"description": "Super Micro Computer, Inc., together with its subsidiaries, develops and sells server and storage solutions based on modular and open-standard architecture in the United States, Asia, Europe, and internationally.",
+"sector": "Technology",
+"industry": "Computer Hardware",
+"sic": "3571",
+"source": "sec+yahoo"
+},
+"SMTC": {
+"ticker": "SMTC",
+"name": "Semtech Corporation",
+"description": "Semtech Corporation provides semiconductor, Internet of Things systems, and cloud connectivity service solutions in the Asia- Pacific, North America, and Europe. The company operates in three segments: Signal Integrity, Analog Mixed Signal and Wireless, and IoT Systems and Connectivity.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"SNAP": {
+"ticker": "SNAP",
+"name": "Snap Inc.",
+"description": "Snap Inc. operates as a technology company in North America, Europe, and internationally.",
+"sector": "Communication Services",
+"industry": "Internet Content & Information",
+"sic": "7370",
+"source": "sec+yahoo"
+},
+"SNEJF": {
+"ticker": "SNEJF",
+"name": "Sony Group Corporation",
+"description": "Sony Group Corporation develops, designs, produces, manufactures, supplies, and sells electronic equipment, instruments, and devices for consumer, professional, and industrial use in Japan, the United States, Europe, China, the Asia-Pacific, and internationally.",
+"sector": "Technology",
+"industry": "Consumer Electronics",
+"sic": "3651",
+"source": "sec+yahoo"
+},
+"SNOW": {
+"ticker": "SNOW",
+"name": "Snowflake Inc.",
+"description": "Snowflake Inc. provides a cloud-based data platform for various organizations in the United States and internationally.",
+"sector": "Technology",
+"industry": "Software - Application",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"SOFI": {
+"ticker": "SOFI",
+"name": "SoFi Technologies, Inc.",
+"description": "SoFi Technologies, Inc. provides various financial services in the United States, Latin America, Canada, and Hong Kong. The company operates through three segments: Lending, Technology Platform, and Financial Services.",
+"sector": "Financial Services",
+"industry": "Credit Services",
+"sic": "6199",
+"source": "sec+yahoo"
+},
+"SOLS": {
+"ticker": "SOLS",
+"name": "Solstice Advanced Materials, Inc.",
+"description": "Solstice Advanced Materials, Inc. operates as a specialty chemicals and advanced materials company in the United States and internationally. It operates in two segments: Refrigerants & Applied Solutions (RAS), and Electronic & Specialty Materials (ESM).",
+"sector": "Basic Materials",
+"industry": "Specialty Chemicals",
+"sic": "2800",
+"source": "sec+yahoo"
+},
+"SPCX": {
+"ticker": "SPCX",
+"name": "Space Exploration Technologies Corp.",
+"description": "Space Exploration Technologies Corp. provides satellite-based broadband services in the United States, Ireland, Canada, and internationally. It operates through three operating segments: Space, Connectivity, and AI.",
+"sector": "Industrials",
+"industry": "Aerospace & Defense",
+"sic": "7370",
+"source": "sec+yahoo"
+},
+"SPYM": {
+"ticker": "SPYM",
+"name": "State Street SPDR Portfolio S&P 500 ETF",
+"description": "Under normal market conditions, the fund generally invests substantially all, but at least 80%, of its total assets in the securities comprising the index. The index is designed to measure the performance of the large-capitalization segment of the U.S. equity market.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"STAG": {
+"ticker": "STAG",
+"name": "STAG Industrial, Inc.",
+"description": "STAG Industrial, Inc. is a real estate investment trust focused on the acquisition, development, ownership and operation of industrial properties throughout the United States.",
+"sector": "Real Estate",
+"industry": "REIT - Industrial",
+"sic": "6798",
+"source": "sec+yahoo"
+},
+"STE": {
+"ticker": "STE",
+"name": "STERIS plc",
+"description": "STERIS plc provides infection prevention products and services in the United States, Ireland, and internationally. It operates through three segments: Healthcare, Applied Sterilization Technologies, and Life Sciences.",
+"sector": "Healthcare",
+"industry": "Medical Devices",
+"sic": "3842",
+"source": "sec+yahoo"
+},
+"STLN": {
+"ticker": "STLN",
+"name": "The Oncology Institute, Inc.",
+"description": "Starling Oncology, Inc., an oncology company, provides various oncology services in the United States. It operates through three segments: Specialty pharmacy, Patient Services, and Clinical Trials & Other.",
+"sector": "Healthcare",
+"industry": "Medical Care Facilities",
+"sic": "8011",
+"source": "sec+yahoo"
+},
+"STX": {
+"ticker": "STX",
+"name": "Seagate Technology Holdings plc",
+"description": "Seagate Technology Holdings plc engages in providing data storage solutions in Singapore, the United States, the Netherlands, and internationally.",
+"sector": "Technology",
+"industry": "Computer Hardware",
+"sic": "3572",
+"source": "sec+yahoo"
+},
+"SYK": {
+"ticker": "SYK",
+"name": "Stryker Corporation",
+"description": "Stryker Corporation operates as a medical technology company in the United States and internationally. It operates through two segments, MedSurg and Neurotechnology, and Orthopaedics.",
+"sector": "Healthcare",
+"industry": "Medical Devices",
+"sic": "3841",
+"source": "sec+yahoo"
+},
+"T": {
+"ticker": "T",
+"name": "AT&T Inc.",
+"description": "AT&T Inc. provides telecommunications and technology services worldwide. It operates through two segments, Communications and Latin America.",
+"sector": "Communication Services",
+"industry": "Telecom Services",
+"sic": "4813",
+"source": "sec+yahoo"
+},
+"TJX": {
+"ticker": "TJX",
+"name": "The TJX Companies, Inc.",
+"description": "The TJX Companies, Inc., together with its subsidiaries, operates as an off-price apparel and home fashions retailer worldwide. It operates through four segments: Marmaxx, HomeGoods, TJX Canada, and TJX International.",
+"sector": "Consumer Cyclical",
+"industry": "Apparel Retail",
+"sic": "5651",
+"source": "sec+yahoo"
+},
+"TKO": {
+"ticker": "TKO",
+"name": "TKO Group Holdings, Inc.",
+"description": "TKO Group Holdings, Inc. operates as a sports and entertainment company. The company operates through three segments: UFC, WWE and IMG.",
+"sector": "Communication Services",
+"industry": "Entertainment",
+"sic": "7900",
+"source": "sec+yahoo"
+},
+"TLH": {
+"ticker": "TLH",
+"name": "iShares 10-20 Year Treasury Bond ETF",
+"description": "The underlying index consists of publicly-issued U.S. Treasury securities that have a remaining maturity of greater than or equal to ten years and less than twenty years and have $300 million or more of outstanding face value, excluding amounts held by the Federal Reserve System.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"TLK": {
+"ticker": "TLK",
+"name": "Perusahaan Perseroan (Persero) PT Telekomunikasi Indonesia Tbk",
+"description": "Perusahaan Perseroan (Persero) PT Telekomunikasi Indonesia Tbk provides information and communications technology, and telecommunications network services worldwide. The company operates through Mobile, Consumer, Enterprise, Wholesale and International Business, and Other segments.",
+"sector": "Communication Services",
+"industry": "Telecom Services",
+"sic": "4813",
+"source": "sec+yahoo"
+},
+"TMO": {
+"ticker": "TMO",
+"name": "Thermo Fisher Scientific Inc.",
+"description": "Thermo Fisher Scientific Inc. provides life sciences solutions, analytical instruments, specialty diagnostics, and laboratory products and biopharma services internationally.",
+"sector": "Healthcare",
+"industry": "Diagnostics & Research",
+"sic": "3829",
+"source": "sec+yahoo"
+},
+"TNDM": {
+"ticker": "TNDM",
+"name": "Tandem Diabetes Care, Inc.",
+"description": "Tandem Diabetes Care, Inc. designs, develops, and commercializes technology solutions for people living with diabetes in the United States and internationally. It's flagship products are the t:slim X2 insulin delivery system; and Tandem Mobi insulin pump, an automated insulin delivery system.",
+"sector": "Healthcare",
+"industry": "Medical Devices",
+"sic": "3841",
+"source": "sec+yahoo"
+},
+"TOELF": {
+"ticker": "TOELF",
+"name": "Tokyo Electron Limited",
+"description": "Tokyo Electron Limited, together with its subsidiaries, develops, manufactures, and sells semiconductor production equipment in Japan, South Korea, Taiwan, China, North America, Europe, and internationally.",
+"sector": "Technology",
+"industry": "Semiconductor Equipment & Materials",
+"sic": null,
+"source": "yahoo"
+},
+"TPYP": {
+"ticker": "TPYP",
+"name": "Tortoise North American Pipeline Fund",
+"description": "The fund will normally invest at least 80% of its net assets, plus the amount of any borrowings for investment purposes, in the types of securities suggested by its name.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"TRV": {
+"ticker": "TRV",
+"name": "The Travelers Companies, Inc.",
+"description": "The Travelers Companies, Inc., through its subsidiaries, provides a range of commercial and personal property, and casualty insurance products and services to businesses, government units, associations, and individuals in the United States, Canada, and internationally.",
+"sector": "Financial Services",
+"industry": "Insurance - Property & Casualty",
+"sic": "6331",
+"source": "sec+yahoo"
+},
+"TSLA": {
+"ticker": "TSLA",
+"name": "Tesla, Inc.",
+"description": "Tesla, Inc. designs, develops, manufactures, leases, and sells electric vehicles, and energy generation and storage systems in the United States, China, and internationally. The company operates in two segments, Automotive; and Energy Generation and Storage.",
+"sector": "Consumer Cyclical",
+"industry": "Auto Manufacturers",
+"sic": "3711",
+"source": "sec+yahoo"
+},
+"TSM": {
+"ticker": "TSM",
+"name": "Taiwan Semiconductor Manufacturing Company Limited",
+"description": "Taiwan Semiconductor Manufacturing Company Limited, together with its subsidiaries, manufactures, packages, tests, and sells integrated circuits and other semiconductor devices in Taiwan, China, Europe, the Middle East, Africa, Japan, the United States, and internationally.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"TTD": {
+"ticker": "TTD",
+"name": "The Trade Desk, Inc.",
+"description": "The Trade Desk, Inc. operates as a technology company in the United States and internationally.",
+"sector": "Communication Services",
+"industry": "Advertising Agencies",
+"sic": "7370",
+"source": "sec+yahoo"
+},
+"TXN": {
+"ticker": "TXN",
+"name": "Texas Instruments Incorporated",
+"description": "Texas Instruments Incorporated designs, manufactures, and sells semiconductors to electronics designers and manufacturers in the United States, China, the rest of Asia, Europe, the Middle East, Africa, Japan, and internationally. It operates through Analog and Embedded Processing segments.",
+"sector": "Technology",
+"industry": "Semiconductors",
+"sic": "3674",
+"source": "sec+yahoo"
+},
+"TXRH": {
+"ticker": "TXRH",
+"name": "Texas Roadhouse, Inc.",
+"description": "Texas Roadhouse, Inc., together with its subsidiaries, operates casual dining restaurants in the United States and internationally. It operates through Texas Roadhouse, Bubba's 33, and Others segments.",
+"sector": "Consumer Cyclical",
+"industry": "Restaurants",
+"sic": "5812",
+"source": "sec+yahoo"
+},
+"TYG": {
+"ticker": "TYG",
+"name": "Tortoise Energy Infrastructure Corporation",
+"description": "Tortoise Energy Infrastructure Corporation is a closed ended equity mutual fund launched and managed by Tortoise Capital Advisors L.L.C. The fund invests in the public equity markets of the United States.",
+"sector": "Financial Services",
+"industry": "Asset Management",
+"sic": null,
+"source": "yahoo"
+},
+"UBER": {
+"ticker": "UBER",
+"name": "Uber Technologies, Inc.",
+"description": "Uber Technologies, Inc. develops and operates proprietary technology applications in the United States, Canada, Latin America, Europe, the Middle East, Africa, and the Asia Pacific. The company operates through three segments: Mobility, Delivery, and Freight.",
+"sector": "Technology",
+"industry": "Software - Application",
+"sic": "7389",
+"source": "sec+yahoo"
+},
+"UNH": {
+"ticker": "UNH",
+"name": "UnitedHealth Group Incorporated",
+"description": "UnitedHealth Group Incorporated operates as a health care company in the United States and internationally. It operates through four segments: Optum Health, Optum Insight, Optum Rx; and UnitedHealthcare.",
+"sector": "Healthcare",
+"industry": "Healthcare Plans",
+"sic": "6324",
+"source": "sec+yahoo"
+},
+"URI": {
+"ticker": "URI",
+"name": "United Rentals, Inc.",
+"description": "United Rentals, Inc., through its subsidiaries, operates as an equipment rental company in the United States, Canada, Europe, Australia, and New Zealand. It operates through two segments, General Rentals and Specialty.",
+"sector": "Industrials",
+"industry": "Rental & Leasing Services",
+"sic": "7359",
+"source": "sec+yahoo"
+},
+"V": {
+"ticker": "V",
+"name": "Visa Inc.",
+"description": "Visa Inc. operates as a payments technology company in the United States and internationally. It operates VisaNet, a transaction processing network that enables authorization, clearing, and settlement of payment transactions.",
+"sector": "Financial Services",
+"industry": "Credit Services",
+"sic": "7389",
+"source": "sec+yahoo"
+},
+"VEA": {
+"ticker": "VEA",
+"name": "Vanguard FTSE Developed Markets Index Fund ETF Shares",
+"description": "The fund employs an indexing investment approach designed to track the performance of the FTSE Developed All Cap ex U.S.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"VSAT": {
+"ticker": "VSAT",
+"name": "Viasat, Inc.",
+"description": "Viasat, Inc. engages in the provision of broadband and communications products and services in the United States and internationally. It operates in segments, Communication Services; and Defense and Advanced Technologies.",
+"sector": "Technology",
+"industry": "Communication Equipment",
+"sic": "4899",
+"source": "sec+yahoo"
+},
+"VUZI": {
+"ticker": "VUZI",
+"name": "Vuzix Corporation",
+"description": "Vuzix Corporation designs, manufactures, and markets artificial intelligence (AI)-powered smart glasses, waveguides, and augmented reality (AR) technologies in North America, Europe, the Asia Pacific, and internationally.",
+"sector": "Technology",
+"industry": "Consumer Electronics",
+"sic": "3663",
+"source": "sec+yahoo"
+},
+"VZ": {
+"ticker": "VZ",
+"name": "Verizon Communications Inc.",
+"description": "Verizon Communications Inc., through its subsidiaries, engages in the provision of communications, technology, information, and streaming products and services to consumers, businesses, and governmental entities worldwide.",
+"sector": "Communication Services",
+"industry": "Telecom Services",
+"sic": "4813",
+"source": "sec+yahoo"
+},
+"WBD": {
+"ticker": "WBD",
+"name": "Warner Bros. Discovery Inc",
+"description": "Warner Bros. Discovery, Inc. operates as a media and entertainment company worldwide.",
+"sector": "Communication Services",
+"industry": "Entertainment",
+"sic": null,
+"source": "yahoo"
+},
+"WDC": {
+"ticker": "WDC",
+"name": "Western Digital Corporation",
+"description": "Western Digital Corporation engages in the development, manufacture, and sale of data storage devices and solutions based on hard disk drive (HDD) technology in the United States, Asia, Europe, the Middle East, and Africa.",
+"sector": "Technology",
+"industry": "Computer Hardware",
+"sic": "3572",
+"source": "sec+yahoo"
+},
+"WFC": {
+"ticker": "WFC",
+"name": "Wells Fargo & Company",
+"description": "Wells Fargo & Company, a financial services company, provides diversified banking, investment, mortgage, and consumer and commercial finance products and services in the United States and internationally.",
+"sector": "Financial Services",
+"industry": "Banks - Diversified",
+"sic": "6021",
+"source": "sec+yahoo"
+},
+"WMB": {
+"ticker": "WMB",
+"name": "The Williams Companies, Inc.",
+"description": "The Williams Companies, Inc., together with its subsidiaries, operates as an energy infrastructure company primarily in the United States. It operates through Transmission, Power & Gulf, Northeast G&P, West, and Gas & NGL Marketing Services segments.",
+"sector": "Energy",
+"industry": "Oil & Gas Midstream",
+"sic": "4922",
+"source": "sec+yahoo"
+},
+"WMT": {
+"ticker": "WMT",
+"name": "Walmart Inc.",
+"description": "Walmart Inc. engages in the operation of retail and wholesale stores and clubs, ecommerce websites, and mobile applications worldwide. The company operates through three segments: Walmart U.S., Walmart International, and Sam's Club U.S.",
+"sector": "Consumer Defensive",
+"industry": "Discount Stores",
+"sic": "5331",
+"source": "sec+yahoo"
+},
+"WSBC": {
+"ticker": "WSBC",
+"name": "WesBanco, Inc.",
+"description": "WesBanco, Inc. operates as the bank holding company for WesBanco Bank, Inc. that provides retail banking, corporate banking, personal and corporate trust, brokerage, mortgage banking, and insurance services to individuals and businesses in the United States.",
+"sector": "Financial Services",
+"industry": "Banks - Regional",
+"sic": "6021",
+"source": "sec+yahoo"
+},
+"WSM": {
+"ticker": "WSM",
+"name": "Williams-Sonoma, Inc.",
+"description": "Williams-Sonoma, Inc. operates as an omni-channel specialty retailer of various products for home the United States and internationally.",
+"sector": "Consumer Cyclical",
+"industry": "Specialty Retail",
+"sic": "5700",
+"source": "sec+yahoo"
+},
+"WUXIF": {
+"ticker": "WUXIF",
+"name": "WuXi AppTec Co., Ltd.",
+"description": "WuXi AppTec Co., Ltd., an investment holding company, provides research and manufacturing services to discover, develop, and manufacture spectrum for small molecule drugs in the People's Republic of China, the United States, Europe, and internationally.",
+"sector": "Healthcare",
+"industry": "Diagnostics & Research",
+"sic": null,
+"source": "yahoo"
+},
+"WWSYX": {
+"ticker": "WWSYX",
+"name": "Westwood Quality SmallCap Fund Ultra",
+"description": "The fund invests at least 80% of its net assets, plus any borrowings for investment purposes, in equity securities of small-cap companies.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"XFIV": {
+"ticker": "XFIV",
+"name": "Bondbloxx Bloomberg Five Year Target Duration US Treasury ETF",
+"description": "Under normal circumstances, the fund will invest at least 80% of its net assets (plus the amount of any borrowings for investment purposes) in a portfolio of U.S.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"XOM": {
+"ticker": "XOM",
+"name": "ExxonMobil Holdings Corporation",
+"description": "ExxonMobil Holdings Corporation engages in the exploration and production of crude oil and natural gas in the United States, Canada, and internationally. The company operates through Upstream, Energy Products, Chemical Products, and Specialty Products segments.",
+"sector": "Energy",
+"industry": "Oil & Gas Integrated",
+"sic": "2911",
+"source": "sec+yahoo"
+},
+"XTWO": {
+"ticker": "XTWO",
+"name": "Bondbloxx Bloomberg Two Year Target Duration US Treasury ETF",
+"description": "Under normal circumstances, the fund will invest at least 80% of its net assets (plus the amount of any borrowings for investment purposes) in a portfolio of U.S.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"YETI": {
+"ticker": "YETI",
+"name": "YETI Holdings, Inc.",
+"description": "YETI Holdings, Inc. designs, retails, and distributes outdoor products under the YETI brand name in the United States, Canada, Australia, New Zealand, Europe, and Japan.",
+"sector": "Consumer Cyclical",
+"industry": "Leisure",
+"sic": "3949",
+"source": "sec+yahoo"
+},
+"ZTS": {
+"ticker": "ZTS",
+"name": "Zoetis Inc.",
+"description": "Zoetis Inc. engages in the discovery, development, manufacture, and commercialization of medicines, vaccines, diagnostic products and services, biodevices, genetic tests, and precision animal health solutions for the animal health industry in the United States and internationally.",
+"sector": "Healthcare",
+"industry": "Drug Manufacturers - Specialty & Generic",
+"sic": "2834",
+"source": "sec+yahoo"
+}
+}

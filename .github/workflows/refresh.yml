@@ -72,6 +72,12 @@ jobs:
 
       - name: Enrich (prices, news, clusters, oversight, insiders, OI board)
         run: python pipeline/enrich.py --days 150 --max-tickers 120 --out data/app_data.json
+      # Company identities + descriptions for the stock pages.  Runs AFTER enrich because it
+      # needs the full ticker universe to know which stock pages exist; enrich embeds the
+      # committed copy from the previous run, so the bundle always has it.
+      - name: Company identities and descriptions
+        continue-on-error: true
+        run: python pipeline/fetch_companies.py --out data/companies.json --sleep 0.15 --yahoo --max 400
 
       # ---- Plain-English fundamentals from SEC EDGAR (10-K XBRL) ----------------
       - name: Fundamentals (SEC EDGAR)
@@ -101,7 +107,7 @@ jobs:
         run: |
           git config user.name  "capitol-flow-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add data/house_trades.json data/senate_trades.json data/politicians.json data/committees.json data/profiles.json data/app_data.json data/fundamentals.json data/options.json data/oi_lookup.json || true
+          git add data/house_trades.json data/senate_trades.json data/politicians.json data/committees.json data/profiles.json data/app_data.json data/fundamentals.json data/options.json data/oi_lookup.json data/companies.json || true
           git add web/data/ || true
           git diff --quiet --cached || git commit -m "data: daily refresh $(date -u +%F)"
           git push

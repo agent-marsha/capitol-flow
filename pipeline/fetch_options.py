@@ -81,8 +81,16 @@ def num(x, default=0):
         return default
 
 
-def expire_list(exps, lo=7, hi=75, limit=6):
-    """Nearest expirations inside the window, oldest first."""
+def expire_list(exps, lo=7, hi=75, limit=14):
+    """ALL expirations inside the DTE window, oldest first.
+
+    This used to be capped at the nearest 6.  That silently hid the largest open
+    interest in the market: GOOGL's $325 call carried 66,879 of its 77,864 contracts on
+    2027-01-15, which the cap excluded — ranking the true #1 strike roughly 7th.  The
+    far end of the window is exactly where LEAPS and institutional positions sit, so the
+    cap systematically discarded the biggest numbers.  The DTE window is the filter now;
+    `limit` is only a guard against a pathological listing (the widest seen is 11).
+    """
     today = date.today()
     out = []
     for e in exps:

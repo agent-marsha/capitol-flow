@@ -277,6 +277,8 @@ def build_oi_board(tickers: list[str], options: dict, prices: dict,
     # Iterate the OPTION universe, not the congressional one — the board must also show
     # high-open-interest names Congress never touched (SPY, TSLA, the retail favourites).
     for tk in sorted(options.keys()):
+        if tk.startswith("_"):
+            continue          # metadata keys (_top_oi) are not tickers
         o = options.get(tk) or {}
         call = o.get("call_oi") or 0
         put = o.get("put_oi") or 0
@@ -466,6 +468,8 @@ def main() -> int:
         "insiders": insiders,
         "sectors": sectors,
         "oi_board": oi_board,
+        # cross-ticker top-50 leaderboard, computed in fetch_options from the full chains
+        "top_oi": options.get("_top_oi"),
         "prices": prices,
         "news": news,
     }

@@ -659,3 +659,26 @@ section[id] { scroll-margin-top: 64px; }
   .lk-go { padding: 0 14px; }
   .lk-spot { text-align: left; }
 }
+
+/* ---------- contract leaderboard: top 50 calls / top 50 puts by open interest ---------- */
+/* Reuses the options pieces (.opt-cols, .opt-col, .opt-row, .opt-l2, .opt-px, .opt-link);
+   only the first row's layout (rank · ticker · strike/expiry · OI) is new. */
+.top-mark { color: var(--ink); }
+.oi-why b { color: var(--ink-2); font-weight: 700; }
+.opt-col-head h3 { margin: 0; font-size: 32px; }
+.top-l1 { display: grid; grid-template-columns: 26px auto minmax(0, 1fr) auto; gap: 12px; align-items: baseline; }
+.top-rank, .top-tk, .top-k { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.top-rank { font-size: 12px; font-weight: 700; color: var(--muted); }
+.top-tk { font-size: 18px; font-weight: 800; letter-spacing: .04em; color: var(--ink); text-decoration: none; }
+.top-tk:hover { text-decoration: underline; text-underline-offset: 3px; }
+.top-k { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.top-oi { font-size: 28px; }
+.top-l2 { padding-left: 38px; }
+.top-q { font-size: 12px; color: var(--muted); }
+.top-dte { white-space: nowrap; }
+@media (max-width: 480px) {
+  .top-l1 { grid-template-columns: 22px auto minmax(0, 1fr) auto; gap: 8px; }
+  .top-tk { font-size: 16px; }
+  .top-oi { font-size: 24px; }
+  .top-l2 { padding-left: 30px; }
+}

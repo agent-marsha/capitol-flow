@@ -64,6 +64,7 @@
     bigAll: false,
     oiSort: 'size',
     oiAll: false,
+    topAll: false,       // contract leaderboard: top 10 per side (false) or all 50 (true)
     lk: { q: '', tk: '', nudge: false }, // ticker lookup: input text, looked-up ticker, empty-submit nudge
     showAllSignals: false,
     tf: 'daily',
@@ -509,6 +510,7 @@
       '</section>' +
 
       oiSection() +
+      topSection() +
       lookupSection() +
 
       '<section class="block" id="feed" aria-labelledby="feed-h">' +
@@ -534,6 +536,7 @@
     renderOv();
     renderBigChart();
     renderOi();
+    renderTop();
     renderLookup();
     renderFeed();
     document.title = 'Capitol Flow — Politician Trade Signals';
@@ -830,6 +833,99 @@
     $('#oi-more').innerHTML = rows.length > OI_TOP
       ? '<button type="button" class="btn-ghost" data-action="oi-all" aria-expanded="' + !!S.oiAll + '">' +
           (S.oiAll ? 'Show top ' + OI_TOP : 'Show all ' + rows.length + ' stocks') + '</button>'
+      : '';
+  }
+
+  // ---- Contract leaderboard: the 50 calls + 50 puts with the most open interest, across
+  // every tracked ticker. Precomputed by the pipeline into D.top_oi (already in the boot
+  // bundle — no fetch). Missing/null top_oi (older data) → the section renders nothing.
+  var TOP_SHORT = 10;
+  var topCache = null;
+  function topData() {
+    if (topCache) return topCache;
+    var t = D && D.top_oi;
+    if (!t || typeof t !== 'object') return (topCache = { calls: [], puts: [], meta: null });
+    var floor = fnum(t.min_dte) ? t.min_dte : 30;
+    function clean(list) {
+      // Defensive: drop malformed rows and anything inside the one-month floor, keep OI order.
+      return (Array.isArray(list) ? list : []).filter(function (c) {
+        return c && c.ticker && fnum(c.strike) && fnum(c.oi) && c.oi >= 0 && validDate(c.expiry) &&
+          fnum(c.dte) && c.dte >= floor;
+      }).sort(function (a, b) { return b.oi - a.oi; }).slice(0, fnum(t.n) ? t.n : 50);
+    }
+    topCache = { calls: clean(t.calls), puts: clean(t.puts), meta: t, floor: floor };
+    var all = topCache.calls.concat(topCache.puts);
+    console.assert(all.every(function (c) { return c.dte >= 30; }), '[top_oi] a listing under 30 DTE slipped through');
+    return topCache;
+  }
+  function topSection() {
+    var d = topData();
+    if (!d.meta || !(d.calls.length || d.puts.length)) return '';
+    var m = d.meta;
+    var scope = (fnum(m.universe) ? m.universe + ' stocks' : 'every stock this app tracks') +
+      (fnum(m.contracts_scanned) ? ', ' + Math.round(m.contracts_scanned).toLocaleString('en-US') + ' contracts scanned' : '');
+    return '<section class="block" id="top-oi" aria-labelledby="top-h">' +
+      '<div class="sec-head"><div><div class="micro top-mark">◆ Contract leaderboard</div><h2 id="top-h" class="display">Where the biggest bets sit.</h2></div>' +
+      '<p>The ' + d.calls.length + ' calls and ' + d.puts.length + ' puts with the most open interest, across every stock this app tracks — one month out or further.</p></div>' +
+      '<p class="oi-why">The board above ranks <b>stocks</b> by total open interest. This one ranks <b>single contracts</b> — one ticker, one strike, one expiry — so it answers “which single bet is the biggest”, not “which stock is most optioned”.</p>' +
+      '<div class="opt-cols top-cols">' + topCol('call', d.calls) + topCol('put', d.puts) + '</div>' +
+      '<div class="bm-more" id="top-more"></div>' +
+      '<p class="bm-caveat"><b>Open interest has no direction.</b> It counts contracts still open; it can’t tell you whether they were bought or sold, and a huge pile is as likely to be a position someone wrote as one someone bought. ' +
+        'Contracts ' + d.floor + '+ days out only, across the next ' + (fnum(m.expirations) ? m.expirations : 10) + ' expirations of ' + esc(scope) + '. ' +
+        'Price is the bid/ask midpoint for one contract, quoted per share (one contract covers 100 shares); — means no two-sided quote. Snapshot from the last data refresh.</p>' +
+    '</section>';
+  }
+  function topCol(side, list) {
+    var isCall = side === 'call';
+    var id = 'top-' + side + '-h';
+    return '<div class="opt-col ' + side + '" role="group" aria-labelledby="' + id + '">' +
+      '<div class="opt-col-head ' + (isCall ? 'buy-ink' : 'sell-ink') + '">' +
+        '<h3 id="' + id + '" class="display">' + (isCall ? 'Calls' : 'Puts') + '</h3>' +
+        '<span class="micro">Top ' + list.length + ' by open interest</span>' +
+      '</div>' +
+      '<div class="opt-legend micro" aria-hidden="true"><span>Contract</span><span>Open interest</span></div>' +
+      (list.length ? '<ol class="opt-rows" id="top-' + side + '-rows"></ol>'
+        : '<p class="empty">No ' + (isCall ? 'calls' : 'puts') + ' in this window.</p>') +
+    '</div>';
+  }
+  function topRow(c, i) {
+    var kind = c.type === 'put' ? 'put' : 'call';
+    var rank = (i + 1 < 10 ? '0' : '') + (i + 1);
+    var pr = fnum(c.price) && c.price > 0 ? '$' + c.price.toFixed(2) : '—';
+    var oiFull = Math.round(c.oi).toLocaleString('en-US');
+    var url = safeUrl(c.tv_url);
+    var label = c.ticker + ' ' + optStrike(c.strike) + ' ' + kind + ' expiring ' + mdy(c.expiry);
+    return '<li class="opt-row top-row ' + kind + '">' +
+      '<span class="sr-only">Rank ' + (i + 1) + ': ' + esc(label) + ', open interest ' + oiFull +
+        (fnum(c.volume) ? ', volume ' + Math.round(c.volume).toLocaleString('en-US') : '') +
+        (pr !== '—' ? ', price ' + pr : ', no price') + '.</span>' +
+      '<div class="top-l1">' +
+        '<span class="top-rank" aria-hidden="true">' + rank + '</span>' +
+        '<a class="top-tk" href="#/stock/' + encodeURIComponent(c.ticker) + '" aria-label="' + esc('Open ' + c.ticker + ' page') + '">' + esc(c.ticker) + '</a>' +
+        '<span class="top-k" aria-hidden="true">' + esc(optStrike(c.strike)) + ' · ' + esc(optDate(c.expiry)) + '</span>' +
+        '<span class="opt-oi top-oi display" aria-hidden="true" title="' + esc(oiFull) + ' open contracts">' + esc(optCount(c.oi)) + '</span>' +
+      '</div>' +
+      '<div class="opt-l2 top-l2">' +
+        '<span class="opt-lab top-dte" aria-hidden="true" title="Days to expiry">' + Math.round(c.dte) + ' days</span>' +
+        '<span class="opt-px" aria-hidden="true"><span class="opt-lab">Vol</span><b class="top-q">' + (fnum(c.volume) ? esc(optCount(c.volume)) : '—') + '</b></span>' +
+        '<span class="opt-px" aria-hidden="true"><span class="opt-lab">Mid</span><b class="top-q">' + esc(pr) + '</b></span>' +
+        (url ? '<a class="opt-link" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" aria-label="' +
+          esc('Open the ' + label + ' (' + (c.symbol || '') + ') on TradingView, new tab') + '">TradingView ↗</a>' : '') +
+      '</div>' +
+    '</li>';
+  }
+  function renderTop() {
+    var d = topData();
+    var n = S.topAll ? Infinity : TOP_SHORT;
+    ['call', 'put'].forEach(function (side) {
+      var ol = $('#top-' + side + '-rows'); if (!ol) return;
+      ol.innerHTML = (side === 'call' ? d.calls : d.puts).slice(0, n).map(topRow).join('');
+    });
+    var more = $('#top-more'); if (!more) return;
+    var most = Math.max(d.calls.length, d.puts.length);
+    more.innerHTML = most > TOP_SHORT
+      ? '<button type="button" class="btn-ghost" data-action="top-all" aria-expanded="' + !!S.topAll + '">' +
+          (S.topAll ? 'Show top ' + TOP_SHORT : 'Show all ' + most) + '</button>'
       : '';
   }
 
@@ -1828,6 +1924,11 @@
       S.oiAll = !S.oiAll; renderOi();
       var ib = $('#oi-more button'); if (ib) ib.focus();
       if (!S.oiAll) { var oe = $('#oi'); if (oe && oe.getBoundingClientRect().top < 0) oe.scrollIntoView(); }
+    }
+    else if (act === 'top-all') {
+      S.topAll = !S.topAll; renderTop();
+      var tb = $('#top-more button'); if (tb) tb.focus();
+      if (!S.topAll) { var te = $('#top-oi'); if (te && te.getBoundingClientRect().top < 0) te.scrollIntoView(); }
     }
     else if (act === 'toggle-signals') {
       S.showAllSignals = !S.showAllSignals; renderDashboard();

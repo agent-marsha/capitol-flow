@@ -37,6 +37,17 @@ from datetime import date, datetime
 warnings.filterwarnings("ignore")
 
 
+def occ_of(root: str, expiry: str, side: str, strike: float) -> str:
+    """Build an OCC symbol: ROOT + YYMMDD + C|P + strike to 3dp in 8 digits.
+
+    e.g. ("AAPL", "2026-12-18", "call", 360.0) -> "AAPL261218C360000", which tv_symbol()
+    turns into the TradingView form "AAPL261218C360.0".
+    """
+    ymd = (expiry or "").replace("-", "")[2:]
+    cp = "C" if side == "call" else "P"
+    return f"{root}{ymd}{cp}{int(round(float(strike) * 1000)):08d}"
+
+
 def tv_symbol(occ: str):
     """OCC contract symbol -> TradingView option symbol (or None)."""
     m = re.match(r"^([A-Z0-9.]+?)(\d{6})([CP])(\d{8})$", (occ or "").upper())
@@ -231,6 +242,7 @@ def main() -> int:
           f"{len(extras)} high-OI), top {a.top} per side", file=sys.stderr)
 
     out, ok, skipped = {}, 0, []
+    ledger = []          # every contract in the window, across every ticker — see below
     for i, t in enumerate(tickers, 1):
         try:
             tk = yf.Ticker(t)
@@ -273,6 +285,39 @@ def main() -> int:
                 "top_calls": build_side(chains, exp_list, 0, a.top),
                 "top_puts": build_side(chains, exp_list, 1, a.top),
             }
+
+            # ---- global contract ledger -------------------------------------------
+            # The cross-ticker leaderboard (top 50 calls / top 50 puts by OI) CANNOT be
+            # built from the per-ticker top-10 above: a huge name's 11th-largest contract
+            # can outrank a small name's 1st, so a top-10-per-ticker cut silently
+            # undertstates the leaderboard.  Every contract in the window is collected
+            # here instead, while the full chains are already in memory.  Costs no extra
+            # network calls.
+            for e, dte in exp_list:
+                cdf, pdf = chains[e]
+                for side, df in (("call", cdf), ("put", pdf)):
+                    if df is None or df.empty:
+                        continue
+                    for _, r0 in df.iterrows():
+                        try:
+                            oi = int(num(r0.get("openInterest"), 0))
+                        except Exception:
+                            continue
+                        if oi <= 0:
+                            continue
+                        try:
+                            k = float(r0["strike"])
+                        except Exception:
+                            continue
+                        b_, a_ = num(r0.get("bid"), 0), num(r0.get("ask"), 0)
+                        mid = round((b_ + a_) / 2.0, 2) if (b_ > 0 and a_ > 0) else None
+                        ledger.append({
+                            "ticker": t, "type": side, "strike": k, "expiry": e, "dte": dte,
+                            "oi": oi, "volume": int(num(r0.get("volume"), 0)),
+                            "price": mid, "underlying": round(spot, 2) if spot else None,
+                            "symbol": tv_symbol(occ_of(t, e, side, k)),
+                            "tv_url": tv_url(occ_of(t, e, side, k)),
+                        })
             ok += 1
             print(f"  [{i}/{len(tickers)}] {t:6s} exps={len(exp_list)} "
                   f"callOI={call_oi:>8,} putOI={put_oi:>8,}", file=sys.stderr)
@@ -298,6 +343,34 @@ def main() -> int:
         print(f"[options] ADV resolved for {got}/{len(out)} tickers", file=sys.stderr)
     except Exception as e:
         print(f"[options] ADV fetch failed: {type(e).__name__} {e}", file=sys.stderr)
+
+    # ---- cross-ticker leaderboard: top 50 calls + top 50 puts by open interest -------
+    # Stored under an underscore key so it rides along in options.json for the browser
+    # (the same convention as fundamentals' _sectors) without looking like a ticker.
+    # Ranked on INDIVIDUAL contracts, not per-strike sums: an "option" is a specific
+    # ticker+expiry+strike+side, and mixing expiries would invent instruments.
+    def _top50(side: str):
+        rows = [r for r in ledger if r["type"] == side]
+        rows.sort(key=lambda r: (-r["oi"], r["ticker"], r["strike"]))
+        return rows[:50]
+
+    calls50, puts50 = _top50("call"), _top50("put")
+    n_exp = 10
+    out["_top_oi"] = {
+        "calls": calls50,
+        "puts": puts50,
+        "n": 50,
+        "min_dte": 30,
+        "expirations": n_exp,
+        "universe": len(out),
+        "contracts_scanned": len(ledger),
+    }
+    if calls50:
+        print(f"[options] leaderboard: {len(ledger):,} contracts scanned, "
+              f"top call {calls50[0]['ticker']} ${calls50[0]['strike']:g} {calls50[0]['expiry']} "
+              f"OI {calls50[0]['oi']:,}; top put {puts50[0]['ticker']} "
+              f"${puts50[0]['strike']:g} {puts50[0]['expiry']} OI {puts50[0]['oi']:,}",
+              file=sys.stderr)
 
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     json.dump(out, open(a.out, "w"))

@@ -936,7 +936,10 @@
   }
 
   // A ticker with an option chain but no congressional trades and no price history: header,
-  // the no-price fallback panel and the options section. No trades/news/basics, no zeroed stats.
+  // the no-price fallback panel, the options section, and — when it has them — its BASICS.
+  // ORCL, AMD, PLTR and friends sit high on the options board AND have SEC fundamentals, so
+  // the slot is always emitted and fillFundamentals() leaves it empty when there's nothing
+  // to show. No trades/news, no zeroed stats.
   function renderOptionsOnly(tk) {
     var name = nameOf.get(tk) || '';
     $('#app').innerHTML =
@@ -950,10 +953,12 @@
       chartFallback(tk) +
       '<div class="d-cols d-cols-opt">' +
         '<div id="opt-slot" class="opt-slot" data-opt-tk="' + esc(tk) + '"></div>' +
-      '</div>';
+      '</div>' +
+      '<div id="fund-slot" data-fund-tk="' + esc(tk) + '"></div>';
     document.title = tk + ' — Capitol Flow';
     window.scrollTo(0, 0);
     fillOptions();
+    fillFundamentals();
   }
 
   // Tickers outside the charted set get a calm dead-end-free panel instead of an empty chart:
@@ -1252,15 +1257,15 @@
     if (!PEER_FMT[metric] || !F || !Object.prototype.hasOwnProperty.call(F, tk)) return '';
     var f = F[tk], p = f && f.peer;
     if (!p || typeof p !== 'object' || !p.sector) return '';
-    var mean = p[metric + '_peer_mean'], vs = p[metric + '_vs_mean'], cheap = p[metric + '_cheap'];
+    var bmk = p[metric + '_peer_median'], cheap = p[metric + '_cheap'];
     var n = p[metric + '_n'], pn = p[metric + '_peer_n'];
     var val = f.valuation && f.valuation[metric];
-    if (!fnum(mean) || !fnum(vs) || !fnum(cheap) || !fnum(val)) return '';
+    if (!fnum(bmk) || !fnum(cheap) || !fnum(val)) return '';
     if (!fnum(n) || n < PEER_MIN_N || !fnum(pn) || pn < 1) return '';
 
     var fmt = PEER_FMT[metric];
     var tone = cheap >= 0.75 ? 'buy' : cheap <= 0.25 ? 'sell' : 'mid';
-    var top = Math.max(val, mean, 0);
+    var top = Math.max(val, bmk, 0);
     function w(v) { return top > 0 ? Math.max(0, v) / top * 100 : 0; }
     function row(cls, label, v) {
       return '<div class="fpeer-row ' + cls + '">' +
@@ -1269,39 +1274,28 @@
         '<span class="fpeer-val num">' + esc(fmt(v)) + '</span></div>';
     }
     var bars = '<div class="fpeer-bars" aria-hidden="true">' +
-      row('is-co ' + tone, tk, val) + row('is-avg', 'Sector average', mean) + '</div>';
+      row('is-co ' + tone, tk, val) + row('is-avg', 'Sector median', bmk) + '</div>';
 
-    var pctVs = Math.round(Math.abs(vs) * 100);
-    // A bare "5.7x the sector average" reads as MORE EXPENSIVE — so on a yield, where a
-    // higher number is CHEAPER, it flatly contradicted the "cheaper" verdict beside it.
-    // Name what is being compared so the two halves of the sentence agree.
-    var mult = (1 + vs).toFixed(1) + '\u00d7';
-    var vsText = vs > 2
-      ? (metric === 'fcf_yield'
-          ? mult + ' as much cash as the sector average'
-          : mult + ' the sector average')
-      : pctVs === 0 ? 'In line with the sector average'
-      : pctVs + '% ' + (vs < 0 ? 'below' : 'above') + ' the sector average';
-    var secs = F._sectors && typeof F._sectors === 'object' ? F._sectors : null;
-    var s = secs && Object.prototype.hasOwnProperty.call(secs, p.sector) ? secs[p.sector] : null;
-    var d = s && s[metric];
-    var med = d && fnum(d.median) ? d.median : null;
-
-    // The line carries ONE comparison base: the sector average — which is what these cards
-    // are about.  It used to also say "cheaper than 75% of X companies", a second and
-    // competing framing that read oddly ("cheaper than a company"?), so it's gone.
-    // The median only appears when a mean has been dragged well away from it.
-    var medNote = '';
-    if (med != null && fnum(mean) && Math.abs(mean) > 1e-9 &&
-        Math.abs(med - mean) / Math.abs(mean) > 0.25) {
-      medNote = '<span class="fpeer-med" aria-hidden="true"> · </span>' +
-        '<span class="fpeer-med">sector median ' + esc(fmt(med)) + '</span>';
-    }
+    // Direction only, in words.  Any ratio phrasing has to survive negative values AND
+    // outliers, and this data has both: Technology FCF yields run from -464% (AI) to +35%
+    // (SHOP), and the MEAN of that (-13.5%) described ORCL — pricier than 93% of its
+    // peers — as "55% ABOVE average".  "Below / Above the <sector> sector median" stays
+    // true at every sign, and the two figures sit in the bars right beside it, so there is
+    // nothing left to misread.
+    var vsText = Math.abs(val - bmk) < 1e-9
+      ? 'In line with the ' + p.sector + ' sector median'
+      : (val > bmk ? 'Above' : 'Below') + ' the ' + p.sector + ' sector median';
+    // "Below the median" means OPPOSITE things on the two cards — cheaper for a multiple,
+    // worse for a yield — so spell out which reading this one is. Same word as the tone
+    // colour, so the two can never disagree.
+    var read = tone === 'buy' ? 'cheaper' : tone === 'sell' ? 'pricier' : '';
 
     var line = '<p class="fpeer-line">' +
       '<span class="fpeer-verdict' + (tone === 'mid' ? '' : ' ' + tone + '-ink') + '">' + vsText + '</span>' +
-      '<span class="sr-only"> (' + esc(fmt(val)) + ' versus a ' + esc(fmt(mean)) + ' sector average)</span>' +
-      medNote +
+      (read ? '<span class="fpeer-med" aria-hidden="true"> · </span>' +
+        '<span class="fpeer-med">' + read + '</span>' : '') +
+      '<span class="sr-only"> (' + esc(fmt(val)) + ' versus a ' + esc(fmt(bmk)) + ' median' +
+      (read ? ', ' + read + ' than most' : '') + ')</span>' +
       '</p>';
     return '<div class="fpeer">' + bars + line + '</div>';
   }

@@ -32,6 +32,18 @@ import urllib.request
 
 UA = "CapitolFlow research (contact: victor26@fastmail.com)"
 TICKERS_URL = "https://www.sec.gov/files/company_tickers.json"
+
+# Funds and trusts have no "company" valuation — a fund's revenue line is meaningless, and
+# an ETN's SEC registrant can be its ISSUER (VXX maps to Barclays Bank, so it would show
+# Barclays' balance sheet under a volatility note).  The option universe is a fixed list, so
+# an explicit ticker set stays auditable; the name pattern is a second net.
+FUND_TICKERS = {
+    "SPY", "QQQ", "IWM", "DIA", "TLT", "TLH", "GLD", "SLV", "USO", "HYG", "EEM", "FXI",
+    "VXX", "UVXY", "SOXL", "TQQQ", "SQQQ", "AVUV", "SPYM", "TOELF",
+}
+FUND_RE = re.compile(
+    r"(ishares|spdr|proshares|invesco|vanguard|wisdomtree|direxion|global x|vaneck"
+    r"|\bfund\b|\betf\b|\betn\b|\btrust\b)", re.I)
 FACTS = "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json"
 
 # concept candidates, in preference order
@@ -485,9 +497,20 @@ def attach_peers(out: dict, sectors: dict) -> None:
                 if others:
                     peer[m + "_peer_mean"] = round(sum(others) / len(others), 2)
                     peer[m + "_peer_n"] = len(others)
+                    peer[m + "_peer_median"] = round(_pctl(sorted(others), 0.5), 2)
                     if others and abs(sum(others) / len(others)) > 1e-9:
                         pm = sum(others) / len(others)
                         peer[m + "_vs_mean"] = round((v - pm) / abs(pm), 3)
+                    # ...but a MEAN is not safe to compare against here.  Technology FCF
+                    # yields run from -464% (AI) to +35% (SHOP): that single outlier drags
+                    # the mean to -13.5% while the median sits at 2.1%, so ORCL (-6.2%,
+                    # pricier than 93% of peers) read as "55% ABOVE average" — the opposite
+                    # of what its own percentile said.  We lead with the median, which is
+                    # what "the typical peer" means and is outlier-proof.
+                    md = _pctl(sorted(others), 0.5)
+                    if abs(md) > 1e-9:
+                        peer[m + "_vs_median"] = round((v - md) / abs(md), 3)
+                    peer[m + "_above_median"] = bool(v > md) if abs(v - md) > 1e-9 else None
         rec["peer"] = peer
 
     out["_sectors"] = stats
@@ -507,16 +530,35 @@ def main() -> int:
     if not tickers:
         tickers = sorted({t["ticker"] for t in data["trades"] if t.get("ticker")})
     tickers = tickers[: a.max]
+    # Also cover the high-open-interest option universe.  Names like ORCL, AMD, PLTR and
+    # SOFI sit near the top of the dashboard's options board but were never charted, so
+    # they had no valuation at all.  ETFs (SPY, HYG, QQQ …) have no company CIK in the SEC
+    # map and drop out naturally, which is correct — a fund has no "company" valuation.
+    try:
+        _opts = json.load(open("data/options.json"))
+    except Exception:
+        _opts = {}
+    for t in sorted(_opts.keys()):
+        if t not in tickers:
+            tickers.append(t)
+
     # last daily close per ticker -> market cap for the valuation cards
     prices: dict[str, float] = {}
     for tk, pv in (data.get("prices") or {}).items():
         daily = pv.get("daily") or []
         if daily:
             prices[tk] = daily[-1]["c"]
+    # Uncharted option tickers have no price history, but options.json carries their spot.
+    # Without a price compute_valuation() bails entirely, so this is what gives them a
+    # market cap — and therefore a valuation.
+    for tk, ov in _opts.items():
+        spot = (ov or {}).get("underlying")
+        if tk not in prices and isinstance(spot, (int, float)) and spot > 0:
+            prices[tk] = float(spot)
     cmap = cik_map()
     print(f"[fundamentals] {len(tickers)} tickers", file=sys.stderr)
 
-    out, done, missing = {}, 0, []
+    out, done, missing, funds = {}, 0, [], []
     for t in tickers:
         cik = cmap.get(t.upper())
         if not cik:
@@ -530,6 +572,10 @@ def main() -> int:
             time.sleep(0.4)
             continue
         name = clean_name(f.get("entityName") or t, t)
+        if t.upper() in FUND_TICKERS or FUND_RE.search(name):
+            funds.append(f"{t}({name[:22]})")
+            time.sleep(0.05)
+            continue
         s = {k: annual_series(f, v) for k, v in CONCEPTS.items()}
         if not s["revenue"]:
             # some filers only tag revenue under a bank/insurance concept
@@ -574,6 +620,9 @@ def main() -> int:
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     json.dump(out, open(a.out, "w"))
     print(f"[fundamentals] wrote {a.out} — {_n} companies, missing CIK: {missing}", file=sys.stderr)
+    if funds:
+        print(f"[fundamentals] excluded {len(funds)} funds/trusts (no company valuation): "
+              f"{', '.join(funds)}", file=sys.stderr)
     return 0
 
 

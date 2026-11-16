@@ -374,19 +374,20 @@ def main() -> int:
     # (the same convention as fundamentals' _sectors) without looking like a ticker.
     # Ranked on INDIVIDUAL contracts, not per-strike sums: an "option" is a specific
     # ticker+expiry+strike+side, and mixing expiries would invent instruments.
-    def _top50(side: str):
+    def _topN(side: str, n: int = 100):
         # funds are excluded so this ranks bets on real companies (SPY/QQQ kept by request)
         rows = [r for r in ledger if r["type"] == side and not is_fund(r["ticker"])]
         rows.sort(key=lambda r: (-r["oi"], r["ticker"], r["strike"]))
-        return rows[:50]
+        return rows[:n]
 
-    calls50, puts50 = _top50("call"), _top50("put")
+    TOP_N = 100
+    calls50, puts50 = _topN("call", TOP_N), _topN("put", TOP_N)
     funds_seen = sorted({r["ticker"] for r in ledger if is_fund(r["ticker"])})
     n_exp = 10
     out["_top_oi"] = {
         "calls": calls50,
         "puts": puts50,
-        "n": 50,
+        "n": TOP_N,
         "min_dte": 30,
         "expirations": n_exp,
         "universe": len(out),

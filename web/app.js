@@ -64,7 +64,7 @@
     bigAll: false,
     oiSort: 'size',
     oiAll: false,
-    topAll: false,       // contract leaderboard: top 10 per side (false) or all 50 (true)
+    topAll: false,       // contract leaderboard: top 10 per side (false) or all 100 (true)
     lk: { q: '', tk: '', nudge: false }, // ticker lookup: input text, looked-up ticker, empty-submit nudge
     showAllSignals: false,
     tf: 'daily',

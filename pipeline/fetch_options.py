@@ -37,6 +37,31 @@ from datetime import date, datetime
 warnings.filterwarnings("ignore")
 
 
+# Funds are not companies.  The leaderboard is meant to answer "which single bet on a real
+# business is the biggest", and funds swamped it: HYG alone took 31 of the 50 puts and TLT
+# another 20, because open interest counts CONTRACTS and their options cost $0.02-$0.88 —
+# one cheap HYG contract counted the same as one $1,344 NVDA contract.
+#
+# Mirrors FUND_TICKERS in fundamentals.py (kept in sync by hand rather than importing, so
+# a change to one pipeline can never silently reshape the other).  SPY and QQQ are
+# explicitly KEPT by request.
+LEADERBOARD_FUNDS = {
+    "SPY", "QQQ", "IWM", "DIA", "TLT", "TLH", "GLD", "SLV", "USO", "HYG", "EEM", "FXI",
+    "VXX", "UVXY", "SOXL", "TQQQ", "SQQQ", "AVUV", "SPYM", "TOELF",
+    # bond / Treasury / commodity funds that could reach the top 50
+    "LQD", "AGG", "BND", "IEF", "SHY", "JNK", "EMB", "MUB", "TIP", "GDX", "GDXJ", "UNG",
+    "XLE", "XLF", "XLV", "XLI", "XLK", "XLP", "XLU", "XLY", "XLB", "XLRE", "XLC",
+    "ARKK", "IBIT", "ETHA",
+}
+LEADERBOARD_KEEP = {"SPY", "QQQ"}          # requested exceptions
+
+
+def is_fund(t: str) -> bool:
+    """True for ETFs/ETNs/trusts that aren't operating companies (SPY/QQQ excepted)."""
+    u = (t or "").upper()
+    return u in LEADERBOARD_FUNDS and u not in LEADERBOARD_KEEP
+
+
 def occ_of(root: str, expiry: str, side: str, strike: float) -> str:
     """Build an OCC symbol: ROOT + YYMMDD + C|P + strike to 3dp in 8 digits.
 
@@ -350,11 +375,13 @@ def main() -> int:
     # Ranked on INDIVIDUAL contracts, not per-strike sums: an "option" is a specific
     # ticker+expiry+strike+side, and mixing expiries would invent instruments.
     def _top50(side: str):
-        rows = [r for r in ledger if r["type"] == side]
+        # funds are excluded so this ranks bets on real companies (SPY/QQQ kept by request)
+        rows = [r for r in ledger if r["type"] == side and not is_fund(r["ticker"])]
         rows.sort(key=lambda r: (-r["oi"], r["ticker"], r["strike"]))
         return rows[:50]
 
     calls50, puts50 = _top50("call"), _top50("put")
+    funds_seen = sorted({r["ticker"] for r in ledger if is_fund(r["ticker"])})
     n_exp = 10
     out["_top_oi"] = {
         "calls": calls50,
@@ -364,6 +391,9 @@ def main() -> int:
         "expirations": n_exp,
         "universe": len(out),
         "contracts_scanned": len(ledger),
+        "companies_only": True,
+        "kept_funds": sorted(LEADERBOARD_KEEP),
+        "excluded_funds": funds_seen,
     }
     if calls50:
         print(f"[options] leaderboard: {len(ledger):,} contracts scanned, "

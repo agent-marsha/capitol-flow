@@ -81,15 +81,20 @@ def num(x, default=0):
         return default
 
 
-def expire_list(exps, lo=7, hi=75, limit=14):
-    """ALL expirations inside the DTE window, oldest first.
+def expire_list(exps, lo=30, hi=400, limit=10):
+    """The next ~10 expirations, starting ONE MONTH out.
 
-    This used to be capped at the nearest 6.  That silently hid the largest open
-    interest in the market: GOOGL's $325 call carried 66,879 of its 77,864 contracts on
-    2027-01-15, which the cap excluded — ranking the true #1 strike roughly 7th.  The
-    far end of the window is exactly where LEAPS and institutional positions sit, so the
-    cap systematically discarded the biggest numbers.  The DTE window is the filter now;
-    `limit` is only a guard against a pathological listing (the widest seen is 11).
+    User rule: "all dates you look at should be at least a month out — don't show me
+    anything closer than one month — so you start from one month out and grab like the
+    next 10 expiration dates."
+
+    So the floor is 30 DTE, nothing nearer is considered, and we take the next 10 listed
+    expirations from there.  `hi` is only a sanity guard (~13 months) so a quarterly-only
+    listing can't drag in two-year LEAPS; if a ticker has fewer than 10 inside it, it
+    simply returns fewer.  The window is now set by the user's rule, not by list position.
+
+    History: this used to be the nearest 6 inside 7-75 DTE, which fetched near-dated
+    contracts the user explicitly does not want and capped the list by position.
     """
     today = date.today()
     out = []

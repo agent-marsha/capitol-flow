@@ -54,13 +54,12 @@ def num(x, default=0):
         return default
 
 
-def expire_list(exps, lo=7, hi=75, limit=14):
-    """ALL expirations inside the DTE window — same rule as the board.
+def expire_list(exps, lo=30, hi=400, limit=10):
+    """The next ~10 expirations, starting ONE MONTH out — same rule as the board.
 
-    Capped at the nearest 6 this understated open interest badly: on GOOGL the $325 call
-    holds 66,879 of its 77,864 contracts in the 2027-01-15 expiry, which the old cap
-    dropped, so the true #1 strike ranked about 7th.  A cap at the NEAR end always
-    discards the far end, and the far end is where the largest positions sit.
+    User rule: nothing nearer than a month; start at one month and take the next 10
+    expiration dates.  `hi` is only a sanity guard (~13 months) so a quarterly-only
+    listing can't reach two-year LEAPS.
     """
     today = time.time()
     out = []

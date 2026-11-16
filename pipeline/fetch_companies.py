@@ -32,9 +32,56 @@ UA = "capitol-flow research (contact: crawford@cs.ua.edu)"
 SEC_TICKERS = "https://www.sec.gov/files/company_tickers.json"
 SEC_SUBS = "https://data.sec.gov/submissions/CIK{cik:010d}.json"
 
-# Tickers that should never be looked up as operating companies.
+# Funds that should never be looked up as operating companies.  Note BRK.B is NOT here:
+# Berkshire Hathaway is a real company, not a fund, and it was wrongly skipped before.
 SKIP = {"SPY", "QQQ", "IWM", "DIA", "TLT", "GLD", "SLV", "USO", "HYG", "EEM", "FXI",
-        "VXX", "UVXY", "SOXL", "TQQQ", "SQQQ", "BRK.B", "BRK-B"}
+        "VXX", "UVXY", "SOXL", "TQQQ", "SQQQ"}
+
+# These have stock pages (they sit on the OI board and the contract leaderboard) but no
+# company filing to read, so without an entry their pages render a bare symbol — the exact
+# complaint this pipeline exists to fix.  They are a small, famous, stable set, so they are
+# described by hand rather than guessed at.  Marked source="curated" so it stays auditable.
+FUND_NOTES = {
+    "SPY":  ("SPDR S&P 500 ETF Trust", "An exchange-traded fund that tracks the S&P 500, an index of about 500 large US companies. Buying it is a way to own the whole US market at once.", "Index fund", "S&P 500 index"),
+    "QQQ":  ("Invesco QQQ Trust", "An exchange-traded fund that tracks the Nasdaq-100, an index of the 100 largest non-financial companies on the Nasdaq. It is heavily weighted toward technology.", "Index fund", "Nasdaq-100 index"),
+    "IWM":  ("iShares Russell 2000 ETF", "An exchange-traded fund that tracks the Russell 2000, an index of 2,000 smaller US companies.", "Index fund", "Small-cap US stocks"),
+    "DIA":  ("SPDR Dow Jones Industrial Average ETF Trust", "An exchange-traded fund that tracks the Dow Jones Industrial Average, an index of 30 large US companies.", "Index fund", "Dow Jones Industrial Average"),
+    "TLT":  ("iShares 20+ Year Treasury Bond ETF", "An exchange-traded fund that holds long-dated US Treasury bonds. It rises when long-term interest rates fall and falls when they rise.", "Bond fund", "US Treasury bonds, 20+ years"),
+    "GLD":  ("SPDR Gold Shares", "An exchange-traded fund that holds gold bullion. It tracks the price of gold.", "Commodity fund", "Gold"),
+    "SLV":  ("iShares Silver Trust", "An exchange-traded fund that holds silver bullion. It tracks the price of silver.", "Commodity fund", "Silver"),
+    "USO":  ("United States Oil Fund", "An exchange-traded fund that tracks the price of crude oil through oil futures contracts.", "Commodity fund", "Crude oil futures"),
+    "HYG":  ("iShares iBoxx High Yield Corporate Bond ETF", "An exchange-traded fund that holds lower-rated corporate bonds, often called junk bonds. It pays more interest than safer bonds and carries more risk.", "Bond fund", "High-yield corporate bonds"),
+    "EEM":  ("iShares MSCI Emerging Markets ETF", "An exchange-traded fund that holds stocks from emerging-market countries such as China, India, Brazil and Taiwan.", "Index fund", "Emerging-market stocks"),
+    "FXI":  ("iShares China Large-Cap ETF", "An exchange-traded fund that holds stock in large Chinese companies listed in Hong Kong.", "Index fund", "Large-cap Chinese stocks"),
+    "VXX":  ("iPath Series B S&P 500 VIX Short-Term Futures ETN", "A traded note that tracks short-term VIX futures, which rise when the stock market gets jumpy. It is designed for short holding periods.", "Volatility fund", "VIX futures"),
+    "UVXY": ("ProShares Ultra VIX Short-Term Futures ETF", "A fund that aims to move 1.5 times as much as short-term VIX futures. It is intended for very short holding periods.", "Volatility fund", "Leveraged VIX futures"),
+    "SOXL": ("Direxion Daily Semiconductor Bull 3X Shares", "A fund that aims to move three times as much as an index of semiconductor stocks, in the same direction.", "Leveraged fund", "3× semiconductors"),
+    "TQQQ": ("ProShares UltraPro QQQ", "A fund that aims to move three times as much as the Nasdaq-100, in the same direction.", "Leveraged fund", "3× Nasdaq-100"),
+    "SQQQ": ("ProShares UltraPro Short QQQ", "A fund that aims to move three times as much as the Nasdaq-100, in the OPPOSITE direction. It rises when the index falls.", "Leveraged fund", "3× inverse Nasdaq-100"),
+}
+
+
+def lookup_variants(t: str) -> list:
+    """Symbol spellings to try, since data providers disagree about dots vs dashes.
+
+    The app writes class shares with a dot (`MOG.A`, `BRK.B`); EDGAR's map and Yahoo both
+    use a dash (`MOG-A`, `BRK-B`).  Without this, those tickers fall through both sources
+    and the stock page goes back to showing a bare symbol.
+    """
+    t = (t or "").upper().strip()
+    out = [t]
+    if "." in t:
+        out.append(t.replace(".", "-"))
+        out.append(t.replace(".", ""))
+    if "-" in t:
+        out.append(t.replace("-", "."))
+        out.append(t.replace("-", ""))
+    seen, uniq = set(), []
+    for x in out:
+        if x and x not in seen:
+            seen.add(x)
+            uniq.append(x)
+    return uniq
 
 
 def num(v, d=0):
@@ -84,6 +131,10 @@ def sic_tickers() -> dict:
         t = str(row.get("ticker") or "").upper().strip()
         if t:
             out[t] = (int(row.get("cik_str") or 0), str(row.get("title") or "").strip())
+            # also index the dot form, so a caller passing BRK.B / MOG.A finds the entry
+            # that EDGAR publishes as BRK-B / MOG-A
+            if "-" in t:
+                out.setdefault(t.replace("-", "."), out[t])
     return out
 
 
@@ -137,7 +188,7 @@ def main() -> int:
         u |= {k for k in json.load(open(a.options)) if not k.startswith("_")}
     except Exception:
         pass
-    u = sorted(x for x in u if x and x not in SKIP)
+    u = sorted(x for x in u if x and (x not in SKIP or x in FUND_NOTES))
 
     prev = {}
     if os.path.exists(a.out):
@@ -158,10 +209,19 @@ def main() -> int:
     for n, t in enumerate(todo, 1):
         rec = {"ticker": t, "name": None, "description": None, "sector": None,
                "industry": None, "sic": None, "source": None}
+        if t in FUND_NOTES:
+            # a fund with a stock page: describe it by hand, never invent a company for it
+            nm, desc, sec, ind = FUND_NOTES[t]
+            out[t] = {"ticker": t, "name": nm, "description": desc, "sector": sec,
+                      "industry": ind, "sic": None, "source": "curated",
+                      "is_fund": True}
+            print(f"  [{n}/{len(todo)}] {t:6s} curated fund note", file=sys.stderr)
+            continue
         try:
-            # 1) EDGAR: authoritative legal name + SIC
-            cik, title = tick.get(t, (0, ""))
-            if cik:
+            # 1) EDGAR: authoritative legal name + SIC.  Try each spelling of the symbol.
+            hit = next((tick[v] for v in lookup_variants(t) if v in tick), None)
+            if hit:
+                cik, title = hit
                 rec["source"] = "sec"
                 sic, sicd = edgar_industry(cik)
                 if sicd:
@@ -169,9 +229,13 @@ def main() -> int:
                     rec["industry"] = sicd
                 if title:
                     rec["name"] = title
-            # 2) Yahoo: the actual business description
+            # 2) Yahoo: the actual business description.  Same variants.
             if a.yahoo:
-                y = yf_profile(t)
+                y = {}
+                for v in lookup_variants(t):
+                    y = yf_profile(v)
+                    if y.get("name") or y.get("summary"):
+                        break
                 if y.get("name"):
                     rec["name"] = y["name"]          # more natural than the legal title
                 if y.get("summary"):

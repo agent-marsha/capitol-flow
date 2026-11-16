@@ -2383,5 +2383,183 @@
 "industry": "Drug Manufacturers - Specialty & Generic",
 "sic": "2834",
 "source": "sec+yahoo"
+},
+"BRK.B": {
+"ticker": "BRK.B",
+"name": "Berkshire Hathaway Inc.",
+"description": "Berkshire Hathaway Inc., together with its subsidiaries, engages in the insurance, freight rail transportation, and utility businesses.",
+"sector": "Financial Services",
+"industry": "Insurance - Diversified",
+"sic": "6331",
+"source": "sec+yahoo"
+},
+"MOG.A": {
+"ticker": "MOG.A",
+"name": "Moog Inc.",
+"description": "Moog Inc. designs, manufactures, and integrates precision motion and fluid controls and controls systems for original equipment manufacturers and end users in the aerospace, defense, and industrial markets in the United States, Germany, and internationally.",
+"sector": "Industrials",
+"industry": "Aerospace & Defense",
+"sic": "3590",
+"source": "sec+yahoo"
+},
+"DIA": {
+"ticker": "DIA",
+"name": "SPDR Dow Jones Industrial Average ETF Trust",
+"description": "An exchange-traded fund that tracks the Dow Jones Industrial Average, an index of 30 large US companies.",
+"sector": "Index fund",
+"industry": "Dow Jones Industrial Average",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"EEM": {
+"ticker": "EEM",
+"name": "iShares MSCI Emerging Markets ETF",
+"description": "An exchange-traded fund that holds stocks from emerging-market countries such as China, India, Brazil and Taiwan.",
+"sector": "Index fund",
+"industry": "Emerging-market stocks",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"FXI": {
+"ticker": "FXI",
+"name": "iShares China Large-Cap ETF",
+"description": "An exchange-traded fund that holds stock in large Chinese companies listed in Hong Kong.",
+"sector": "Index fund",
+"industry": "Large-cap Chinese stocks",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"GLD": {
+"ticker": "GLD",
+"name": "SPDR Gold Shares",
+"description": "An exchange-traded fund that holds gold bullion. It tracks the price of gold.",
+"sector": "Commodity fund",
+"industry": "Gold",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"HYG": {
+"ticker": "HYG",
+"name": "iShares iBoxx High Yield Corporate Bond ETF",
+"description": "An exchange-traded fund that holds lower-rated corporate bonds, often called junk bonds. It pays more interest than safer bonds and carries more risk.",
+"sector": "Bond fund",
+"industry": "High-yield corporate bonds",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"IWM": {
+"ticker": "IWM",
+"name": "iShares Russell 2000 ETF",
+"description": "An exchange-traded fund that tracks the Russell 2000, an index of 2,000 smaller US companies.",
+"sector": "Index fund",
+"industry": "Small-cap US stocks",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"QQQ": {
+"ticker": "QQQ",
+"name": "Invesco QQQ Trust",
+"description": "An exchange-traded fund that tracks the Nasdaq-100, an index of the 100 largest non-financial companies on the Nasdaq. It is heavily weighted toward technology.",
+"sector": "Index fund",
+"industry": "Nasdaq-100 index",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"SLV": {
+"ticker": "SLV",
+"name": "iShares Silver Trust",
+"description": "An exchange-traded fund that holds silver bullion. It tracks the price of silver.",
+"sector": "Commodity fund",
+"industry": "Silver",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"SOXL": {
+"ticker": "SOXL",
+"name": "Direxion Daily Semiconductor Bull 3X Shares",
+"description": "A fund that aims to move three times as much as an index of semiconductor stocks, in the same direction.",
+"sector": "Leveraged fund",
+"industry": "3\u00d7 semiconductors",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"SPY": {
+"ticker": "SPY",
+"name": "SPDR S&P 500 ETF Trust",
+"description": "An exchange-traded fund that tracks the S&P 500, an index of about 500 large US companies. Buying it is a way to own the whole US market at once.",
+"sector": "Index fund",
+"industry": "S&P 500 index",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"SQQQ": {
+"ticker": "SQQQ",
+"name": "ProShares UltraPro Short QQQ",
+"description": "A fund that aims to move three times as much as the Nasdaq-100, in the OPPOSITE direction. It rises when the index falls.",
+"sector": "Leveraged fund",
+"industry": "3\u00d7 inverse Nasdaq-100",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"TLT": {
+"ticker": "TLT",
+"name": "iShares 20+ Year Treasury Bond ETF",
+"description": "An exchange-traded fund that holds long-dated US Treasury bonds. It rises when long-term interest rates fall and falls when they rise.",
+"sector": "Bond fund",
+"industry": "US Treasury bonds, 20+ years",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"TQQQ": {
+"ticker": "TQQQ",
+"name": "ProShares UltraPro QQQ",
+"description": "A fund that aims to move three times as much as the Nasdaq-100, in the same direction.",
+"sector": "Leveraged fund",
+"industry": "3\u00d7 Nasdaq-100",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"USO": {
+"ticker": "USO",
+"name": "United States Oil Fund",
+"description": "An exchange-traded fund that tracks the price of crude oil through oil futures contracts.",
+"sector": "Commodity fund",
+"industry": "Crude oil futures",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"UVXY": {
+"ticker": "UVXY",
+"name": "ProShares Ultra VIX Short-Term Futures ETF",
+"description": "A fund that aims to move 1.5 times as much as short-term VIX futures. It is intended for very short holding periods.",
+"sector": "Volatility fund",
+"industry": "Leveraged VIX futures",
+"sic": null,
+"source": "curated",
+"is_fund": true
+},
+"VXX": {
+"ticker": "VXX",
+"name": "iPath Series B S&P 500 VIX Short-Term Futures ETN",
+"description": "A traded note that tracks short-term VIX futures, which rise when the stock market gets jumpy. It is designed for short holding periods.",
+"sector": "Volatility fund",
+"industry": "VIX futures",
+"sic": null,
+"source": "curated",
+"is_fund": true
 }
 }

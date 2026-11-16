@@ -374,14 +374,26 @@ def main() -> int:
     # (the same convention as fundamentals' _sectors) without looking like a ticker.
     # Ranked on INDIVIDUAL contracts, not per-strike sums: an "option" is a specific
     # ticker+expiry+strike+side, and mixing expiries would invent instruments.
-    def _topN(side: str, n: int = 100):
+    TOP_N = 100
+    MIN_PRICE = 0.20
+
+    def _topN(side: str, n: int = TOP_N):
         # funds are excluded so this ranks bets on real companies (SPY/QQQ kept by request)
-        rows = [r for r in ledger if r["type"] == side and not is_fund(r["ticker"])]
+        # and so are contracts under MIN_PRICE: open interest counts CONTRACTS, so a $0.01
+        # strike ties with a $1,344 one on the count while representing almost no money.
+        # Rows with no quote at all are dropped too — a price floor can't be verified.
+        rows = [r for r in ledger
+                if r["type"] == side
+                and not is_fund(r["ticker"])
+                and r.get("price") is not None
+                and r["price"] >= MIN_PRICE]
         rows.sort(key=lambda r: (-r["oi"], r["ticker"], r["strike"]))
         return rows[:n]
 
-    TOP_N = 100
-    calls50, puts50 = _topN("call", TOP_N), _topN("put", TOP_N)
+    dropped_cheap = sum(1 for r in ledger
+                        if not is_fund(r["ticker"])
+                        and (r.get("price") is None or r["price"] < MIN_PRICE))
+    calls50, puts50 = _topN("call"), _topN("put")
     funds_seen = sorted({r["ticker"] for r in ledger if is_fund(r["ticker"])})
     n_exp = 10
     out["_top_oi"] = {
@@ -389,18 +401,22 @@ def main() -> int:
         "puts": puts50,
         "n": TOP_N,
         "min_dte": 30,
+        "min_price": MIN_PRICE,
         "expirations": n_exp,
         "universe": len(out),
         "contracts_scanned": len(ledger),
+        "dropped_under_min_price": dropped_cheap,
         "companies_only": True,
         "kept_funds": sorted(LEADERBOARD_KEEP),
         "excluded_funds": funds_seen,
     }
     if calls50:
         print(f"[options] leaderboard: {len(ledger):,} contracts scanned, "
+              f"{dropped_cheap:,} dropped under ${MIN_PRICE:.2f}, "
               f"top call {calls50[0]['ticker']} ${calls50[0]['strike']:g} {calls50[0]['expiry']} "
-              f"OI {calls50[0]['oi']:,}; top put {puts50[0]['ticker']} "
-              f"${puts50[0]['strike']:g} {puts50[0]['expiry']} OI {puts50[0]['oi']:,}",
+              f"OI {calls50[0]['oi']:,} @ ${calls50[0]['price']}; top put {puts50[0]['ticker']} "
+              f"${puts50[0]['strike']:g} {puts50[0]['expiry']} OI {puts50[0]['oi']:,} "
+              f"@ ${puts50[0]['price']}",
               file=sys.stderr)
 
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)

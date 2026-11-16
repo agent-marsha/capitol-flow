@@ -896,7 +896,8 @@
       (fnum(m.contracts_scanned) ? ', ' + Math.round(m.contracts_scanned).toLocaleString('en-US') + ' contracts scanned' : '');
     return '<section class="block" id="top-oi" aria-labelledby="top-h">' +
       '<div class="sec-head"><div><div class="micro top-mark">◆ Contract leaderboard</div><h2 id="top-h" class="display">Where the biggest bets sit.</h2></div>' +
-      '<p>The ' + d.calls.length + ' calls and ' + d.puts.length + ' puts with the most open interest, across every stock this app tracks — one month out or further.</p></div>' +
+      '<p>The ' + d.calls.length + ' calls and ' + d.puts.length + ' puts with the most open interest, across every stock this app tracks — one month out or further' +
+        (fnum(m.min_price) ? ', and priced at $' + (+m.min_price).toFixed(2) + ' or more' : '') + '.</p></div>' +
       '<p class="oi-why">The board above ranks <b>stocks</b> by total open interest. This one ranks <b>single contracts</b> — one ticker, one strike, one expiry — so it answers “which single bet is the biggest”, not “which stock is most optioned”.</p>' +
       '<div class="opt-cols top-cols">' + topCol('call', d.calls) + topCol('put', d.puts) + '</div>' +
       '<div class="bm-more" id="top-more"></div>' +

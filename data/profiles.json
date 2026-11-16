@@ -11,6 +11,42 @@
 "sic": "2834",
 "industry": "Pharmaceutical Preparations"
 },
+"ADI": {
+"name": "ANALOG DEVICES INC",
+"sector": "Technology",
+"sic": "3674",
+"industry": "Semiconductors & Related Devices"
+},
+"AEIS": {
+"name": "ADVANCED ENERGY INDUSTRIES INC",
+"sector": "Technology",
+"sic": "3679",
+"industry": "Electronic Components, NEC"
+},
+"ALGM": {
+"name": "ALLEGRO MICROSYSTEMS, INC.",
+"sector": "Technology",
+"sic": "3674",
+"industry": "Semiconductors & Related Devices"
+},
+"ALKS": {
+"name": "Alkermes plc.",
+"sector": "Healthcare",
+"sic": "2834",
+"industry": "Pharmaceutical Preparations"
+},
+"ALNY": {
+"name": "ALNYLAM PHARMACEUTICALS, INC.",
+"sector": "Healthcare",
+"sic": "2834",
+"industry": "Pharmaceutical Preparations"
+},
+"AMAT": {
+"name": "APPLIED MATERIALS INC /DE",
+"sector": "Technology",
+"sic": "3674",
+"industry": "Semiconductors & Related Devices"
+},
 "AMGN": {
 "name": "AMGEN INC",
 "sector": "Healthcare",
@@ -35,17 +71,47 @@
 "sic": "3714",
 "industry": "Motor Vehicle Parts & Accessories"
 },
+"ARE": {
+"name": "ALEXANDRIA REAL ESTATE EQUITIES, INC.",
+"sector": "Financial Services",
+"sic": "6798",
+"industry": "Real Estate Investment Trusts"
+},
 "ARGX": {
 "name": "ARGENX SE",
 "sector": "Healthcare",
 "sic": "2836",
 "industry": "Biological Products, (No Diagnostic Substances)"
 },
+"ASML": {
+"name": "ASML HOLDING NV",
+"sector": "Industrials",
+"sic": "3559",
+"industry": "Special Industry Machinery, NEC"
+},
+"ATRC": {
+"name": "AtriCure, Inc.",
+"sector": "Healthcare",
+"sic": "3841",
+"industry": "Surgical & Medical Instruments & Apparatus"
+},
 "AVGO": {
 "name": "Broadcom Inc.",
 "sector": "Technology",
 "sic": "3674",
 "industry": "Semiconductors & Related Devices"
+},
+"AZO": {
+"name": "AUTOZONE INC",
+"sector": "Consumer Cyclical",
+"sic": "5531",
+"industry": "Retail-Auto & Home Supply Stores"
+},
+"BA": {
+"name": "BOEING CO",
+"sector": "Industrials",
+"sic": "3721",
+"industry": "Aircraft"
 },
 "BAC": {
 "name": "BANK OF AMERICA CORP /DE/",
@@ -58,6 +124,18 @@
 "sector": "Healthcare",
 "sic": "2834",
 "industry": "Pharmaceutical Preparations"
+},
+"BCPC": {
+"name": "BALCHEM CORP",
+"sector": "Basic Materials",
+"sic": "2800",
+"industry": "Chemicals & Allied Products"
+},
+"BEP": {
+"name": "Brookfield Renewable Partners L.P.",
+"sector": "Utilities",
+"sic": "4911",
+"industry": "Electric Services"
 },
 "BHE": {
 "name": "BENCHMARK ELECTRONICS INC",
@@ -77,11 +155,29 @@
 "sic": "6331",
 "industry": "Fire, Marine & Casualty Insurance"
 },
+"CDNS": {
+"name": "CADENCE DESIGN SYSTEMS INC",
+"sector": "Technology",
+"sic": "7372",
+"industry": "Services-Prepackaged Software"
+},
+"CINF": {
+"name": "CINCINNATI FINANCIAL CORP",
+"sector": "Financial Services",
+"sic": "6331",
+"industry": "Fire, Marine & Casualty Insurance"
+},
 "CL": {
 "name": "COLGATE PALMOLIVE CO",
 "sector": "Consumer Defensive",
 "sic": "2844",
 "industry": "Perfumes, Cosmetics & Other Toilet Preparations"
+},
+"CMG": {
+"name": "CHIPOTLE MEXICAN GRILL INC",
+"sector": "Consumer Cyclical",
+"sic": "5812",
+"industry": "Retail-Eating  Places"
 },
 "COST": {
 "name": "COSTCO WHOLESALE CORP /NEW",
@@ -101,6 +197,18 @@
 "sic": "3576",
 "industry": "Computer Communications Equipment"
 },
+"CSX": {
+"name": "CSX CORP",
+"sector": "Industrials",
+"sic": "4011",
+"industry": "Railroads, Line-Haul Operating"
+},
+"CTVA": {
+"name": "Corteva, Inc.",
+"sector": "Basic Materials",
+"sic": "0100",
+"industry": "Agricultural Production-Crops"
+},
 "CVX": {
 "name": "CHEVRON CORP",
 "sector": "Energy",
@@ -112,6 +220,12 @@
 "sector": "Technology",
 "sic": "7372",
 "industry": "Services-Prepackaged Software"
+},
+"DHR": {
+"name": "DANAHER CORP /DE/",
+"sector": "Technology",
+"sic": "3823",
+"industry": "Industrial Instruments For Measurement, Display, and Control"
 },
 "DVN": {
 "name": "DEVON ENERGY CORP/DE",
@@ -125,11 +239,29 @@
 "sic": "2844",
 "industry": "Perfumes, Cosmetics & Other Toilet Preparations"
 },
+"EMR": {
+"name": "EMERSON ELECTRIC CO",
+"sector": "Industrials",
+"sic": "3600",
+"industry": "Electronic & Other Electrical Equipment (No Computer Equip)"
+},
+"ETN": {
+"name": "Eaton Corp plc",
+"sector": "Industrials",
+"sic": "3590",
+"industry": "Misc Industrial & Commercial Machinery & Equipment"
+},
 "FDX": {
 "name": "FEDEX CORP",
 "sector": "Industrials",
 "sic": "4513",
 "industry": "Air Courier Services"
+},
+"FIS": {
+"name": "Fidelity National Information Services, Inc.",
+"sector": "Industrials",
+"sic": "7389",
+"industry": "Services-Business Services, NEC"
 },
 "GLW": {
 "name": "CORNING INC /NY",
@@ -142,6 +274,18 @@
 "sector": "Communication Services",
 "sic": "7370",
 "industry": "Services-Computer Programming, Data Processing, Etc."
+},
+"GOOGL": {
+"name": "Alphabet Inc.",
+"sector": "Communication Services",
+"sic": "7370",
+"industry": "Services-Computer Programming, Data Processing, Etc."
+},
+"GS": {
+"name": "GOLDMAN SACHS GROUP INC",
+"sector": "Financial Services",
+"sic": "6211",
+"industry": "Security Brokers, Dealers & Flotation Companies"
 },
 "HD": {
 "name": "HOME DEPOT, INC.",
@@ -167,179 +311,41 @@
 "sic": "3570",
 "industry": "Computer & office Equipment"
 },
+"IBRX": {
+"name": "ImmunityBio, Inc.",
+"sector": "Healthcare",
+"sic": "2836",
+"industry": "Biological Products, (No Diagnostic Substances)"
+},
+"INTC": {
+"name": "INTEL CORP",
+"sector": "Technology",
+"sic": "3674",
+"industry": "Semiconductors & Related Devices"
+},
+"IQV": {
+"name": "IQVIA HOLDINGS INC.",
+"sector": "Industrials",
+"sic": "8731",
+"industry": "Services-Commercial Physical & Biological Research"
+},
+"ITT": {
+"name": "ITT INC.",
+"sector": "Industrials",
+"sic": "3561",
+"industry": "Pumps & Pumping Equipment"
+},
 "ITW": {
 "name": "ILLINOIS TOOL WORKS INC",
 "sector": "Industrials",
 "sic": "3560",
 "industry": "General Industrial Machinery & Equipment"
 },
-"LLY": {
-"name": "ELI LILLY & Co",
+"JNJ": {
+"name": "JOHNSON & JOHNSON",
 "sector": "Healthcare",
 "sic": "2834",
 "industry": "Pharmaceutical Preparations"
-},
-"LMT": {
-"name": "LOCKHEED MARTIN CORP",
-"sector": "Industrials",
-"sic": "3760",
-"industry": "Guided Missiles & Space Vehicles & Parts"
-},
-"LOW": {
-"name": "LOWES COMPANIES INC",
-"sector": "Consumer Cyclical",
-"sic": "5211",
-"industry": "Retail-Lumber & Other Building Materials Dealers"
-},
-"MBGL": {
-"name": "Mobility Global Inc.",
-"sector": "Industrials",
-"sic": "7389",
-"industry": "Services-Business Services, NEC"
-},
-"MCD": {
-"name": "MCDONALDS CORP",
-"sector": "Consumer Cyclical",
-"sic": "5812",
-"industry": "Retail-Eating  Places"
-},
-"META": {
-"name": "Meta Platforms, Inc.",
-"sector": "Communication Services",
-"sic": "7370",
-"industry": "Services-Computer Programming, Data Processing, Etc."
-},
-"MPC": {
-"name": "Marathon Petroleum Corp",
-"sector": "Energy",
-"sic": "2911",
-"industry": "Petroleum Refining"
-},
-"MRSH": {
-"name": "MARSH & MCLENNAN COMPANIES, INC.",
-"sector": "Financial Services",
-"sic": "6411",
-"industry": "Insurance Agents, Brokers & Service"
-},
-"MSFT": {
-"name": "MICROSOFT CORP",
-"sector": "Technology",
-"sic": "7372",
-"industry": "Services-Prepackaged Software"
-},
-"MU": {
-"name": "MICRON TECHNOLOGY INC",
-"sector": "Technology",
-"sic": "3674",
-"industry": "Semiconductors & Related Devices"
-},
-"NVDA": {
-"name": "NVIDIA CORP",
-"sector": "Technology",
-"sic": "3674",
-"industry": "Semiconductors & Related Devices"
-},
-"OKE": {
-"name": "ONEOK INC /NEW/",
-"sector": "Energy",
-"sic": "4923",
-"industry": "Natural Gas Transmisison & Distribution"
-},
-"PG": {
-"name": "PROCTER & GAMBLE Co",
-"sector": "Consumer Defensive",
-"sic": "2840",
-"industry": "Soap, Detergents, Cleang Preparations, Perfumes, Cosmetics"
-},
-"PTC": {
-"name": "PTC INC.",
-"sector": "Technology",
-"sic": "7372",
-"industry": "Services-Prepackaged Software"
-},
-"ROK": {
-"name": "ROCKWELL AUTOMATION, INC",
-"sector": "Industrials",
-"sic": "3829",
-"industry": "Measuring & Controlling Devices, NEC"
-},
-"RVTY": {
-"name": "REVVITY, INC.",
-"sector": "Healthcare",
-"sic": "3826",
-"industry": "Laboratory Analytical Instruments"
-},
-"SBUX": {
-"name": "STARBUCKS CORP",
-"sector": "Consumer Cyclical",
-"sic": "5810",
-"industry": "Retail-Eating & Drinking Places"
-},
-"STLN": {
-"name": "Starling Oncology, Inc.",
-"sector": "Healthcare",
-"sic": "8011",
-"industry": "Services-Offices & Clinics of  Doctors of  Medicine"
-},
-"T": {
-"name": "AT&T INC.",
-"sector": "Communication Services",
-"sic": "4813",
-"industry": "Telephone Communications (No Radiotelephone)"
-},
-"TJX": {
-"name": "TJX COMPANIES INC /DE/",
-"sector": "Consumer Cyclical",
-"sic": "5651",
-"industry": "Retail-Family Clothing Stores"
-},
-"UNH": {
-"name": "UNITEDHEALTH GROUP INC",
-"sector": "Healthcare",
-"sic": "6324",
-"industry": "Hospital & Medical Service Plans"
-},
-"V": {
-"name": "VISA INC.",
-"sector": "Financial Services",
-"sic": "7389",
-"industry": "Services-Business Services, NEC"
-},
-"VSAT": {
-"name": "VIASAT INC",
-"sector": "Communication Services",
-"sic": "4899",
-"industry": "Communications Services, NEC"
-},
-"VZ": {
-"name": "VERIZON COMMUNICATIONS INC",
-"sector": "Communication Services",
-"sic": "4813",
-"industry": "Telephone Communications (No Radiotelephone)"
-},
-"WFC": {
-"name": "WELLS FARGO & COMPANY/MN",
-"sector": "Financial Services",
-"sic": "6021",
-"industry": "National Commercial Banks"
-},
-"WMB": {
-"name": "WILLIAMS COMPANIES, INC.",
-"sector": "Energy",
-"sic": "4922",
-"industry": "Natural Gas Transmission"
-},
-"WMT": {
-"name": "Walmart Inc.",
-"sector": "Consumer Defensive",
-"sic": "5331",
-"industry": "Retail-Variety Stores"
-},
-"XOM": {
-"name": "ExxonMobil Holdings Corp",
-"sector": "Energy",
-"sic": "2911",
-"industry": "Petroleum Refining"
 },
 "AAL": {
 "name": "American Airlines Group Inc.",
@@ -388,12 +394,6 @@
 "sector": "Financial Services",
 "sic": "6199",
 "industry": "Finance Services"
-},
-"BA": {
-"name": "BOEING CO",
-"sector": "Industrials",
-"sic": "3721",
-"industry": "Aircraft"
 },
 "CAT": {
 "name": "CATERPILLAR INC",
@@ -473,41 +473,17 @@
 "sic": "5734",
 "industry": "Retail-Computer & Computer Software Stores"
 },
-"GOOGL": {
-"name": "Alphabet Inc.",
-"sector": "Communication Services",
-"sic": "7370",
-"industry": "Services-Computer Programming, Data Processing, Etc."
-},
-"GS": {
-"name": "GOLDMAN SACHS GROUP INC",
-"sector": "Financial Services",
-"sic": "6211",
-"industry": "Security Brokers, Dealers & Flotation Companies"
-},
 "HOOD": {
 "name": "Robinhood Markets, Inc.",
 "sector": "Financial Services",
 "sic": "6211",
 "industry": "Security Brokers, Dealers & Flotation Companies"
 },
-"INTC": {
-"name": "INTEL CORP",
-"sector": "Technology",
-"sic": "3674",
-"industry": "Semiconductors & Related Devices"
-},
 "IONQ": {
 "name": "IonQ, Inc.",
 "sector": "Technology",
 "sic": "7373",
 "industry": "Services-Computer Integrated Systems Design"
-},
-"JNJ": {
-"name": "JOHNSON & JOHNSON",
-"sector": "Healthcare",
-"sic": "2834",
-"industry": "Pharmaceutical Preparations"
 },
 "JPM": {
 "name": "JPMORGAN CHASE & CO",
@@ -527,6 +503,24 @@
 "sic": "3711",
 "industry": "Motor Vehicles & Passenger Car Bodies"
 },
+"LLY": {
+"name": "ELI LILLY & Co",
+"sector": "Healthcare",
+"sic": "2834",
+"industry": "Pharmaceutical Preparations"
+},
+"LMT": {
+"name": "LOCKHEED MARTIN CORP",
+"sector": "Industrials",
+"sic": "3760",
+"industry": "Guided Missiles & Space Vehicles & Parts"
+},
+"LOW": {
+"name": "LOWES COMPANIES INC",
+"sector": "Consumer Cyclical",
+"sic": "5211",
+"industry": "Retail-Lumber & Other Building Materials Dealers"
+},
 "MA": {
 "name": "Mastercard Inc",
 "sector": "Financial Services",
@@ -538,6 +532,24 @@
 "sector": "Financial Services",
 "sic": "6199",
 "industry": "Finance Services"
+},
+"MCD": {
+"name": "MCDONALDS CORP",
+"sector": "Consumer Cyclical",
+"sic": "5812",
+"industry": "Retail-Eating  Places"
+},
+"META": {
+"name": "Meta Platforms, Inc.",
+"sector": "Communication Services",
+"sic": "7370",
+"industry": "Services-Computer Programming, Data Processing, Etc."
+},
+"MPC": {
+"name": "Marathon Petroleum Corp",
+"sector": "Energy",
+"sic": "2911",
+"industry": "Petroleum Refining"
 },
 "MRK": {
 "name": "Merck & Co., Inc.",
@@ -551,11 +563,23 @@
 "sic": "6211",
 "industry": "Security Brokers, Dealers & Flotation Companies"
 },
+"MSFT": {
+"name": "MICROSOFT CORP",
+"sector": "Technology",
+"sic": "7372",
+"industry": "Services-Prepackaged Software"
+},
 "MSTR": {
 "name": "Strategy Inc",
 "sector": "Financial Services",
 "sic": "6199",
 "industry": "Finance Services"
+},
+"MU": {
+"name": "MICRON TECHNOLOGY INC",
+"sector": "Technology",
+"sic": "3674",
+"industry": "Semiconductors & Related Devices"
 },
 "NIO": {
 "name": "NIO Inc.",
@@ -568,6 +592,18 @@
 "sector": "Basic Materials",
 "sic": "3021",
 "industry": "Rubber & Plastics Footwear"
+},
+"NVDA": {
+"name": "NVIDIA CORP",
+"sector": "Technology",
+"sic": "3674",
+"industry": "Semiconductors & Related Devices"
+},
+"OKE": {
+"name": "ONEOK INC /NEW/",
+"sector": "Energy",
+"sic": "4923",
+"industry": "Natural Gas Transmisison & Distribution"
 },
 "ORCL": {
 "name": "ORACLE CORP",
@@ -587,8 +623,20 @@
 "sic": "2834",
 "industry": "Pharmaceutical Preparations"
 },
+"PG": {
+"name": "PROCTER & GAMBLE Co",
+"sector": "Consumer Defensive",
+"sic": "2840",
+"industry": "Soap, Detergents, Cleang Preparations, Perfumes, Cosmetics"
+},
 "PLTR": {
 "name": "Palantir Technologies Inc.",
+"sector": "Technology",
+"sic": "7372",
+"industry": "Services-Prepackaged Software"
+},
+"PTC": {
+"name": "PTC INC.",
 "sector": "Technology",
 "sic": "7372",
 "industry": "Services-Prepackaged Software"
@@ -635,6 +683,12 @@
 "sic": "3711",
 "industry": "Motor Vehicles & Passenger Car Bodies"
 },
+"SBUX": {
+"name": "STARBUCKS CORP",
+"sector": "Consumer Cyclical",
+"sic": "5810",
+"industry": "Retail-Eating & Drinking Places"
+},
 "SHOP": {
 "name": "SHOPIFY INC.",
 "sector": "Technology",
@@ -677,6 +731,24 @@
 "sic": "",
 "industry": ""
 },
+"STLN": {
+"name": "Starling Oncology, Inc.",
+"sector": "Healthcare",
+"sic": "8011",
+"industry": "Services-Offices & Clinics of  Doctors of  Medicine"
+},
+"T": {
+"name": "AT&T INC.",
+"sector": "Communication Services",
+"sic": "4813",
+"industry": "Telephone Communications (No Radiotelephone)"
+},
+"TJX": {
+"name": "TJX COMPANIES INC /DE/",
+"sector": "Consumer Cyclical",
+"sic": "5651",
+"industry": "Retail-Family Clothing Stores"
+},
 "TMO": {
 "name": "THERMO FISHER SCIENTIFIC INC.",
 "sector": "Industrials",
@@ -701,6 +773,12 @@
 "sic": "7389",
 "industry": "Services-Business Services, NEC"
 },
+"UNH": {
+"name": "UNITEDHEALTH GROUP INC",
+"sector": "Healthcare",
+"sic": "6324",
+"industry": "Hospital & Medical Service Plans"
+},
 "USO": {
 "name": "United States Oil Fund, LP",
 "sector": "Financial Services",
@@ -713,10 +791,52 @@
 "sic": "6221",
 "industry": "Commodity Contracts Brokers & Dealers"
 },
+"V": {
+"name": "VISA INC.",
+"sector": "Financial Services",
+"sic": "7389",
+"industry": "Services-Business Services, NEC"
+},
+"VSAT": {
+"name": "VIASAT INC",
+"sector": "Communication Services",
+"sic": "4899",
+"industry": "Communications Services, NEC"
+},
 "VXX": {
 "name": "BARCLAYS BANK PLC",
 "sector": "Financial Services",
 "sic": "6029",
 "industry": "Commercial Banks, NEC"
+},
+"VZ": {
+"name": "VERIZON COMMUNICATIONS INC",
+"sector": "Communication Services",
+"sic": "4813",
+"industry": "Telephone Communications (No Radiotelephone)"
+},
+"WFC": {
+"name": "WELLS FARGO & COMPANY/MN",
+"sector": "Financial Services",
+"sic": "6021",
+"industry": "National Commercial Banks"
+},
+"WMB": {
+"name": "WILLIAMS COMPANIES, INC.",
+"sector": "Energy",
+"sic": "4922",
+"industry": "Natural Gas Transmission"
+},
+"WMT": {
+"name": "Walmart Inc.",
+"sector": "Consumer Defensive",
+"sic": "5331",
+"industry": "Retail-Variety Stores"
+},
+"XOM": {
+"name": "ExxonMobil Holdings Corp",
+"sector": "Energy",
+"sic": "2911",
+"industry": "Petroleum Refining"
 }
 }

@@ -1,8 +1,8 @@
 {
- "generated": "2026-11-15T17:39:14.879936Z",
+ "generated": "2026-11-16T20:55:03.760619Z",
  "source": "US Senate \u2014 Periodic Transaction Reports (via matr-co/senate-ptr mirror of efdsearch.senate.gov)",
- "mirror_updated": "2026-11-14T23:53:25+00:00",
- "count": 271,
+ "mirror_updated": "2026-11-16T20:25:23+00:00",
+ "count": 270,
  "transactions": [
   {
    "owner": "Spouse",
@@ -5133,25 +5133,6 @@
    "ticker": "WMB",
    "source_url": "https://efdsearch.senate.gov/search/view/ptr/fda235b3-bad7-4637-8fa1-053f354d929c/",
    "asset_type": "Stock Option"
-  },
-  {
-   "owner": "Self",
-   "asset_raw": "ALLEGHENY CNTY PA SAN AUTH SWR REV BDS",
-   "txn_type": "P",
-   "txn_type_label": "Purchase",
-   "txn_date": "2026-06-18",
-   "notification_date": null,
-   "amount_low": 250001,
-   "amount_high": 500000,
-   "amount_label": "$250,001 - $500,000",
-   "politician": "Sen. David H McCormick",
-   "chamber": "Senate",
-   "state_district": null,
-   "filed_date": "2026-06-26",
-   "doc_id": "ff0b0573-2809-40ae-8197-4b26648e9027",
-   "ticker": null,
-   "source_url": "https://efdsearch.senate.gov/search/view/ptr/ff0b0573-2809-40ae-8197-4b26648e9027/",
-   "asset_type": "Municipal Security"
   }
  ]
 }

@@ -168,7 +168,7 @@ EXTRA_HIGH_OI = [
     "SPY", "QQQ", "IWM", "DIA", "TLT", "GLD", "SLV", "USO", "HYG", "EEM", "FXI",
     "VXX", "UVXY", "SOXL", "TQQQ", "SQQQ",
     # mega / large caps not necessarily in the congressional set
-    "TSLA", "GOOGL", "JPM", "JNJ", "MA", "AVGO", "ORCL", "CRM", "ADBE", "AMD",
+    "NVDA", "TSLA", "GOOGL", "JPM", "JNJ", "MA", "AVGO", "ORCL", "CRM", "ADBE", "AMD",
     "INTC", "CSCO", "QCOM", "TXN", "IBM", "PFE", "MRK", "ABBV", "TMO", "PEP",
     "KO", "MCD", "NKE", "DIS", "BA", "CAT", "GS", "MS", "AXP", "CMCSA", "ORCL",
     # high-retail-option names
@@ -204,11 +204,26 @@ def main() -> int:
         return 2
 
     data = json.load(open(a.inp))
-    base = sorted((data.get("prices") or {}).keys())[: a.max]
+    # Pick the tickers that MATTER, not the ones that come first in the alphabet.
+    #
+    # This was `sorted(prices)[:max]` — an A-through-J slice of the tracked set.  It
+    # silently dropped NVDA (position 80 of 120) from options.json, so NVDA's stock page
+    # lost its entire options section while every ticker starting with A kept theirs.
+    # Nothing about "A" makes a ticker worth fetching; rank by previous-run open interest
+    # (the biggest option markets), then by how many congressional trades it has.
+    _prices = data.get("prices") or {}
+    _oi = {r.get("ticker"): (r.get("total_oi") or 0) for r in (data.get("oi_board") or [])}
+    _trades: dict = {}
+    for _t in (data.get("trades") or []):
+        _tk = _t.get("ticker")
+        if _tk:
+            _trades[_tk] = _trades.get(_tk, 0) + 1
+    ranked = sorted(_prices.keys(), key=lambda t: (-_oi.get(t, 0), -_trades.get(t, 0), t))
+    base = ranked[: a.max]
     extras = [] if a.no_extra else [t for t in _dedupe(EXTRA_HIGH_OI) if t not in set(base)]
     tickers = base + extras
-    print(f"[options] {len(tickers)} tickers ({len(base)} congressional + {len(extras)} "
-          f"high-OI), top {a.top} per side", file=sys.stderr)
+    print(f"[options] {len(tickers)} tickers ({len(base)} ranked by OI/trades + "
+          f"{len(extras)} high-OI), top {a.top} per side", file=sys.stderr)
 
     out, ok, skipped = {}, 0, []
     for i, t in enumerate(tickers, 1):

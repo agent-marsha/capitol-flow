@@ -1287,12 +1287,21 @@
     var d = s && s[metric];
     var med = d && fnum(d.median) ? d.median : null;
 
+    // The line carries ONE comparison base: the sector average — which is what these cards
+    // are about.  It used to also say "cheaper than 75% of X companies", a second and
+    // competing framing that read oddly ("cheaper than a company"?), so it's gone.
+    // The median only appears when a mean has been dragged well away from it.
+    var medNote = '';
+    if (med != null && fnum(mean) && Math.abs(mean) > 1e-9 &&
+        Math.abs(med - mean) / Math.abs(mean) > 0.25) {
+      medNote = '<span class="fpeer-med" aria-hidden="true"> · </span>' +
+        '<span class="fpeer-med">sector median ' + esc(fmt(med)) + '</span>';
+    }
+
     var line = '<p class="fpeer-line">' +
       '<span class="fpeer-verdict' + (tone === 'mid' ? '' : ' ' + tone + '-ink') + '">' + vsText + '</span>' +
-      '<span class="sr-only"> (' + esc(fmt(val)) + ' vs ' + esc(fmt(mean)) + '), </span><span aria-hidden="true"> · </span>' +
-      'cheaper than ' + Math.round(cheap * 100) + '% of ' + esc(p.sector) + ' companies' +
-      (med != null ? '<span class="sr-only">; </span><span class="fpeer-med" aria-hidden="true"> · </span>' +
-        '<span class="fpeer-med">median ' + esc(fmt(med)) + '</span>' : '') +
+      '<span class="sr-only"> (' + esc(fmt(val)) + ' versus a ' + esc(fmt(mean)) + ' sector average)</span>' +
+      medNote +
       '</p>';
     return '<div class="fpeer">' + bars + line + '</div>';
   }

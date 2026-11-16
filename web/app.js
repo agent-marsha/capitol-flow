@@ -1272,7 +1272,14 @@
       row('is-co ' + tone, tk, val) + row('is-avg', 'Sector average', mean) + '</div>';
 
     var pctVs = Math.round(Math.abs(vs) * 100);
-    var vsText = vs > 2 ? (1 + vs).toFixed(1) + '\u00d7 the sector average'
+    // A bare "5.7x the sector average" reads as MORE EXPENSIVE — so on a yield, where a
+    // higher number is CHEAPER, it flatly contradicted the "cheaper" verdict beside it.
+    // Name what is being compared so the two halves of the sentence agree.
+    var mult = (1 + vs).toFixed(1) + '\u00d7';
+    var vsText = vs > 2
+      ? (metric === 'fcf_yield'
+          ? mult + ' as much cash as the sector average'
+          : mult + ' the sector average')
       : pctVs === 0 ? 'In line with the sector average'
       : pctVs + '% ' + (vs < 0 ? 'below' : 'above') + ' the sector average';
     var secs = F._sectors && typeof F._sectors === 'object' ? F._sectors : null;

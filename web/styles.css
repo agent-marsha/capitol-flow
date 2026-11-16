@@ -624,3 +624,38 @@ section[id] { scroll-margin-top: 64px; }
 .d-nocong { margin: 20px 0 0; }
 .d-cols.d-cols-opt { grid-template-columns: 1fr; grid-template-areas: none; }
 .d-cols-opt > .opt-slot { grid-area: auto; }
+
+/* ---------- look up a ticker: top calls & puts by open interest ---------- */
+/* Reuses the stock page's options pieces (.opt-strip, .opt-cols, .opt-row) for the result;
+   only the input row, the result header and the quiet message line are new. */
+.lk-form { display: flex; gap: 8px; align-items: stretch; max-width: 560px; margin-bottom: 20px; }
+.lk-input {
+  flex: 1 1 auto; padding: 12px 16px; border-color: var(--line-2);
+  font: 800 clamp(28px, 6vw, 40px)/1 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  letter-spacing: .06em; text-transform: uppercase; font-variant-numeric: tabular-nums;
+}
+.lk-input::placeholder { color: var(--line-2); }
+.lk-input:focus { border-color: var(--ink); outline: none; }
+.lk-input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.lk-go {
+  flex: none; background: var(--ink); color: var(--bg); border: 1px solid var(--ink); border-radius: var(--radius);
+  padding: 0 22px; font-size: 13px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap;
+}
+.lk-go:hover { background: var(--ink-2); border-color: var(--ink-2); }
+.lk-out:empty { display: none; }
+/* The result block gets a hairline so it reads as a distinct answer to the form above it. */
+.lk-res { border-top: 1px solid var(--line); padding-top: 20px; margin-top: 4px; }
+.lk-msg { margin: 0; padding: 8px 0 0; color: var(--ink-2); font-size: 15px; max-width: 60ch; }
+.lk-msg b { color: var(--ink); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: .04em; }
+.lk-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; margin-bottom: 16px; }
+.lk-id { min-width: 0; }
+.lk-tk { margin: 0; font-size: clamp(64px, 14vw, 120px); word-break: break-all; }
+.lk-name { margin-top: 8px; }
+.lk-page { display: inline-block; margin-top: 8px; }
+.lk-spot { text-align: right; }
+.lk-spot .display { margin-top: 6px; }
+@media (max-width: 480px) {
+  .lk-form { gap: 6px; }
+  .lk-go { padding: 0 14px; }
+  .lk-spot { text-align: left; }
+}

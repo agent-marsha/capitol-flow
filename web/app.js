@@ -64,6 +64,7 @@
     bigAll: false,
     oiSort: 'size',
     oiAll: false,
+    lk: { q: '', tk: '', nudge: false }, // ticker lookup: input text, looked-up ticker, empty-submit nudge
     showAllSignals: false,
     tf: 'daily',
     chart: null,
@@ -508,6 +509,7 @@
       '</section>' +
 
       oiSection() +
+      lookupSection() +
 
       '<section class="block" id="feed" aria-labelledby="feed-h">' +
         '<div class="sec-head"><div><div class="micro">All disclosures</div><h2 id="feed-h" class="display">The feed</h2></div>' +
@@ -532,6 +534,7 @@
     renderOv();
     renderBigChart();
     renderOi();
+    renderLookup();
     renderFeed();
     document.title = 'Capitol Flow — Politician Trade Signals';
   }
@@ -828,6 +831,163 @@
       ? '<button type="button" class="btn-ghost" data-action="oi-all" aria-expanded="' + !!S.oiAll + '">' +
           (S.oiAll ? 'Show top ' + OI_TOP : 'Show all ' + rows.length + ' stocks') + '</button>'
       : '';
+  }
+
+  // ---- Look up a ticker: top calls & puts by open interest, for a much wider universe.
+  // data/oi_lookup.json (~1 MB) is NOT part of boot: it is fetched the first time the user
+  // submits a lookup, once. Same fetch → inline-script → {} fallback chain as loadOptions().
+  var OI = null;         // lookup index by ticker (null until first use; {} if unavailable)
+  var oiP = null;
+  var LK_KEY = 'cf.lookup';
+  function loadOI() {
+    if (OI) return Promise.resolve(OI);
+    if (oiP) return oiP;
+    var viaFetch = window.__CAPITOL_OI_LOOKUP__ ? Promise.resolve(window.__CAPITOL_OI_LOOKUP__)
+      : location.protocol === 'file:'
+        ? Promise.reject(new Error('file://'))
+        : fetch('data/oi_lookup.json', { cache: 'no-cache' }).then(function (r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+          });
+    oiP = viaFetch.catch(function () {
+      return loadScript('data/oi_lookup.js').then(function () { return window.__CAPITOL_OI_LOOKUP__; });
+    }).then(function (o) {
+      return o && typeof o === 'object' && !Array.isArray(o) ? o : {};
+    }).catch(function () { return {}; }).then(function (o) { OI = o; return o; });
+    return oiP;
+  }
+
+  // OCC symbol: ROOT + YYMMDD + C|P + strike, strike un-padded with at least one decimal.
+  // AAPL + 2026-12-18 + call + 360 → AAPL261218C360.0 (matches the pipeline's occ_symbol).
+  function occSymbol(tk, expiry, isCall, strike) {
+    var ymd = expiry.replace(/-/g, '').slice(2);
+    var st = (+strike).toFixed(3).replace(/0+$/, '');
+    if (st.slice(-1) === '.') st += '0';
+    return tk + ymd + (isCall ? 'C' : 'P') + st;
+  }
+  function tvUrl(tk, expiry, isCall, strike) {
+    return 'https://www.tradingview.com/symbols/OPRA-' + occSymbol(tk, expiry, isCall, strike) + '/';
+  }
+
+  function lkStore(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { /* private mode */ } }
+  function lkRecall(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
+  function lkClean(v) { return String(v || '').trim().toUpperCase().replace(/\s+/g, ''); }
+  // "BRK.B" and "BRK-B" are the same company; accept either spelling.
+  function lkKey(tk) {
+    if (!OI || !tk) return null;
+    var tries = [tk, tk.replace(/\./g, '-'), tk.replace(/-/g, '.'), tk.replace(/[.\-]/g, '')];
+    for (var i = 0; i < tries.length; i++) {
+      if (Object.prototype.hasOwnProperty.call(OI, tries[i]) && OI[tries[i]] && typeof OI[tries[i]] === 'object') return tries[i];
+    }
+    return null;
+  }
+
+  function lookupSection() {
+    return '<section class="block" id="lookup" aria-labelledby="lk-h">' +
+      '<div class="sec-head"><div><div class="micro">Market positioning</div><h2 id="lk-h" class="display">Look up your own.</h2></div>' +
+      '<p>Type any ticker. See where the option money is sitting.</p></div>' +
+      '<form class="lk-form" id="lk-form" role="search" aria-label="Look up a ticker\'s options" novalidate>' +
+        '<label class="sr-only" for="lk-q">Ticker symbol</label>' +
+        '<input id="lk-q" class="search lk-input" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" maxlength="12" placeholder="Ticker" value="' + esc(S.lk.q) + '">' +
+        '<button type="submit" class="lk-go">Look up</button>' +
+      '</form>' +
+      '<div class="lk-out" id="lk-out" role="region" aria-live="polite" aria-labelledby="lk-h"></div>' +
+    '</section>';
+  }
+
+  function lkCol(side, list, tk) {
+    var isCall = side === 'call';
+    var max = list.reduce(function (m, c) { return Math.max(m, c.oi); }, 0);
+    var id = 'lk-' + side + '-h';
+    return '<div class="opt-col ' + side + '" role="group" aria-labelledby="' + id + '">' +
+      '<div class="opt-col-head ' + (isCall ? 'buy-ink' : 'sell-ink') + '">' +
+        '<h4 id="' + id + '" class="display">' + (isCall ? 'Calls' : 'Puts') + '</h4>' +
+        '<span class="micro">Top ' + list.length + ' by open interest</span>' +
+      '</div>' +
+      '<div class="opt-legend micro" aria-hidden="true"><span>Strike</span><span>Open interest</span></div>' +
+      (list.length
+        ? '<ul class="opt-rows">' + list.map(function (c) { return optRow(c, side, max, tk); }).join('') + '</ul>'
+        : '<p class="empty">No open ' + (isCall ? 'calls' : 'puts') + ' listed.</p>') +
+    '</div>';
+  }
+
+  // Top rows by OI (loudest first), each given the OCC symbol + TradingView URL optRow expects.
+  function lkRows(list, tk, isCall) {
+    return (Array.isArray(list) ? list : []).filter(function (c) {
+      return c && fnum(c.strike) && fnum(c.oi) && c.oi >= 0;
+    }).sort(function (a, b) { return (b.oi - a.oi) || (a.strike - b.strike); }).slice(0, 10).map(function (c) {
+      var r = Object.assign({}, c);
+      if (validDate(c.expiry)) { r.symbol = occSymbol(tk, c.expiry, isCall, c.strike); r.tv_url = tvUrl(tk, c.expiry, isCall, c.strike); }
+      return r;
+    });
+  }
+
+  function lkResult(tk) {
+    var o = OI[tk];
+    var calls = lkRows(o.top_calls, tk, true), puts = lkRows(o.top_puts, tk, false);
+    var exp = validDate(o.expiry) ? o.expiry : null;
+    var dte = fnum(o.dte) ? Math.round(o.dte) : (exp && TODAY ? days(TODAY, exp) : null);
+    var cOI = fnum(o.call_oi) ? o.call_oi : sum(calls, 'oi');
+    var pOI = fnum(o.put_oi) ? o.put_oi : sum(puts, 'oi');
+    var pc = fnum(o.pc_ratio) ? o.pc_ratio : (cOI ? pOI / cOI : null);
+    var pcTxt = pc == null ? '' : pc > 1.2 ? 'More puts than calls' : pc < 0.8 ? 'More calls than puts' : 'Roughly balanced';
+    var dteTxt = dte != null ? (dte <= 0 ? 'Expires today' : plural(dte, 'day') + ' to go') : '';
+    var total = cOI + pOI;
+    var name = nameOf.get(tk) || '';
+    var known = byTicker.has(tk) || (O && Object.prototype.hasOwnProperty.call(O, tk));
+
+    return '<div class="lk-res">' +
+      '<div class="lk-top">' +
+        '<div class="lk-id"><h3 class="display lk-tk">' + esc(tk) + '</h3>' +
+          (name ? '<div class="d-name lk-name">' + esc(name) + '</div>' : '') +
+          (known ? '<a class="opt-link lk-page" href="#/stock/' + encodeURIComponent(tk) + '">' + esc(tk) + ' page →</a>' : '') +
+        '</div>' +
+        (fnum(o.underlying) ? '<div class="d-price lk-spot"><div class="micro">Spot</div><div class="display">$' + px(o.underlying) + '</div></div>' : '') +
+      '</div>' +
+      '<div class="opt-strip" role="list">' +
+        '<div class="opt-stat" role="listitem"><div class="micro">Most active expiry</div><div class="display">' + esc(exp ? optDate(exp) : '—') + '</div>' + (dteTxt ? '<div class="sub">' + dteTxt + '</div>' : '') + '</div>' +
+        '<div class="opt-stat" role="listitem"><div class="micro">Call vs put OI</div>' +
+          '<div class="display"><span class="buy-ink">' + esc(optCount(cOI)) + '</span><span class="opt-vs">/</span><span class="sell-ink">' + esc(optCount(pOI)) + '</span></div>' +
+          (total > 0 ? '<div class="split opt-split" aria-hidden="true"><i class="b" style="width:' + (cOI / total * 100).toFixed(1) + '%"></i><i class="s" style="width:' + (pOI / total * 100).toFixed(1) + '%"></i></div>' : '') +
+          '<span class="sr-only">' + Math.round(cOI).toLocaleString('en-US') + ' call contracts open, ' + Math.round(pOI).toLocaleString('en-US') + ' put contracts open.</span>' +
+        '</div>' +
+        '<div class="opt-stat" role="listitem"><div class="micro">Put/call ratio</div><div class="display">' + (pc == null ? '—' : pc.toFixed(2)) + '</div>' +
+          (pcTxt ? '<div class="sub">' + pcTxt + '</div>' : '') + '</div>' +
+      '</div>' +
+      '<p class="opt-explain">Open interest is how many contracts are still open at each strike. Big piles often act like walls — prices tend to stall there.</p>' +
+      '<div class="opt-cols">' + lkCol('call', calls, tk) + lkCol('put', puts, tk) + '</div>' +
+      '<p class="bm-caveat"><b>Open interest is positioning, not a prediction.</b> It counts option contracts still open; it says nothing about which way a stock will move, and it can’t tell you whether those contracts were bought or sold. ' +
+        'Totals and per-strike counts are summed across the next few expirations; each row shows its own expiration. ' +
+        'Price is for one contract, quoted per share (one contract covers 100 shares). Snapshot from the last data refresh.</p>' +
+    '</div>';
+  }
+
+  function renderLookup() {
+    var out = $('#lk-out'); if (!out) return;
+    var tk = S.lk.tk;
+    if (S.lk.nudge) { out.innerHTML = '<p class="lk-msg">Type a ticker first — like <b>AAPL</b>.</p>'; return; }
+    if (!tk) { out.innerHTML = ''; return; }
+    if (OI === null) { out.innerHTML = '<p class="lk-msg">Loading…</p>'; return; }
+    var key = lkKey(tk);
+    if (!key) {
+      out.innerHTML = '<p class="lk-msg">No option data for <b>' + esc(tk) + '</b>. The index covers the S&amp;P 500 and the tickers this app already tracks.</p>';
+      return;
+    }
+    var html = '';
+    try { html = lkResult(key); } catch (e) { html = '<p class="lk-msg">No option data for <b>' + esc(tk) + '</b>.</p>'; }
+    out.innerHTML = html;
+  }
+
+  function lookup(raw) {
+    var tk = lkClean(raw);
+    var input = $('#lk-q');
+    if (input) input.value = tk;
+    S.lk.q = tk;
+    if (!tk) { S.lk.tk = ''; S.lk.nudge = true; renderLookup(); if (input) input.focus(); return; }
+    S.lk.tk = tk; S.lk.nudge = false;
+    lkStore(LK_KEY, tk);
+    renderLookup();
+    loadOI().then(function () { if (S.lk.tk === tk) renderLookup(); });
   }
 
   function feedList() {
@@ -1683,6 +1843,7 @@
 
   var qTimer = null;
   function onInput(e) {
+    if (e.target.id === 'lk-q') { S.lk.q = e.target.value; return; }
     if (e.target.id !== 'q') return;
     clearTimeout(qTimer);
     var v = e.target.value;
@@ -1690,6 +1851,8 @@
   }
 
   function boot() {
+    // Refill the lookup box with the last ticker — no fetch until the user submits.
+    S.lk.q = lkRecall(LK_KEY);
     // In parallel with the main bundle; fills the section in whenever it lands.
     loadFundamentals().then(function (f) {
       F = f;
@@ -1707,6 +1870,11 @@
       var app = $('#app');
       app.addEventListener('click', onClick);
       app.addEventListener('input', onInput);
+      app.addEventListener('submit', function (e) {
+        if (e.target.id !== 'lk-form') return;
+        e.preventDefault();
+        var q = $('#lk-q'); lookup(q ? q.value : '');
+      });
       // <img> errors don't bubble, so listen in the capture phase. A failed politician photo is
       // dropped (initials underneath show through) and remembered so later renders skip it.
       app.addEventListener('error', function (e) {

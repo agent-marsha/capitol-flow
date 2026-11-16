@@ -63,6 +63,13 @@ jobs:
         continue-on-error: true
         run: python pipeline/fetch_options.py --max 60 --top 10 --out data/options.json
 
+      # Broad open-interest index for the "look up a ticker" section.  ~520 names at
+      # ~2.5 s each ≈ 22 min, so it is NON-FATAL: a Yahoo rate-limit must never take the
+      # whole refresh down.  Resumable — it skips whatever the previous run finished.
+      - name: Open-interest lookup index (broad universe)
+        continue-on-error: true
+        run: python pipeline/fetch_oi_lookup.py --out data/oi_lookup.json
+
       - name: Enrich (prices, news, clusters, oversight, insiders, OI board)
         run: python pipeline/enrich.py --days 150 --max-tickers 120 --out data/app_data.json
 
@@ -85,12 +92,16 @@ jobs:
             cp data/options.json web/data/options.json
             { printf 'window.__CAPITOL_OPTIONS__ = '; cat data/options.json; printf ';\n'; } > web/data/options.js
           fi
+          if [ -f data/oi_lookup.json ]; then
+            cp data/oi_lookup.json web/data/oi_lookup.json
+            { printf 'window.__CAPITOL_OI_LOOKUP__ = '; cat data/oi_lookup.json; printf ';\n'; } > web/data/oi_lookup.js
+          fi
 
       - name: Commit refreshed data
         run: |
           git config user.name  "capitol-flow-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add data/house_trades.json data/senate_trades.json data/politicians.json data/committees.json data/profiles.json data/app_data.json data/fundamentals.json || true
+          git add data/house_trades.json data/senate_trades.json data/politicians.json data/committees.json data/profiles.json data/app_data.json data/fundamentals.json data/options.json data/oi_lookup.json || true
           git add web/data/ || true
           git diff --quiet --cached || git commit -m "data: daily refresh $(date -u +%F)"
           git push

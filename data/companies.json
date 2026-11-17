@@ -2561,5 +2561,32 @@
 "sic": null,
 "source": "curated",
 "is_fund": true
+},
+"BP": {
+"ticker": "BP",
+"name": "BP p.l.c.",
+"description": "BP p.l.c., an integrated energy company, engages in the oil and gas business worldwide. The company operates through Gas & Low Carbon Energy, Oil Production & Operations, and Customers & Products segments.",
+"sector": "Energy",
+"industry": "Oil & Gas Integrated",
+"sic": "2911",
+"source": "sec+yahoo"
+},
+"JBGS": {
+"ticker": "JBGS",
+"name": "JBG SMITH Properties",
+"description": "JBG SMITH Properties owns, operates, and develops mixed-use properties concentrated in amenity-rich, Metro-served submarkets in and around Washington, DC, most notably National Landing, where through our focus on placemaking, we cultivate vibrant, highly amenitized, walkable neighborhoods.",
+"sector": "Real Estate",
+"industry": "REIT - Diversified",
+"sic": "6798",
+"source": "sec+yahoo"
+},
+"SPHR": {
+"ticker": "SPHR",
+"name": "Sphere Entertainment Co.",
+"description": "Sphere Entertainment Co. operates as a live entertainment and media company in the United States. It operates through two segments, Sphere and MSG Networks.",
+"sector": "Communication Services",
+"industry": "Entertainment",
+"sic": "7900",
+"source": "sec+yahoo"
 }
 }

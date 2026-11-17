@@ -99,6 +99,16 @@
   "chamber": "House",
   "official_full": "James A. Himes"
  },
+ "Hon. James French Hill": {
+  "bioguide": "H001072",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/H001072.jpg",
+  "state": "AR",
+  "state_name": "Arkansas",
+  "party": "Republican",
+  "district": 2,
+  "chamber": "House",
+  "official_full": "J. French Hill"
+ },
  "Hon. Jodey Arrington": {
   "bioguide": "A000375",
   "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/A000375.jpg",

@@ -1,9 +1,19 @@
 name: Refresh trade data
 
-# Rebuilds the politician-trade dataset daily and republishes the static site.
+# Rebuilds the politician-trade dataset and republishes the static site.
+#
+# Target: the most current option data every WEEKDAY MORNING at 08:35 America/Chicago.
+# 08:35 CT is five minutes after the 09:30 ET open (open == 08:30 CT), so the chain pull
+# catches the opening quotes rather than a stale overnight close.
+#
+# GitHub cron is UTC-only and does not follow daylight saving, so one line can only be exact
+# for half the year.  Two lines are listed -- 14:35 UTC (exact in CST, Nov-Mar) and 13:35 UTC
+# (exact in CDT, Mar-Nov) -- and the `clock` job below keeps only the one that actually lands
+# at 08:35 Chicago.  Both are weekdays only: 1-5.  The wrong-hour twin is skipped, not run.
 on:
   schedule:
-    - cron: "0 11 * * *"      # 11:00 UTC daily
+    - cron: "35 14 * * 1-5"   # 08:35 CST (UTC-6) — the correct slot Nov-Mar
+    - cron: "35 13 * * 1-5"   # 08:35 CDT (UTC-5) — the correct slot Mar-Nov
   workflow_dispatch: {}
 
 permissions:
@@ -16,7 +26,40 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Decides whether this firing is really the 08:35 Chicago slot.
+  #
+  # Two failure modes to satisfy at once:
+  #   * GitHub's scheduler is best-effort and starts scheduled jobs late (10-30 min is
+  #     routine under load), so a tight +/-2 min window would silently skip real runs and
+  #     leave the data stale -- worse than running late.
+  #   * The DST-mismatched twin fires a full hour off (07:35 CT in winter, 09:35 CT in
+  #     summer) and must never run.
+  # So: accept the whole 08:30-08:59 Chicago hour.  That tolerates ~24 min of scheduler
+  # delay while still rejecting both twins with an hour of margin.  07:35 would have to be
+  # delayed past 08:30 to sneak in, and 09:35 is already outside the window.
+  clock:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+      when: ${{ steps.check.outputs.when }}
+    steps:
+      - id: check
+        run: |
+          when=$(TZ=America/Chicago date '+%Y-%m-%d %H:%M %Z')
+          hhmm=$(TZ=America/Chicago date +%H%M)
+          if [ "$hhmm" -ge 830 ] && [ "$hhmm" -le 859 ]; then
+            echo "run=yes" >> "$GITHUB_OUTPUT"
+            echo "Chicago time is $when — inside the 08:35 slot. Running."
+          else
+            echo "run=no" >> "$GITHUB_OUTPUT"
+            echo "Chicago time is $when — outside the 08:35 slot (other DST twin, or too late to trust). Skipping."
+          fi
+          echo "when=$when" >> "$GITHUB_OUTPUT"
+
   refresh:
+    needs: clock
+    # manual dispatch always runs; scheduled runs only in the real 08:35 CT window
+    if: needs.clock.outputs.run == 'yes' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

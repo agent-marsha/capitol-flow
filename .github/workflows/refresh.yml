@@ -185,10 +185,36 @@ jobs:
           fi
 
       - name: Commit refreshed data
+        id: commit
         run: |
           git config user.name  "capitol-flow-bot"
           git config user.email "bot@users.noreply.github.com"
           git add data/house_trades.json data/senate_trades.json data/politicians.json data/committees.json data/profiles.json data/app_data.json data/fundamentals.json data/options.json data/oi_lookup.json data/companies.json || true
           git add web/data/ || true
-          git diff --quiet --cached || git commit -m "data: daily refresh $(date -u +%F)"
-          git push
+          if git diff --quiet --cached; then
+            echo "nothing to commit" 
+            echo "pushed=no" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "data: daily refresh $(date -u +%F)"
+            git push
+            echo "pushed=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      # THE PUBLISH STEP.  Without this the site never updates.
+      #
+      # A push made with the workflow's GITHUB_TOKEN does NOT trigger other workflows --
+      # GitHub suppresses that on purpose to prevent loops.  So the "data: daily refresh"
+      # commit above never started pages.yml, whose `push.paths: web/**` filter would have
+      # matched it.  Result: every refresh wrote new data to the repo that the live site
+      # never served; freshness depended entirely on a human pushing a change under web/.
+      # Dispatching pages.yml explicitly is the only way to publish from here.
+      #
+      # (page deploy is ~20s, so this is cheap; it is also why deploy-pages must never be
+      # re-run after a failure -- a fresh dispatch is the safe path.)
+      - name: Publish to GitHub Pages
+        if: steps.commit.outputs.pushed == 'yes'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run pages.yml --repo "${{ github.repository }}" --ref main
+          echo "dispatched pages.yml to publish the refreshed data"

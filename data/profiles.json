@@ -143,11 +143,41 @@
 "sic": "3672",
 "industry": "Printed Circuit Boards"
 },
-"BSX": {
-"name": "BOSTON SCIENTIFIC CORP",
+"BIIB": {
+"name": "BIOGEN INC.",
 "sector": "Healthcare",
-"sic": "3841",
-"industry": "Surgical & Medical Instruments & Apparatus"
+"sic": "2836",
+"industry": "Biological Products, (No Diagnostic Substances)"
+},
+"BNS": {
+"name": "BANK OF NOVA SCOTIA",
+"sector": "Financial Services",
+"sic": "6022",
+"industry": "State Commercial Banks"
+},
+"BP": {
+"name": "BP PLC",
+"sector": "Energy",
+"sic": "2911",
+"industry": "Petroleum Refining"
+},
+"C": {
+"name": "CITIGROUP INC",
+"sector": "Financial Services",
+"sic": "6021",
+"industry": "National Commercial Banks"
+},
+"CACI": {
+"name": "CACI INTERNATIONAL INC /DE/",
+"sector": "Technology",
+"sic": "7373",
+"industry": "Services-Computer Integrated Systems Design"
+},
+"CAT": {
+"name": "CATERPILLAR INC",
+"sector": "Industrials",
+"sic": "3531",
+"industry": "Construction Machinery & Equip"
 },
 "CB": {
 "name": "Chubb Ltd",
@@ -155,11 +185,35 @@
 "sic": "6331",
 "industry": "Fire, Marine & Casualty Insurance"
 },
-"CDNS": {
-"name": "CADENCE DESIGN SYSTEMS INC",
+"CBOE": {
+"name": "Cboe Global Markets, Inc.",
+"sector": "Financial Services",
+"sic": "6200",
+"industry": "Security & Commodity Brokers, Dealers, Exchanges & Services"
+},
+"CCI": {
+"name": "CROWN CASTLE INC.",
+"sector": "Financial Services",
+"sic": "6798",
+"industry": "Real Estate Investment Trusts"
+},
+"CEG": {
+"name": "Constellation Energy Corp",
+"sector": "Utilities",
+"sic": "4911",
+"industry": "Electric Services"
+},
+"CF": {
+"name": "CF Industries Holdings, Inc.",
+"sector": "Basic Materials",
+"sic": "2870",
+"industry": "Agricultural Chemicals"
+},
+"CIEN": {
+"name": "CIENA CORP",
 "sector": "Technology",
-"sic": "7372",
-"industry": "Services-Prepackaged Software"
+"sic": "3661",
+"industry": "Telephone & Telegraph Apparatus"
 },
 "CINF": {
 "name": "CINCINNATI FINANCIAL CORP",
@@ -167,11 +221,11 @@
 "sic": "6331",
 "industry": "Fire, Marine & Casualty Insurance"
 },
-"CL": {
-"name": "COLGATE PALMOLIVE CO",
-"sector": "Consumer Defensive",
-"sic": "2844",
-"industry": "Perfumes, Cosmetics & Other Toilet Preparations"
+"CMCSA": {
+"name": "COMCAST CORP",
+"sector": "Communication Services",
+"sic": "4841",
+"industry": "Cable & Other Pay Television Services"
 },
 "CMG": {
 "name": "CHIPOTLE MEXICAN GRILL INC",
@@ -179,29 +233,35 @@
 "sic": "5812",
 "industry": "Retail-Eating  Places"
 },
+"CMS": {
+"name": "CMS ENERGY CORP",
+"sector": "Utilities",
+"sic": "4931",
+"industry": "Electric & Other Services Combined"
+},
+"COCO": {
+"name": "Vita Coco Company, Inc.",
+"sector": "Consumer Defensive",
+"sic": "2080",
+"industry": "Beverages"
+},
+"COHR": {
+"name": "COHERENT CORP.",
+"sector": "Healthcare",
+"sic": "3827",
+"industry": "Optical Instruments & Lenses"
+},
 "COST": {
 "name": "COSTCO WHOLESALE CORP /NEW",
 "sector": "Consumer Defensive",
 "sic": "5331",
 "industry": "Retail-Variety Stores"
 },
-"CR": {
-"name": "Crane Co",
-"sector": "Industrials",
-"sic": "3490",
-"industry": "Miscellaneous Fabricated Metal Products"
-},
 "CSCO": {
 "name": "CISCO SYSTEMS, INC.",
 "sector": "Technology",
 "sic": "3576",
 "industry": "Computer Communications Equipment"
-},
-"CSX": {
-"name": "CSX CORP",
-"sector": "Industrials",
-"sic": "4011",
-"industry": "Railroads, Line-Haul Operating"
 },
 "CTVA": {
 "name": "Corteva, Inc.",
@@ -221,12 +281,6 @@
 "sic": "7372",
 "industry": "Services-Prepackaged Software"
 },
-"DHR": {
-"name": "DANAHER CORP /DE/",
-"sector": "Technology",
-"sic": "3823",
-"industry": "Industrial Instruments For Measurement, Display, and Control"
-},
 "DVN": {
 "name": "DEVON ENERGY CORP/DE",
 "sector": "Energy",
@@ -238,12 +292,6 @@
 "sector": "Consumer Defensive",
 "sic": "2844",
 "industry": "Perfumes, Cosmetics & Other Toilet Preparations"
-},
-"EMR": {
-"name": "EMERSON ELECTRIC CO",
-"sector": "Industrials",
-"sic": "3600",
-"industry": "Electronic & Other Electrical Equipment (No Computer Equip)"
 },
 "ETN": {
 "name": "Eaton Corp plc",
@@ -286,66 +334,6 @@
 "sector": "Financial Services",
 "sic": "6211",
 "industry": "Security Brokers, Dealers & Flotation Companies"
-},
-"HD": {
-"name": "HOME DEPOT, INC.",
-"sector": "Consumer Cyclical",
-"sic": "5211",
-"industry": "Retail-Lumber & Other Building Materials Dealers"
-},
-"HON": {
-"name": "HONEYWELL INTERNATIONAL INC",
-"sector": "Industrials",
-"sic": "3724",
-"industry": "Aircraft Engines & Engine Parts"
-},
-"HONA": {
-"name": "Honeywell Aerospace Inc.",
-"sector": "Industrials",
-"sic": "3724",
-"industry": "Aircraft Engines & Engine Parts"
-},
-"IBM": {
-"name": "INTERNATIONAL BUSINESS MACHINES CORP",
-"sector": "Technology",
-"sic": "3570",
-"industry": "Computer & office Equipment"
-},
-"IBRX": {
-"name": "ImmunityBio, Inc.",
-"sector": "Healthcare",
-"sic": "2836",
-"industry": "Biological Products, (No Diagnostic Substances)"
-},
-"INTC": {
-"name": "INTEL CORP",
-"sector": "Technology",
-"sic": "3674",
-"industry": "Semiconductors & Related Devices"
-},
-"IQV": {
-"name": "IQVIA HOLDINGS INC.",
-"sector": "Industrials",
-"sic": "8731",
-"industry": "Services-Commercial Physical & Biological Research"
-},
-"ITT": {
-"name": "ITT INC.",
-"sector": "Industrials",
-"sic": "3561",
-"industry": "Pumps & Pumping Equipment"
-},
-"ITW": {
-"name": "ILLINOIS TOOL WORKS INC",
-"sector": "Industrials",
-"sic": "3560",
-"industry": "General Industrial Machinery & Equipment"
-},
-"JNJ": {
-"name": "JOHNSON & JOHNSON",
-"sector": "Healthcare",
-"sic": "2834",
-"industry": "Pharmaceutical Preparations"
 },
 "AAL": {
 "name": "American Airlines Group Inc.",
@@ -395,11 +383,11 @@
 "sic": "6199",
 "industry": "Finance Services"
 },
-"CAT": {
-"name": "CATERPILLAR INC",
-"sector": "Industrials",
-"sic": "3531",
-"industry": "Construction Machinery & Equip"
+"BSX": {
+"name": "BOSTON SCIENTIFIC CORP",
+"sector": "Healthcare",
+"sic": "3841",
+"industry": "Surgical & Medical Instruments & Apparatus"
 },
 "CCL": {
 "name": "Carnival Corp Ltd.",
@@ -407,11 +395,11 @@
 "sic": "4400",
 "industry": "Water Transportation"
 },
-"CMCSA": {
-"name": "COMCAST CORP",
-"sector": "Communication Services",
-"sic": "4841",
-"industry": "Cable & Other Pay Television Services"
+"CL": {
+"name": "COLGATE PALMOLIVE CO",
+"sector": "Consumer Defensive",
+"sic": "2844",
+"industry": "Perfumes, Cosmetics & Other Toilet Preparations"
 },
 "COIN": {
 "name": "Coinbase Global, Inc.",
@@ -473,17 +461,47 @@
 "sic": "5734",
 "industry": "Retail-Computer & Computer Software Stores"
 },
+"HD": {
+"name": "HOME DEPOT, INC.",
+"sector": "Consumer Cyclical",
+"sic": "5211",
+"industry": "Retail-Lumber & Other Building Materials Dealers"
+},
+"HONA": {
+"name": "Honeywell Aerospace Inc.",
+"sector": "Industrials",
+"sic": "3724",
+"industry": "Aircraft Engines & Engine Parts"
+},
 "HOOD": {
 "name": "Robinhood Markets, Inc.",
 "sector": "Financial Services",
 "sic": "6211",
 "industry": "Security Brokers, Dealers & Flotation Companies"
 },
+"IBM": {
+"name": "INTERNATIONAL BUSINESS MACHINES CORP",
+"sector": "Technology",
+"sic": "3570",
+"industry": "Computer & office Equipment"
+},
+"INTC": {
+"name": "INTEL CORP",
+"sector": "Technology",
+"sic": "3674",
+"industry": "Semiconductors & Related Devices"
+},
 "IONQ": {
 "name": "IonQ, Inc.",
 "sector": "Technology",
 "sic": "7373",
 "industry": "Services-Computer Integrated Systems Design"
+},
+"JNJ": {
+"name": "JOHNSON & JOHNSON",
+"sector": "Healthcare",
+"sic": "2834",
+"industry": "Pharmaceutical Preparations"
 },
 "JPM": {
 "name": "JPMORGAN CHASE & CO",

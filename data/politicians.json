@@ -19,6 +19,16 @@
   "chamber": "House",
   "official_full": "Ann Wagner"
  },
+ "Hon. Byron Donalds": {
+  "bioguide": "D000032",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/D000032.jpg",
+  "state": "FL",
+  "state_name": "Florida",
+  "party": "Republican",
+  "district": 19,
+  "chamber": "House",
+  "official_full": "Byron Donalds"
+ },
  "Hon. Carol Devine Miller": {
   "bioguide": "M001205",
   "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/M001205.jpg",

@@ -2588,5 +2588,32 @@
 "industry": "Entertainment",
 "sic": "7900",
 "source": "sec+yahoo"
+},
+"ADSK": {
+"ticker": "ADSK",
+"name": "Autodesk, Inc.",
+"description": "Autodesk, Inc. engages in the provision of 3D design, engineering, and entertainment technology solutions worldwide.",
+"sector": "Technology",
+"industry": "Software - Application",
+"sic": "7372",
+"source": "sec+yahoo"
+},
+"HYBB": {
+"ticker": "HYBB",
+"name": "iShares BB Rated Corporate Bond ETF",
+"description": "The fund will invest at least 80% of its assets in the component securities of the underlying index, and the fund will invest at least 90% of its assets in fixed income securities of the types included in the underlying index that BFA believes will help the fund track the underlying index.",
+"sector": null,
+"industry": null,
+"sic": null,
+"source": "yahoo"
+},
+"IBKR": {
+"ticker": "IBKR",
+"name": "Interactive Brokers Group, Inc.",
+"description": "Interactive Brokers Group, Inc. operates as an automated electronic broker in the United States and internationally.",
+"sector": "Financial Services",
+"industry": "Capital Markets",
+"sic": "6211",
+"source": "sec+yahoo"
 }
 }

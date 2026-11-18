@@ -12,8 +12,16 @@ name: Refresh trade data
 # at 08:35 Chicago.  Both are weekdays only: 1-5.  The wrong-hour twin is skipped, not run.
 on:
   schedule:
-    - cron: "35 14 * * 1-5"   # 08:35 CST (UTC-6) — the correct slot Nov-Mar
-    - cron: "35 13 * * 1-5"   # 08:35 CDT (UTC-5) — the correct slot Mar-Nov
+    # GitHub's own scheduler is unreliable on this repo: runs requested for 11:00 UTC have
+    # started at 17:38, 19:43 and 20:54 UTC -- hours late, and on 2026-11-18 no run fired at
+    # all.  A scheduled trigger therefore cannot be trusted to hit a specific morning time,
+    # so it is kept only as a backup and the real clock is the Hermes cron job on the host,
+    # which calls `gh workflow run` at 08:35 Chicago.  See docs in the repo notes.
+    #
+    # Kept weekday-only and early so a backup run still lands before the US open if the
+    # external trigger fails.  The `clock` job below decides whether a firing is usable.
+    - cron: "35 13 * * 1-5"   # 08:35 CDT (UTC-5) — backup, correct in summer
+    - cron: "35 14 * * 1-5"   # 08:35 CST (UTC-6) — backup, correct in winter
   workflow_dispatch: {}
 
 permissions:
@@ -26,40 +34,70 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Decides whether this firing is really the 08:35 Chicago slot.
+  # A manual / external dispatch always runs -- that is the primary clock (the Hermes cron on
+  # the host).  The window check applies ONLY to GitHub's own unreliable scheduled firings,
+  # where it exists to reject the DST-mismatched twin.
   #
-  # Two failure modes to satisfy at once:
-  #   * GitHub's scheduler is best-effort and starts scheduled jobs late (10-30 min is
-  #     routine under load), so a tight +/-2 min window would silently skip real runs and
-  #     leave the data stale -- worse than running late.
-  #   * The DST-mismatched twin fires a full hour off (07:35 CT in winter, 09:35 CT in
-  #     summer) and must never run.
-  # So: accept the whole 08:30-08:59 Chicago hour.  That tolerates ~24 min of scheduler
-  # delay while still rejecting both twins with an hour of margin.  07:35 would have to be
-  # delayed past 08:30 to sneak in, and 09:35 is already outside the window.
+  # Deliberately wide (whole 08:30-08:59 Chicago hour) because GitHub starts scheduled jobs
+  # 10-30 min late routinely, and on this repo far worse: runs requested at 11:00 UTC have
+  # begun at 17:38 / 19:43 / 20:54 UTC.  A tight window would silently skip real runs, and a
+  # silently skipped freshness job is the exact failure this whole change exists to prevent.
+  # If a scheduled firing is outside the window we run anyway when nothing has refreshed in
+  # 20 hours, so the data can never go more than roughly a day stale.
   clock:
     runs-on: ubuntu-latest
     outputs:
       run: ${{ steps.check.outputs.run }}
       when: ${{ steps.check.outputs.when }}
+      why: ${{ steps.check.outputs.why }}
     steps:
+      - uses: actions/checkout@v4          # needed to read data/app_data.json's timestamp
       - id: check
         run: |
           when=$(TZ=America/Chicago date '+%Y-%m-%d %H:%M %Z')
           hhmm=$(TZ=America/Chicago date +%H%M)
+          echo "when=$when" >> "$GITHUB_OUTPUT"
+
+          # a dispatch IS the clock -- always run
+          if [ "$GITHUB_EVENT_NAME" != "schedule" ]; then
+            echo "run=yes"  >> "$GITHUB_OUTPUT"
+            echo "why=dispatched" >> "$GITHUB_OUTPUT"
+            echo "Chicago time is $when — dispatched ($GITHUB_EVENT_NAME), running."
+            exit 0
+          fi
+
+          # scheduled: inside the morning window -> run
           if [ "$hhmm" -ge 830 ] && [ "$hhmm" -le 859 ]; then
             echo "run=yes" >> "$GITHUB_OUTPUT"
-            echo "Chicago time is $when — inside the 08:35 slot. Running."
+            echo "why=window" >> "$GITHUB_OUTPUT"
+            echo "Chicago time is $when — inside the 08:35 window, running."
+            exit 0
+          fi
+
+          # scheduled but drifted out of the window: only skip if the data is still fresh.
+          # These workflows always check out main first, so read the committed timestamp.
+          echo "Chicago time is $when — outside the 08:35 window." >&2
+          age_h=$(python3 - <<'PY' 2>/dev/null || echo 999
+          import json, datetime
+          d = json.load(open("data/app_data.json"))
+          t = datetime.datetime.strptime(d["generated"], "%Y-%m-%dT%H:%M:%S.%fZ")
+          print(int((datetime.datetime.utcnow() - t).total_seconds() // 3600))
+          PY
+          )
+          echo "data age: ${age_h}h" >&2
+          if [ "$age_h" -ge 20 ]; then
+            echo "run=yes" >> "$GITHUB_OUTPUT"
+            echo "why=stale-fallback" >> "$GITHUB_OUTPUT"
+            echo "Data is ${age_h}h old — running anyway so it cannot go stale." >&2
           else
             echo "run=no" >> "$GITHUB_OUTPUT"
-            echo "Chicago time is $when — outside the 08:35 slot (other DST twin, or too late to trust). Skipping."
+            echo "why=already-fresh" >> "$GITHUB_OUTPUT"
+            echo "Data is only ${age_h}h old — the other DST twin already refreshed it." >&2
           fi
-          echo "when=$when" >> "$GITHUB_OUTPUT"
 
   refresh:
     needs: clock
-    # manual dispatch always runs; scheduled runs only in the real 08:35 CT window
-    if: needs.clock.outputs.run == 'yes' || github.event_name == 'workflow_dispatch'
+    if: needs.clock.outputs.run == 'yes'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

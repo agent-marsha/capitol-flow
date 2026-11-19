@@ -17,6 +17,12 @@
 "sic": "3674",
 "industry": "Semiconductors & Related Devices"
 },
+"ADSK": {
+"name": "Autodesk, Inc.",
+"sector": "Technology",
+"sic": "7372",
+"industry": "Services-Prepackaged Software"
+},
 "AEIS": {
 "name": "ADVANCED ENERGY INDUSTRIES INC",
 "sector": "Technology",
@@ -233,24 +239,6 @@
 "sic": "5812",
 "industry": "Retail-Eating  Places"
 },
-"CMS": {
-"name": "CMS ENERGY CORP",
-"sector": "Utilities",
-"sic": "4931",
-"industry": "Electric & Other Services Combined"
-},
-"COCO": {
-"name": "Vita Coco Company, Inc.",
-"sector": "Consumer Defensive",
-"sic": "2080",
-"industry": "Beverages"
-},
-"COHR": {
-"name": "COHERENT CORP.",
-"sector": "Healthcare",
-"sic": "3827",
-"industry": "Optical Instruments & Lenses"
-},
 "COST": {
 "name": "COSTCO WHOLESALE CORP /NEW",
 "sector": "Consumer Defensive",
@@ -335,6 +323,18 @@
 "sic": "6211",
 "industry": "Security Brokers, Dealers & Flotation Companies"
 },
+"HD": {
+"name": "HOME DEPOT, INC.",
+"sector": "Consumer Cyclical",
+"sic": "5211",
+"industry": "Retail-Lumber & Other Building Materials Dealers"
+},
+"HON": {
+"name": "HONEYWELL INTERNATIONAL INC",
+"sector": "Industrials",
+"sic": "3724",
+"industry": "Aircraft Engines & Engine Parts"
+},
 "AAL": {
 "name": "American Airlines Group Inc.",
 "sector": "Industrials",
@@ -383,23 +383,11 @@
 "sic": "6199",
 "industry": "Finance Services"
 },
-"BSX": {
-"name": "BOSTON SCIENTIFIC CORP",
-"sector": "Healthcare",
-"sic": "3841",
-"industry": "Surgical & Medical Instruments & Apparatus"
-},
 "CCL": {
 "name": "Carnival Corp Ltd.",
 "sector": "Industrials",
 "sic": "4400",
 "industry": "Water Transportation"
-},
-"CL": {
-"name": "COLGATE PALMOLIVE CO",
-"sector": "Consumer Defensive",
-"sic": "2844",
-"industry": "Perfumes, Cosmetics & Other Toilet Preparations"
 },
 "COIN": {
 "name": "Coinbase Global, Inc.",
@@ -460,12 +448,6 @@
 "sector": "Consumer Cyclical",
 "sic": "5734",
 "industry": "Retail-Computer & Computer Software Stores"
-},
-"HD": {
-"name": "HOME DEPOT, INC.",
-"sector": "Consumer Cyclical",
-"sic": "5211",
-"industry": "Retail-Lumber & Other Building Materials Dealers"
 },
 "HONA": {
 "name": "Honeywell Aerospace Inc.",
@@ -617,12 +599,6 @@
 "sic": "3674",
 "industry": "Semiconductors & Related Devices"
 },
-"OKE": {
-"name": "ONEOK INC /NEW/",
-"sector": "Energy",
-"sic": "4923",
-"industry": "Natural Gas Transmisison & Distribution"
-},
 "ORCL": {
 "name": "ORACLE CORP",
 "sector": "Technology",
@@ -700,6 +676,12 @@
 "sector": "Industrials",
 "sic": "3711",
 "industry": "Motor Vehicles & Passenger Car Bodies"
+},
+"RVTY": {
+"name": "REVVITY, INC.",
+"sector": "Healthcare",
+"sic": "3826",
+"industry": "Laboratory Analytical Instruments"
 },
 "SBUX": {
 "name": "STARBUCKS CORP",
@@ -850,11 +832,5 @@
 "sector": "Consumer Defensive",
 "sic": "5331",
 "industry": "Retail-Variety Stores"
-},
-"XOM": {
-"name": "ExxonMobil Holdings Corp",
-"sector": "Energy",
-"sic": "2911",
-"industry": "Petroleum Refining"
 }
 }

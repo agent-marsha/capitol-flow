@@ -215,23 +215,11 @@
 "sic": "2870",
 "industry": "Agricultural Chemicals"
 },
-"CIEN": {
-"name": "CIENA CORP",
-"sector": "Technology",
-"sic": "3661",
-"industry": "Telephone & Telegraph Apparatus"
-},
 "CINF": {
 "name": "CINCINNATI FINANCIAL CORP",
 "sector": "Financial Services",
 "sic": "6331",
 "industry": "Fire, Marine & Casualty Insurance"
-},
-"CMCSA": {
-"name": "COMCAST CORP",
-"sector": "Communication Services",
-"sic": "4841",
-"industry": "Cable & Other Pay Television Services"
 },
 "CMG": {
 "name": "CHIPOTLE MEXICAN GRILL INC",
@@ -335,6 +323,18 @@
 "sic": "3724",
 "industry": "Aircraft Engines & Engine Parts"
 },
+"HONA": {
+"name": "Honeywell Aerospace Inc.",
+"sector": "Industrials",
+"sic": "3724",
+"industry": "Aircraft Engines & Engine Parts"
+},
+"IBKR": {
+"name": "Interactive Brokers Group, Inc.",
+"sector": "Financial Services",
+"sic": "6211",
+"industry": "Security Brokers, Dealers & Flotation Companies"
+},
 "AAL": {
 "name": "American Airlines Group Inc.",
 "sector": "Industrials",
@@ -388,6 +388,12 @@
 "sector": "Industrials",
 "sic": "4400",
 "industry": "Water Transportation"
+},
+"CMCSA": {
+"name": "COMCAST CORP",
+"sector": "Communication Services",
+"sic": "4841",
+"industry": "Cable & Other Pay Television Services"
 },
 "COIN": {
 "name": "Coinbase Global, Inc.",
@@ -448,12 +454,6 @@
 "sector": "Consumer Cyclical",
 "sic": "5734",
 "industry": "Retail-Computer & Computer Software Stores"
-},
-"HONA": {
-"name": "Honeywell Aerospace Inc.",
-"sector": "Industrials",
-"sic": "3724",
-"industry": "Aircraft Engines & Engine Parts"
 },
 "HOOD": {
 "name": "Robinhood Markets, Inc.",

@@ -339,6 +339,16 @@
   "chamber": "House",
   "official_full": "Sheri Biggs"
  },
+ "Hon. Steve Cohen": {
+  "bioguide": "C001068",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/C001068.jpg",
+  "state": "TN",
+  "state_name": "Tennessee",
+  "party": "Democrat",
+  "district": 9,
+  "chamber": "House",
+  "official_full": "Steve Cohen"
+ },
  "Hon. Suzan K. DelBene": {
   "bioguide": "D000617",
   "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/D000617.jpg",
@@ -348,6 +358,16 @@
   "district": 1,
   "chamber": "House",
   "official_full": "Suzan K. DelBene"
+ },
+ "Hon. Terri A. Sewell": {
+  "bioguide": "S001185",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/S001185.jpg",
+  "state": "AL",
+  "state_name": "Alabama",
+  "party": "Democrat",
+  "district": 7,
+  "chamber": "House",
+  "official_full": "Terri A. Sewell"
  },
  "Hon. Thomas H. Kean Jr": {
   "bioguide": "K000398",

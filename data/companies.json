@@ -2615,5 +2615,14 @@
 "industry": "Capital Markets",
 "sic": "6211",
 "source": "sec+yahoo"
+},
+"TPR": {
+"ticker": "TPR",
+"name": "Tapestry, Inc.",
+"description": "Tapestry, Inc. provides accessories and lifestyle brand products in North America, Greater China, rest of Asia, and internationally. The company operates in two segments, Coach and Kate Spade.",
+"sector": "Consumer Cyclical",
+"industry": "Luxury Goods",
+"sic": "3100",
+"source": "sec+yahoo"
 }
 }

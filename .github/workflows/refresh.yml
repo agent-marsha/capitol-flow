@@ -28,6 +28,13 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  actions: write        # REQUIRED by the 'Publish to GitHub Pages' step.
+                        # gh workflow run dispatches a workflow, which needs actions:write.
+                        # Without it the run gets HTTP 403 "Resource not accessible by
+                        # integration" -- and because the data commit happens BEFORE that
+                        # step, the pipeline looks successful while the site silently stays
+                        # stale.  That is exactly what happened on 2026-11-20: all 17 data
+                        # steps passed, the commit landed, and publish 403'd.
 
 concurrency:
   group: refresh

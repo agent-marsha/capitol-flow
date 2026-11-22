@@ -429,16 +429,6 @@
   "chamber": "Senate",
   "official_full": "Angus S. King, Jr."
  },
- "Sen. Bernie Moreno": {
-  "bioguide": "M001242",
-  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/M001242.jpg",
-  "state": "OH",
-  "state_name": "Ohio",
-  "party": "Republican",
-  "district": null,
-  "chamber": "Senate",
-  "official_full": "Bernie Moreno"
- },
  "Sen. Christopher A Coons": {
   "bioguide": "C001088",
   "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/C001088.jpg",
@@ -489,16 +479,6 @@
   "chamber": "Senate",
   "official_full": "James C. Justice"
  },
- "Sen. Jerry Moran,": {
-  "bioguide": "M000934",
-  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/M000934.jpg",
-  "state": "KS",
-  "state_name": "Kansas",
-  "party": "Republican",
-  "district": null,
-  "chamber": "Senate",
-  "official_full": "Jerry Moran"
- },
  "Sen. John Boozman": {
   "bioguide": "B001236",
   "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/B001236.jpg",
@@ -528,6 +508,16 @@
   "district": null,
   "chamber": "Senate",
   "official_full": "Mark R. Warner"
+ },
+ "Sen. Rafael E Cruz": {
+  "bioguide": "C001098",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/C001098.jpg",
+  "state": "TX",
+  "state_name": "Texas",
+  "party": "Republican",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Ted Cruz"
  },
  "Sen. Richard Blumenthal": {
   "bioguide": "B001277",

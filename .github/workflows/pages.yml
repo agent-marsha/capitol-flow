@@ -12,6 +12,11 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read          # REQUIRED: deploy-pages reads the github-pages artifact uploaded by
+                         # upload-pages-artifact.  When a workflow sets a permissions block,
+                         # every scope it does not list is set to NONE -- so without this the
+                         # artifact uploads fine and deploy-pages fails with
+                         # 'Found 0 artifact(s)' even though the artifact exists.
 
 concurrency:
   group: pages

@@ -197,12 +197,6 @@
 "sic": "6200",
 "industry": "Security & Commodity Brokers, Dealers, Exchanges & Services"
 },
-"CCI": {
-"name": "CROWN CASTLE INC.",
-"sector": "Financial Services",
-"sic": "6798",
-"industry": "Real Estate Investment Trusts"
-},
 "CEG": {
 "name": "Constellation Energy Corp",
 "sector": "Utilities",
@@ -214,6 +208,12 @@
 "sector": "Basic Materials",
 "sic": "2870",
 "industry": "Agricultural Chemicals"
+},
+"CIEN": {
+"name": "CIENA CORP",
+"sector": "Technology",
+"sic": "3661",
+"industry": "Telephone & Telegraph Apparatus"
 },
 "CINF": {
 "name": "CINCINNATI FINANCIAL CORP",
@@ -580,6 +580,12 @@
 "sector": "Technology",
 "sic": "3674",
 "industry": "Semiconductors & Related Devices"
+},
+"NFLX": {
+"name": "NETFLIX INC",
+"sector": "Communication Services",
+"sic": "7841",
+"industry": "Services-Video Tape Rental"
 },
 "NIO": {
 "name": "NIO Inc.",

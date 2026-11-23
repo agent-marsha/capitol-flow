@@ -190,6 +190,11 @@ jobs:
             cp data/oi_lookup.json web/data/oi_lookup.json
             { printf 'window.__CAPITOL_OI_LOOKUP__ = '; cat data/oi_lookup.json; printf ';\n'; } > web/data/oi_lookup.js
           fi
+          # compact OI history, so stock pages can chart where open interest has been
+          if [ -f data/oi_history_summary.json ]; then
+            cp data/oi_history_summary.json web/data/oi_history_summary.json
+            { printf 'window.__CAPITOL_OI_HISTORY__ = '; cat data/oi_history_summary.json; printf ';\n'; } > web/data/oi_history_summary.js
+          fi
 
       - name: Commit refreshed data
         id: commit

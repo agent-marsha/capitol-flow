@@ -34,10 +34,11 @@ follows one real contract across days and is the only like-for-like comparison.
 """
 from __future__ import annotations
 
+import glob
 import gzip
 import json
 import os
-import glob
+import sys
 from datetime import datetime, timezone
 
 HIST_DIR = "data/oi_history"
@@ -88,6 +89,23 @@ def write(record: dict, hist_dir: str = HIST_DIR, summary: str = SUMMARY) -> tup
     os.makedirs(hist_dir, exist_ok=True)
     day = record["date"]
     path = os.path.join(hist_dir, "%s.json.gz" % day)
+
+    # GUARD: never replace an existing day with a narrower one. A partial run
+    # (fetch_options --max N) writes to the same date but covers far fewer tickers, so
+    # without this a test or truncated run silently swaps a complete day for a fragment.
+    # That happened once during testing and had to be restored from git. A re-run with equal
+    # or greater coverage still overwrites, so genuine retries keep the latest numbers.
+    new_n = len(record.get("tickers") or {})
+    if os.path.exists(path):
+        try:
+            old_n = len(load_day(path).get("tickers") or {})
+            if old_n and new_n < old_n * 0.9:
+                print("[oi-history] REFUSING to overwrite %s: this run has %d tickers, stored "
+                      "has %d -- looks like a partial run" % (day, new_n, old_n), file=sys.stderr)
+                return path, summary
+        except Exception:
+            pass
+
     payload = json.dumps(record, separators=(",", ":")).encode("utf-8")
     with gzip.open(path, "wb", compresslevel=9) as f:
         f.write(payload)
@@ -101,7 +119,11 @@ def write(record: dict, hist_dir: str = HIST_DIR, summary: str = SUMMARY) -> tup
     series = data.setdefault("series", {})
     for tk, v in record["tickers"].items():
         rows = [r for r in series.get(tk, []) if r and r[0] != day]
-        rows.append([day, v.get("spot"), v.get("call_oi"), v.get("put_oi")])
+        # Row = [date, spot, call_oi, put_oi, n_exp].  n_exp is carried so a reader can tell
+        # whether a move in the totals is real or just a change in how many expirations are
+        # in scope -- without it a 6-expiry day sits beside a 10-expiry day and the gap reads
+        # as a 144% jump in positioning, which it is not.
+        rows.append([day, v.get("spot"), v.get("call_oi"), v.get("put_oi"), v.get("n_exp")])
         rows.sort(key=lambda r: r[0])
         series[tk] = rows
     with open(summary, "w") as f:
@@ -185,6 +207,19 @@ if __name__ == "__main__":
 
     if len(sys.argv) > 1 and sys.argv[1] == "backfill":
         print("backfilled %d snapshot(s) from git" % backfill_from_git())
+    elif len(sys.argv) > 1 and sys.argv[1] == "rebuild":
+        # Regenerate the compact summary from the stored daily detail files.  Needed whenever
+        # the summary's row shape changes, since the detail files are the source of truth.
+        if os.path.exists(SUMMARY):
+            os.remove(SUMMARY)
+        n = 0
+        for p in days():
+            try:
+                write(load_day(p))
+                n += 1
+            except Exception as e:
+                print("  skip %s: %s" % (p, e))
+        print("rebuilt %s from %d day file(s)" % (SUMMARY, n))
     elif len(sys.argv) > 1 and sys.argv[1] == "size":
         for p in days():
             print("  %-26s %6.0f KB" % (os.path.basename(p), os.path.getsize(p) / 1024))

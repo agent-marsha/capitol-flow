@@ -1212,6 +1212,7 @@
           (trades.length ? '<ul class="trades">' + trades.map(function (t) { return tradeRow(t, { since: true }); }).join('') + '</ul>' : '<p class="empty">No disclosed trades.</p>') +
         '</section>' +
         '<div id="opt-slot" class="opt-slot" data-opt-tk="' + esc(tk) + '"></div>' +
+        '<div id="oih-slot" class="oih-slot" data-oih-tk="' + esc(tk) + '"></div>' +
         // Omit THE NEWS entirely when there are no headlines (same rule as BASICS).
         ((D.news[tk] || []).length
           ? '<section class="block d-news" aria-labelledby="news-h"><div class="micro">Around the trades</div><h3 id="news-h" class="display">The news</h3>' + newsBlock(tk, trades) + '</section>'
@@ -1224,6 +1225,7 @@
     window.scrollTo(0, 0);
     mountChart(tk);
     fillOptions();
+    fillOIHistory();
     fillFundamentals();
   }
 
@@ -1240,11 +1242,13 @@
       chartFallback(tk) +
       '<div class="d-cols d-cols-opt">' +
         '<div id="opt-slot" class="opt-slot" data-opt-tk="' + esc(tk) + '"></div>' +
+        '<div id="oih-slot" class="oih-slot" data-oih-tk="' + esc(tk) + '"></div>' +
       '</div>' +
       '<div id="fund-slot" data-fund-tk="' + esc(tk) + '"></div>';
     document.title = tk + ' — Capitol Flow';
     window.scrollTo(0, 0);
     fillOptions();
+    fillOIHistory();
     fillFundamentals();
   }
 
@@ -1432,6 +1436,192 @@
       '<div class="opt-cols">' + optCol('call', calls, tk) + optCol('put', puts, tk) + '</div>' +
       '<p class="opt-foot">Open interest per strike is summed across those expirations. Price is for one contract on the row\'s expiration, quoted per share (one contract covers 100 shares). Snapshot from the last data refresh.</p>' +
     '</section>';
+  }
+
+  // ------------------------------------------------------------------ open interest history
+  // data/oi_history_summary.json is NOT part of boot: it is fetched the first time a stock
+  // page is viewed, once. Same fetch → inline-script → {} fallback chain as loadOI().
+  // Shape: { series: { TICKER: [[date, spot_at_pull, call_oi, put_oi], ...] } }, oldest first.
+  var OIH = null;        // series by ticker (null until first use; {} if unavailable)
+  var oihP = null;
+  function loadOIHistory() {
+    if (OIH) return Promise.resolve(OIH);
+    if (oihP) return oihP;
+    var viaFetch = window.__CAPITOL_OI_HISTORY__ ? Promise.resolve(window.__CAPITOL_OI_HISTORY__)
+      : location.protocol === 'file:'
+        ? Promise.reject(new Error('file://'))
+        : fetch('data/oi_history_summary.json', { cache: 'no-cache' }).then(function (r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+          });
+    oihP = viaFetch.catch(function () {
+      return loadScript('data/oi_history_summary.js').then(function () { return window.__CAPITOL_OI_HISTORY__; });
+    }).then(function (o) {
+      var s = o && typeof o === 'object' ? o.series : null;
+      return s && typeof s === 'object' && !Array.isArray(s) ? s : {};
+    }).catch(function () { return {}; }).then(function (s) { OIH = s; return s; });
+    return oihP;
+  }
+
+  // Clean rows for one ticker: valid date, finite non-negative OI, one row per date, oldest
+  // first. A missing or non-positive spot becomes null (it is only shown in the table).
+  function oihRows(tk) {
+    if (!OIH || !tk) return [];
+    var tries = [tk, tk.replace(/\./g, '-'), tk.replace(/-/g, '.')], raw = null;
+    for (var i = 0; i < tries.length && !raw; i++) {
+      if (Object.prototype.hasOwnProperty.call(OIH, tries[i]) && Array.isArray(OIH[tries[i]])) raw = OIH[tries[i]];
+    }
+    var byDate = {};
+    (raw || []).forEach(function (r) {
+      if (!Array.isArray(r) || !validDate(r[0]) || !fnum(r[2]) || !fnum(r[3]) || r[2] < 0 || r[3] < 0) return;
+      byDate[r[0]] = { d: r[0], spot: fnum(r[1]) && r[1] > 0 ? r[1] : null, c: r[2], p: r[3],
+                       n: fnum(r[4]) ? r[4] : null };
+    });
+    return Object.keys(byDate).sort().map(function (k) { return byDate[k]; });
+  }
+
+  function oihCount(n) {
+    if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M';
+    if (n >= 1e4) return (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'K';
+    return Math.round(n).toLocaleString('en-US');
+  }
+  // Percent change, or '' when the start is zero (no divide-by-zero, no "Infinity%").
+  function oihPct(a, b) {
+    if (!(a > 0)) return '';
+    var x = (b - a) / a * 100;
+    return ' (' + (x >= 0 ? '+' : '−') + Math.abs(x).toFixed(1) + '%)';
+  }
+  function oihPC(r) { return r.c > 0 ? r.p / r.c : null; }
+  function oihPCTxt(r) { var v = oihPC(r); return v == null ? '—' : v.toFixed(2); }
+
+  // Fills #oih-slot for the ticker it was rendered for. First call starts the lazy load and
+  // re-runs itself when the data lands (if the user is still on that ticker's page).
+  function fillOIHistory() {
+    var slot = $('#oih-slot');
+    if (!slot) return;
+    var tk = slot.getAttribute('data-oih-tk');
+    if (OIH === null) {
+      loadOIHistory().then(function () {
+        var s = $('#oih-slot');
+        if (s && s.getAttribute('data-oih-tk') === tk) fillOIHistory();
+      });
+      return;
+    }
+    var html = '';
+    try { html = oiHistoryBlock(tk); } catch (e) { html = ''; }
+    slot.innerHTML = html;
+    if (html) { try { wireOIHistory(slot, oihRows(tk)); } catch (e) { /* hover is optional */ } }
+  }
+
+  var OIH_W = 600, OIH_H = 160;
+  function oiHistoryBlock(tk) {
+    var rows = oihRows(tk);
+    if (rows.length < 2) return '';
+    var first = rows[0], last = rows[rows.length - 1];
+    // The change figures must compare LIKE WITH LIKE.  Total OI jumps when the set of
+    // tracked expirations changes, so measuring from a 6-expiry day to a 10-expiry day
+    // reported a +144% "increase" that was purely a change in what is counted.  Walk back
+    // from the newest reading while the expiry count holds steady and compare only that
+    // stretch; fall back to the full range when every day differs.
+    var cmp = last;
+    for (var ci = rows.length - 2; ci >= 0; ci--) {
+      if (rows[ci].n != null && last.n != null && rows[ci].n === last.n) cmp = rows[ci];
+      else break;
+    }
+    var cmpNote = cmp !== rows[0];
+    var span = Math.max(1, days(first.d, last.d));
+    var max = rows.reduce(function (m, r) { return Math.max(m, r.c, r.p); }, 0);
+    var top = max > 0 ? max * 1.08 : 1;
+    function xy(r, k) {
+      var x = days(first.d, r.d) / span * OIH_W;
+      var y = OIH_H - (r[k] / top) * OIH_H;
+      return x.toFixed(1) + ',' + y.toFixed(1);
+    }
+    var line = function (k, cls) {
+      return '<polyline class="oih-ln ' + cls + '" vector-effect="non-scaling-stroke" points="' +
+        rows.map(function (r) { return xy(r, k); }).join(' ') + '"/>';
+    };
+    var grid = [0.25, 0.5, 0.75, 1].map(function (f) {
+      var y = (OIH_H - f * max / top * OIH_H).toFixed(1);
+      return '<line class="oih-grid" vector-effect="non-scaling-stroke" x1="0" x2="' + OIH_W + '" y1="' + y + '" y2="' + y + '"/>';
+    }).join('');
+    var nDays = rows.length;
+    var range = md(first.d) + ' to ' + md(last.d);
+
+    var table = '<table><thead><tr><th scope="col">Date</th><th scope="col">Call OI</th><th scope="col">Put OI</th>' +
+      '<th scope="col">Put/call</th><th scope="col">Price at pull*</th></tr></thead><tbody>' +
+      rows.slice().reverse().map(function (r) {
+        return '<tr><td>' + esc(mdy(r.d)) + '</td><td>' + Math.round(r.c).toLocaleString('en-US') + '</td><td>' +
+          Math.round(r.p).toLocaleString('en-US') + '</td><td>' + oihPCTxt(r) + '</td><td>' +
+          (r.spot == null ? '—' : '$' + px(r.spot)) + '</td></tr>';
+      }).join('') + '</tbody></table>' +
+      '<p class="opt-foot">*Stock price when the data was pulled, around 9:35 a.m. ET — not the closing price.</p>';
+
+    return '<section class="block oih" aria-labelledby="oih-h">' +
+      '<div class="micro">Open interest over time</div><h3 id="oih-h" class="display">The history</h3>' +
+      '<p class="note">Total ' + esc(tk) + ' call and put open interest, one reading per day we pulled it.</p>' +
+      '<div class="oih-legend micro" aria-hidden="true">' +
+        '<span><i class="oih-sw call"></i>Calls <b>' + esc(oihCount(last.c)) + '</b></span>' +
+        '<span><i class="oih-sw put"></i>Puts <b>' + esc(oihCount(last.p)) + '</b></span>' +
+      '</div>' +
+      '<div class="oih-plot" aria-hidden="true">' +
+        '<span class="oih-y oih-ymax" style="top:' + ((1 - max / top) * 100).toFixed(2) + '%">' + esc(oihCount(max)) + '</span>' +
+        '<span class="oih-y oih-y0">0</span>' +
+        '<svg class="oih-svg" viewBox="0 0 ' + OIH_W + ' ' + OIH_H + '" preserveAspectRatio="none" focusable="false">' +
+          grid +
+          '<line class="oih-base" vector-effect="non-scaling-stroke" x1="0" x2="' + OIH_W + '" y1="' + OIH_H + '" y2="' + OIH_H + '"/>' +
+          line('c', 'call') + line('p', 'put') +
+        '</svg>' +
+        '<div class="oih-hover" hidden><i class="oih-rule"></i><i class="oih-dot call"></i><i class="oih-dot put"></i>' +
+          '<div class="oih-tip"></div></div>' +
+      '</div>' +
+      '<div class="oih-x micro" aria-hidden="true"><span>' + esc(md(first.d)) + '</span><span>' + esc(md(last.d)) + '</span></div>' +
+      '<span class="sr-only">Line chart of ' + esc(tk) + ' open interest from ' + esc(mdy(first.d)) + ' to ' + esc(mdy(last.d)) +
+        '. The full readings are in the table below.</span>' +
+      // The change figures never stand alone: they share one box with the expiry-set caveat.
+      '<div class="oih-read">' +
+        '<p class="oih-delta"><span class="oih-k">Calls</span> ' + esc(oihCount(cmp.c)) + ' to ' + esc(oihCount(last.c)) + oihPct(cmp.c, last.c) +
+          ' · <span class="oih-k">Puts</span> ' + esc(oihCount(cmp.p)) + ' to ' + esc(oihCount(last.p)) + oihPct(cmp.p, last.p) +
+          ' · ' + esc(cmpNote ? md(cmp.d) + ' to ' + md(last.d) : range) + ', ' + plural(cmpNote ? rows.slice(rows.indexOf(cmp)).length : nDays, 'reading') + '</p>' +
+        '<p class="oih-delta"><span class="oih-k">Put/call ratio</span> ' + oihPCTxt(last) + ' now, ' + oihPCTxt(cmp) + ' on ' + esc(md(cmp.d)) + '</p>' +
+        (cmpNote ? '<p class="oih-delta oih-cmpnote">Change is measured over <b>' + esc(md(cmp.d)) + ' to ' + esc(md(last.d)) +
+          '</b> only — the stretch where the same number of expirations was tracked, so it compares like with like.</p>' : '') +
+        '<p class="bm-caveat oih-caveat"><b>Open interest totals jump when the set of expirations we track changes — that is a change in what is counted, not necessarily a change in positioning.</b> ' +
+          'Each day’s total is summed over the expirations tracked that day, so a step up or down may just mean an expiration was added or aged out. ' +
+          'Open interest also has no direction: it counts contracts still open, not whether they were bought or sold.</p>' +
+      '</div>' +
+      '<details class="table"><summary>VIEW OPEN INTEREST TABLE</summary><div class="scroll">' + table + '</div></details>' +
+    '</section>';
+  }
+
+  // Crosshair + tooltip: snaps to the nearest day under the pointer.
+  function wireOIHistory(slot, rows) {
+    var plot = slot.querySelector('.oih-plot'), hov = slot.querySelector('.oih-hover');
+    if (!plot || !hov || rows.length < 2) return;
+    var first = rows[0].d, span = Math.max(1, days(first, rows[rows.length - 1].d));
+    var max = rows.reduce(function (m, r) { return Math.max(m, r.c, r.p); }, 0);
+    var top = max > 0 ? max * 1.08 : 1;
+    var xs = rows.map(function (r) { return days(first, r.d) / span; });
+    var rule = hov.querySelector('.oih-rule'), dc = hov.querySelector('.oih-dot.call'),
+        dp = hov.querySelector('.oih-dot.put'), tip = hov.querySelector('.oih-tip');
+    function show(e) {
+      var b = plot.getBoundingClientRect();
+      if (!b.width) return;
+      var f = (e.clientX - b.left) / b.width, best = 0;
+      for (var i = 1; i < xs.length; i++) if (Math.abs(xs[i] - f) < Math.abs(xs[best] - f)) best = i;
+      var r = rows[best], left = (xs[best] * 100).toFixed(2) + '%';
+      rule.style.left = dc.style.left = dp.style.left = left;
+      dc.style.top = ((1 - r.c / top) * 100).toFixed(2) + '%';
+      dp.style.top = ((1 - r.p / top) * 100).toFixed(2) + '%';
+      tip.innerHTML = '<b>' + esc(mdy(r.d)) + '</b><span><i class="oih-sw call"></i>Calls ' + esc(oihCount(r.c)) + '</span>' +
+        '<span><i class="oih-sw put"></i>Puts ' + esc(oihCount(r.p)) + '</span><span>Put/call ' + oihPCTxt(r) + '</span>';
+      tip.classList.toggle('flip', xs[best] > 0.55);
+      tip.style.left = left;
+      hov.hidden = false;
+    }
+    plot.addEventListener('pointermove', show);
+    plot.addEventListener('pointerdown', show);
+    plot.addEventListener('pointerleave', function () { hov.hidden = true; });
   }
 
   // ------------------------------------------------------------------ fundamentals ("The basics")

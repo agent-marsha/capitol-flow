@@ -7,28 +7,34 @@ the OI on every daily run, for every stock we pull.
 
 STORAGE SHAPE (two files, on purpose):
 
-1. data/oi_history/YYYY-MM-DD.json    one file per RUN DAY, full detail
-   {date, generated, spot-by-ticker, call/put OI, and per-contract OI keyed
-    "expiry|strike" for every contract in the leaderboard cut}
+1. data/oi_history/YYYY-MM-DD.json.gz   one file per RUN DAY, full detail, GZIPPED
+   spot, call/put OI, P/C, the captured expiry set, and per-contract OI keyed
+   "expiry|strike" for every contract in the leaderboard cut.
 
-   Sharded by date rather than one growing file, because git stores a whole new copy of a
-   file on every change. One 120 KB/day file costs 120 KB/day; one accumulating JSON would
-   cost its entire size again every single day. Re-running on the same day overwrites that
-   day's file, so a retry never creates a duplicate.
+   Measured: one uncompressed day is ~381 KB -- 121 tickers x ~90 contracts a side, because
+   each strike row carries a per-expiry `parts` split. That projects to ~93 MB/year of git.
+   JSON gzips about 10x, so this lands near 10 MB/year. The daily files are append-only and
+   never edited, so giving up line diffs on them costs nothing.
 
-2. data/oi_history_summary.json       the compact series, one row per ticker per day
+   Sharded per day rather than one growing file: git stores a whole new copy of a file on
+   every change, so a 40 KB/day file costs 40 KB/day while one accumulating JSON would cost
+   its entire size again every single day. A same-day re-run overwrites that day's file, so
+   retries never duplicate.
+
+2. data/oi_history_summary.json   the compact series, one row per ticker per day
    {"series": {"NVDA": [[date, spot, call_oi, put_oi], ...]}}
-
-   Small enough (~10 KB/day) to keep forever and to plot in one read, and it is the only
-   thing the charting code needs to touch.
+   ~6 KB/day, kept forever, plain JSON so it stays diffable. This is all the charting code
+   needs to read.
 
 CAVEAT THE READER MUST RESPECT: per-ticker totals are NOT comparable across runs when the
 captured expiration set changes -- the 30-day floor rolls forward and contracts expire, so
-total OI can jump purely because different expiries are in scope. Every record therefore
-stores `n_exp` and the expiry list, and any comparison should hold that constant.
+total OI can jump purely because different expiries are in scope. Every record stores
+`n_exp` and the expiry list, and any comparison should hold that constant. contract_series()
+follows one real contract across days and is the only like-for-like comparison.
 """
 from __future__ import annotations
 
+import gzip
 import json
 import os
 import glob
@@ -78,14 +84,14 @@ def build_record(options: dict, generated: str | None = None) -> dict:
 
 
 def write(record: dict, hist_dir: str = HIST_DIR, summary: str = SUMMARY) -> tuple:
-    """Write the dated detail file and fold the day into the compact summary."""
+    """Write the dated detail file (gzipped) and fold the day into the compact summary."""
     os.makedirs(hist_dir, exist_ok=True)
     day = record["date"]
-    path = os.path.join(hist_dir, "%s.json" % day)
-    with open(path, "w") as f:
-        json.dump(record, f, separators=(",", ":"))
+    path = os.path.join(hist_dir, "%s.json.gz" % day)
+    payload = json.dumps(record, separators=(",", ":")).encode("utf-8")
+    with gzip.open(path, "wb", compresslevel=9) as f:
+        f.write(payload)
 
-    # compact series: one row per ticker per day, de-duped by date
     data = {"series": {}}
     if os.path.exists(summary):
         try:
@@ -103,6 +109,14 @@ def write(record: dict, hist_dir: str = HIST_DIR, summary: str = SUMMARY) -> tup
     return path, summary
 
 
+def load_day(path: str) -> dict:
+    """Read one dated record, gzipped or not (so old plain .json files still work)."""
+    if path.endswith(".gz"):
+        with gzip.open(path, "rb") as f:
+            return json.loads(f.read().decode("utf-8"))
+    return json.load(open(path))
+
+
 def series(ticker: str, summary: str = SUMMARY):
     """[[date, spot, call_oi, put_oi], ...] for one ticker, oldest first."""
     if not os.path.exists(summary):
@@ -113,19 +127,19 @@ def series(ticker: str, summary: str = SUMMARY):
 
 def days(hist_dir: str = HIST_DIR):
     """Available dated detail files, oldest first."""
-    return sorted(glob.glob(os.path.join(hist_dir, "[0-9]" * 4 + "-[0-9][0-9]-[0-9][0-9].json")))
+    return sorted(glob.glob(os.path.join(hist_dir, "2*-*-*.json*")))
 
 
 def contract_series(ticker: str, side: str, expiry: str, strike, hist_dir: str = HIST_DIR):
     """Follow ONE real contract across days -> [[date, oi], ...].
 
-    This is the only like-for-like comparison; totals move when the expiry set changes.
+    The only like-for-like comparison; totals move when the expiry set changes.
     """
     key = "%s|%s" % (expiry, strike)
     out = []
     for p in days(hist_dir):
         try:
-            rec = json.load(open(p))
+            rec = load_day(p)
         except Exception:
             continue
         v = (rec.get("tickers") or {}).get(ticker.upper())
@@ -141,8 +155,7 @@ def backfill_from_git(start: str = "2026-01-01"):
     """Seed history from the options.json revisions already in git.
 
     The pipeline overwrote that file for weeks before this store existed, but every run
-    committed it -- so the early history can be recovered instead of starting from zero.
-    Oldest wins when two commits share a day; later same-day runs overwrite via write().
+    committed it -- so early history can be recovered instead of starting from zero.
     """
     import subprocess
 
@@ -172,6 +185,9 @@ if __name__ == "__main__":
 
     if len(sys.argv) > 1 and sys.argv[1] == "backfill":
         print("backfilled %d snapshot(s) from git" % backfill_from_git())
+    elif len(sys.argv) > 1 and sys.argv[1] == "size":
+        for p in days():
+            print("  %-26s %6.0f KB" % (os.path.basename(p), os.path.getsize(p) / 1024))
     else:
         tk = sys.argv[1].upper() if len(sys.argv) > 1 else "NVDA"
         rows = series(tk)

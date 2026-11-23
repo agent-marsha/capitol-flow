@@ -197,6 +197,7 @@ jobs:
           git config user.name  "capitol-flow-bot"
           git config user.email "bot@users.noreply.github.com"
           git add data/house_trades.json data/senate_trades.json data/politicians.json data/committees.json data/profiles.json data/app_data.json data/fundamentals.json data/options.json data/oi_lookup.json data/companies.json || true
+          git add data/oi_history/ data/oi_history_summary.json || true
           git add web/data/ || true
           if git diff --quiet --cached; then
             echo "nothing to commit" 

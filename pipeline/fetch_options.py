@@ -236,6 +236,8 @@ def main() -> int:
     ap.add_argument("--top", type=int, default=10)
     ap.add_argument("--no-extra", action="store_true",
                     help="skip the high-open-interest universe (congressional tickers only)")
+    ap.add_argument("--no-history", action="store_true",
+                    help="skip appending to the open-interest history (used by backfills/tests)")
     a = ap.parse_args()
 
     try:
@@ -422,6 +424,22 @@ def main() -> int:
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     json.dump(out, open(a.out, "w"))
     print(f"[options] wrote {a.out} — {ok} tickers with data, no options: {skipped}", file=sys.stderr)
+
+    # Append this run to the open-interest history.  Requested: keep track of the OI on every
+    # daily run, for every stock we pull.  Non-fatal -- a history failure must never lose the
+    # day's option data, which is what the app actually serves.
+    if not getattr(a, "no_history", False):
+        try:
+            import oi_history_store as hist
+            rec = hist.build_record(out)
+            p, s = hist.write(rec)
+            n_c = sum(len(v["calls"]) for v in rec["tickers"].values())
+            n_p = sum(len(v["puts"]) for v in rec["tickers"].values())
+            print(f"[options] OI history {rec['date']}: {len(rec['tickers'])} tickers, "
+                  f"{n_c} call + {n_p} put contracts -> {p}", file=sys.stderr)
+        except Exception as e:
+            print(f"[options] OI history FAILED ({type(e).__name__}: {e}) — continuing",
+                  file=sys.stderr)
     return 0
 
 

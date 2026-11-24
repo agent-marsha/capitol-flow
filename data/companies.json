@@ -2624,5 +2624,104 @@
 "industry": "Luxury Goods",
 "sic": "3100",
 "source": "sec+yahoo"
+},
+"ABNB": {
+"ticker": "ABNB",
+"name": "Airbnb, Inc.",
+"description": "Airbnb, Inc., together with its subsidiaries, operates a platform for stays, experiences, and services worldwide. The company's marketplace connects hosts and guests online or through mobile devices to book spaces, experiences, and services.",
+"sector": "Consumer Cyclical",
+"industry": "Travel Services",
+"sic": "7340",
+"source": "sec+yahoo"
+},
+"APD": {
+"ticker": "APD",
+"name": "Air Products and Chemicals, Inc.",
+"description": "Air Products and Chemicals, Inc., an industrial gases company, provides industrial gases, related equipment, and applications to the energy, environmental, and other markets in the Americas, Asia, Europe, the Middle East, India, and internationally.",
+"sector": "Basic Materials",
+"industry": "Specialty Chemicals",
+"sic": "2810",
+"source": "sec+yahoo"
+},
+"AZN": {
+"ticker": "AZN",
+"name": "AstraZeneca PLC",
+"description": "AstraZeneca PLC, a biopharmaceutical company, focuses on the discovery, development, manufacture, and commercialization of prescription medicines.",
+"sector": "Healthcare",
+"industry": "Drug Manufacturers - General",
+"sic": "2834",
+"source": "sec+yahoo"
+},
+"CVS": {
+"ticker": "CVS",
+"name": "CVS Health Corporation",
+"description": "CVS Health Corporation provides health solutions in the United States.",
+"sector": "Healthcare",
+"industry": "Healthcare Plans",
+"sic": "5912",
+"source": "sec+yahoo"
+},
+"FANG": {
+"ticker": "FANG",
+"name": "Diamondback Energy, Inc.",
+"description": "Diamondback Energy, Inc., an independent oil and natural gas company, acquires, develops, explores, and exploits unconventional, onshore oil and natural gas reserves in the Permian Basin in West Texas, the United States.",
+"sector": "Energy",
+"industry": "Oil & Gas E&P",
+"sic": "1311",
+"source": "sec+yahoo"
+},
+"FLEX": {
+"ticker": "FLEX",
+"name": "Flex Ltd.",
+"description": "Flex Ltd. provides technology innovation, supply chain, and manufacturing solutions to data center, communications, enterprise, consumer, automotive, healthcare, industrial, and power industries in the Americas, Asia, and Europe.",
+"sector": "Technology",
+"industry": "Electronic Components",
+"sic": "3672",
+"source": "sec+yahoo"
+},
+"ISRG": {
+"ticker": "ISRG",
+"name": "Intuitive Surgical, Inc.",
+"description": "Intuitive Surgical, Inc. develops, manufactures, and markets products that enable physicians and healthcare providers to enhance the quality of and access to minimally invasive care in the United States and internationally.",
+"sector": "Healthcare",
+"industry": "Medical Instruments & Supplies",
+"sic": "3842",
+"source": "sec+yahoo"
+},
+"LYB": {
+"ticker": "LYB",
+"name": "LyondellBasell Industries N.V.",
+"description": "LyondellBasell Industries N.V. operates as a chemical company in the United States, Germany, China, Mexico, Italy, Japan, France, Poland, the Netherlands, and internationally.",
+"sector": "Basic Materials",
+"industry": "Specialty Chemicals",
+"sic": "2860",
+"source": "sec+yahoo"
+},
+"PANW": {
+"ticker": "PANW",
+"name": "Palo Alto Networks, Inc.",
+"description": "Palo Alto Networks, Inc. provides cybersecurity solutions in the Americas, Europe, the Middle East, Africa, the Asia Pacific, and Japan.",
+"sector": "Technology",
+"industry": "Software - Infrastructure",
+"sic": "3577",
+"source": "sec+yahoo"
+},
+"TGT": {
+"ticker": "TGT",
+"name": "Target Corporation",
+"description": "Target Corporation operates as a general merchandise retailer in the United States.",
+"sector": "Consumer Defensive",
+"industry": "Discount Stores",
+"sic": "5331",
+"source": "sec+yahoo"
+},
+"UNP": {
+"ticker": "UNP",
+"name": "Union Pacific Corporation",
+"description": "Union Pacific Corporation, through its subsidiary, Union Pacific Railroad Company, operates in the railroad business in the United States.",
+"sector": "Industrials",
+"industry": "Railroads",
+"sic": "4011",
+"source": "sec+yahoo"
 }
 }

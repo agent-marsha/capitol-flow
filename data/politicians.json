@@ -109,6 +109,16 @@
   "chamber": "House",
   "official_full": "Gilbert Ray Cisneros, Jr."
  },
+ "Hon. Harriet Hageman": {
+  "bioguide": "H001096",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/H001096.jpg",
+  "state": "WY",
+  "state_name": "Wyoming",
+  "party": "Republican",
+  "district": 0,
+  "chamber": "House",
+  "official_full": "Harriet M. Hageman"
+ },
  "Hon. James A. Himes": {
   "bioguide": "H001047",
   "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/H001047.jpg",

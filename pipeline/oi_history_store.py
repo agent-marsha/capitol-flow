@@ -227,7 +227,10 @@ if __name__ == "__main__":
         tk = sys.argv[1].upper() if len(sys.argv) > 1 else "NVDA"
         rows = series(tk)
         print("%d day(s) of history for %s" % (len(rows), tk))
-        for d, spot, co, po in rows:
-            print("  %s  spot %8s  call %10s  put %10s  P/C %5.2f" %
+        for r in rows:
+            d, spot, co, po = r[0], r[1], r[2], r[3]
+            ne = r[4] if len(r) > 4 else None
+            print("  %s  spot %8s  call %10s  put %10s  P/C %5.2f  exps %s" %
                   (d, ("%.2f" % spot) if spot else "-", format(int(co), ","),
-                   format(int(po), ","), (po / co) if co else 0))
+                   format(int(po), ","), (po / co) if co else 0,
+                   ne if ne is not None else "-"))

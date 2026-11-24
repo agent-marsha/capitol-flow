@@ -89,6 +89,16 @@
   "chamber": "House",
   "official_full": "Donald S. Beyer, Jr."
  },
+ "Hon. Ed Case": {
+  "bioguide": "C001055",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/C001055.jpg",
+  "state": "HI",
+  "state_name": "Hawaii",
+  "party": "Democrat",
+  "district": 1,
+  "chamber": "House",
+  "official_full": "Ed Case"
+ },
  "Hon. Gilbert Cisneros": {
   "bioguide": "C001123",
   "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/C001123.jpg",
@@ -118,6 +128,16 @@
   "district": 2,
   "chamber": "House",
   "official_full": "J. French Hill"
+ },
+ "Hon. Jennifer McClellan": {
+  "bioguide": "M001227",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/M001227.jpg",
+  "state": "VA",
+  "state_name": "Virginia",
+  "party": "Democrat",
+  "district": 4,
+  "chamber": "House",
+  "official_full": "Jennifer L. McClellan"
  },
  "Hon. Jodey Arrington": {
   "bioguide": "A000375",

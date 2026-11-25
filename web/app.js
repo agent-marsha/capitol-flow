@@ -1364,6 +1364,22 @@
           esc('Open the ' + tk + ' ' + optStrike(c.strike) + ' ' + kind + exp + ' (' + (c.symbol || '') + ') on TradingView, new tab') +
         '">TradingView ↗</a>'
       : '';
+    // Robinhood link on CALLS ONLY (as requested).
+    //
+    // It points at the STOCK page, not an option chain, because Robinhood exposes no public
+    // per-ticker options URL -- /us/en/stocks/<T>/options/ returns 404 and the /options/<T>
+    // forms return an 8 KB JS shell, while /us/en/stocks/<T>/ returns 200.  So the label and
+    // the aria-label say "on Robinhood", never "this option", which would be a lie.  The
+    // value is skipping the ticker lookup inside the app, one tap from here.
+    //
+    // Dotted tickers (BRK.B) use a dash on Robinhood; none of the option rows have a dot
+    // today, but map defensively rather than emitting a broken URL if one appears.
+    var rh = kind === 'call'
+      ? '<a class="opt-link opt-rh" href="https://robinhood.com/us/en/stocks/' +
+          esc(String(tk).replace(/\./g, '-')) + '/" target="_blank" rel="noopener noreferrer" aria-label="' +
+          esc('Open ' + tk + ' on Robinhood, new tab. Robinhood has no direct link to a single option; this opens the stock page.') +
+        '">Robinhood ↗</a>'
+      : '';
     return '<li class="opt-row ' + kind + '">' +
       '<span class="sr-only">' + esc(phrase) + '.</span>' +
       '<div class="opt-l1" aria-hidden="true">' +
@@ -1375,7 +1391,7 @@
         (expiry ? '<span class="opt-exp" aria-hidden="true" title="Expires ' + esc(mdy(expiry)) + '"><span class="opt-lab">Exp</span><b>' + esc(optDate(expiry)) + '</b></span>' : '') +
         '<span class="opt-px" aria-hidden="true"><span class="opt-lab">' + (pr ? pr.lab : 'price') + '</span><b>' + esc(prTxt) + '</b></span>' +
         (extra.length ? '<span class="opt-extra" aria-hidden="true">' + esc(extra.join(' · ')) + '</span>' : '') +
-        link +
+        link + rh +
       '</div>' +
     '</li>';
   }

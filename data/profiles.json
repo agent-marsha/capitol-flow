@@ -5,6 +5,12 @@
 "sic": "3571",
 "industry": "Electronic Computers"
 },
+"ABNB": {
+"name": "Airbnb, Inc.",
+"sector": "Industrials",
+"sic": "7340",
+"industry": "Services-To Dwellings & Other Buildings"
+},
 "ABT": {
 "name": "ABBOTT LABORATORIES",
 "sector": "Healthcare",
@@ -53,6 +59,12 @@
 "sic": "3674",
 "industry": "Semiconductors & Related Devices"
 },
+"AMD": {
+"name": "ADVANCED MICRO DEVICES INC",
+"sector": "Technology",
+"sic": "3674",
+"industry": "Semiconductors & Related Devices"
+},
 "AMGN": {
 "name": "AMGEN INC",
 "sector": "Healthcare",
@@ -64,6 +76,12 @@
 "sector": "Consumer Cyclical",
 "sic": "5961",
 "industry": "Retail-Catalog & Mail-Order Houses"
+},
+"APD": {
+"name": "Air Products & Chemicals, Inc.",
+"sector": "Basic Materials",
+"sic": "2810",
+"industry": "Industrial Inorganic Chemicals"
 },
 "APP": {
 "name": "AppLovin Corp",
@@ -107,6 +125,12 @@
 "sic": "3674",
 "industry": "Semiconductors & Related Devices"
 },
+"AZN": {
+"name": "ASTRAZENECA PLC",
+"sector": "Healthcare",
+"sic": "2834",
+"industry": "Pharmaceutical Preparations"
+},
 "AZO": {
 "name": "AUTOZONE INC",
 "sector": "Consumer Cyclical",
@@ -149,71 +173,11 @@
 "sic": "3672",
 "industry": "Printed Circuit Boards"
 },
-"BIIB": {
-"name": "BIOGEN INC.",
-"sector": "Healthcare",
-"sic": "2836",
-"industry": "Biological Products, (No Diagnostic Substances)"
-},
-"BNS": {
-"name": "BANK OF NOVA SCOTIA",
-"sector": "Financial Services",
-"sic": "6022",
-"industry": "State Commercial Banks"
-},
-"BP": {
-"name": "BP PLC",
-"sector": "Energy",
-"sic": "2911",
-"industry": "Petroleum Refining"
-},
-"C": {
-"name": "CITIGROUP INC",
-"sector": "Financial Services",
-"sic": "6021",
-"industry": "National Commercial Banks"
-},
-"CACI": {
-"name": "CACI INTERNATIONAL INC /DE/",
-"sector": "Technology",
-"sic": "7373",
-"industry": "Services-Computer Integrated Systems Design"
-},
-"CAT": {
-"name": "CATERPILLAR INC",
-"sector": "Industrials",
-"sic": "3531",
-"industry": "Construction Machinery & Equip"
-},
 "CB": {
 "name": "Chubb Ltd",
 "sector": "Financial Services",
 "sic": "6331",
 "industry": "Fire, Marine & Casualty Insurance"
-},
-"CBOE": {
-"name": "Cboe Global Markets, Inc.",
-"sector": "Financial Services",
-"sic": "6200",
-"industry": "Security & Commodity Brokers, Dealers, Exchanges & Services"
-},
-"CEG": {
-"name": "Constellation Energy Corp",
-"sector": "Utilities",
-"sic": "4911",
-"industry": "Electric Services"
-},
-"CF": {
-"name": "CF Industries Holdings, Inc.",
-"sector": "Basic Materials",
-"sic": "2870",
-"industry": "Agricultural Chemicals"
-},
-"CIEN": {
-"name": "CIENA CORP",
-"sector": "Technology",
-"sic": "3661",
-"industry": "Telephone & Telegraph Apparatus"
 },
 "CINF": {
 "name": "CINCINNATI FINANCIAL CORP",
@@ -287,6 +251,12 @@
 "sic": "7389",
 "industry": "Services-Business Services, NEC"
 },
+"GIS": {
+"name": "GENERAL MILLS INC",
+"sector": "Consumer Defensive",
+"sic": "2040",
+"industry": "Grain Mill Products"
+},
 "GLW": {
 "name": "CORNING INC /NY",
 "sector": "Basic Materials",
@@ -335,6 +305,42 @@
 "sic": "6211",
 "industry": "Security Brokers, Dealers & Flotation Companies"
 },
+"IBM": {
+"name": "INTERNATIONAL BUSINESS MACHINES CORP",
+"sector": "Technology",
+"sic": "3570",
+"industry": "Computer & office Equipment"
+},
+"IBRX": {
+"name": "ImmunityBio, Inc.",
+"sector": "Healthcare",
+"sic": "2836",
+"industry": "Biological Products, (No Diagnostic Substances)"
+},
+"INTC": {
+"name": "INTEL CORP",
+"sector": "Technology",
+"sic": "3674",
+"industry": "Semiconductors & Related Devices"
+},
+"ITT": {
+"name": "ITT INC.",
+"sector": "Industrials",
+"sic": "3561",
+"industry": "Pumps & Pumping Equipment"
+},
+"JNJ": {
+"name": "JOHNSON & JOHNSON",
+"sector": "Healthcare",
+"sic": "2834",
+"industry": "Pharmaceutical Preparations"
+},
+"JPM": {
+"name": "JPMORGAN CHASE & CO",
+"sector": "Financial Services",
+"sic": "6021",
+"industry": "National Commercial Banks"
+},
 "AAL": {
 "name": "American Airlines Group Inc.",
 "sector": "Industrials",
@@ -365,12 +371,6 @@
 "sic": "7830",
 "industry": "Services-Motion Picture Theaters"
 },
-"AMD": {
-"name": "ADVANCED MICRO DEVICES INC",
-"sector": "Technology",
-"sic": "3674",
-"industry": "Semiconductors & Related Devices"
-},
 "ARM": {
 "name": "ARM HOLDINGS PLC /UK",
 "sector": "Technology",
@@ -382,6 +382,12 @@
 "sector": "Financial Services",
 "sic": "6199",
 "industry": "Finance Services"
+},
+"CAT": {
+"name": "CATERPILLAR INC",
+"sector": "Industrials",
+"sic": "3531",
+"industry": "Construction Machinery & Equip"
 },
 "CCL": {
 "name": "Carnival Corp Ltd.",
@@ -461,35 +467,11 @@
 "sic": "6211",
 "industry": "Security Brokers, Dealers & Flotation Companies"
 },
-"IBM": {
-"name": "INTERNATIONAL BUSINESS MACHINES CORP",
-"sector": "Technology",
-"sic": "3570",
-"industry": "Computer & office Equipment"
-},
-"INTC": {
-"name": "INTEL CORP",
-"sector": "Technology",
-"sic": "3674",
-"industry": "Semiconductors & Related Devices"
-},
 "IONQ": {
 "name": "IonQ, Inc.",
 "sector": "Technology",
 "sic": "7373",
 "industry": "Services-Computer Integrated Systems Design"
-},
-"JNJ": {
-"name": "JOHNSON & JOHNSON",
-"sector": "Healthcare",
-"sic": "2834",
-"industry": "Pharmaceutical Preparations"
-},
-"JPM": {
-"name": "JPMORGAN CHASE & CO",
-"sector": "Financial Services",
-"sic": "6021",
-"industry": "National Commercial Banks"
 },
 "KO": {
 "name": "COCA COLA CO",

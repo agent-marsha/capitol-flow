@@ -802,3 +802,35 @@ section[id] { scroll-margin-top: 64px; }
   .oix-sep { display: none; }
   .oix-nr { display: block; }
 }
+
+/* ---------- STRATEGY overlay (data/strategy.json) ----------
+   The house trading rules + the daily scan. Flat, high-contrast, same tokens as the rest of
+   the app: no gradients, no glows. Buy/sell colour is used only on the CALL/PUT tag and the
+   trend word, the same convention the option rows use. */
+.st-mark { color: var(--ink); }
+.st-rules { list-style: none; margin: 0 0 8px; padding: 0; border-top: 1px solid var(--line); }
+.st-rule { display: flex; gap: 16px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.st-num { flex: 0 0 auto; width: 40px; font-size: 30px; color: var(--muted); }
+.st-rule-txt { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.st-rule-txt b { font-size: 15px; font-weight: 700; }
+.st-rule-txt span { color: var(--ink-2); font-size: 14px; max-width: 70ch; }
+
+.st-opps-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 32px 0 12px; }
+.st-opps-head h3 { margin: 0; font-size: clamp(22px, 4vw, 30px); }
+.st-opps { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.st-opp { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.st-l1 { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.st-tag { flex: 0 0 auto; padding: 2px 6px; border: 1px solid currentColor; }
+.st-tk { font-size: 24px; text-decoration: none; }
+.st-tk:hover { text-decoration: underline; }
+.st-con { color: var(--ink-2); }
+.st-trend { margin-left: auto; }
+.st-l2 { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; margin-top: 8px; }
+.st-px { display: inline-flex; align-items: baseline; gap: 6px; }
+.st-px b { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.st-why { margin-top: 8px; color: var(--muted); letter-spacing: .06em; }
+.st-caveat { color: var(--muted); font-size: 13px; margin: 16px 0 0; max-width: 70ch; }
+@media (max-width: 640px) {
+  .st-num { width: 30px; font-size: 24px; }
+  .st-trend { margin-left: 0; }
+}

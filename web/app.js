@@ -134,6 +134,29 @@
     }).catch(function () { return {}; });
   }
 
+  // Strategy overlay (the house trading rules + the daily scan) is optional too: same
+  // fetch → inline-script → null fallback chain. When it is missing the STRATEGY block
+  // simply renders nothing. data/strategy.json is produced by pipeline/strategy.py.
+  var ST = null;         // strategy bundle (null until loaded; null if unavailable)
+  var stP = null;
+  function strategyReady() {
+    return stP || (stP = loadStrategy().then(function (s) { ST = s; return s; }));
+  }
+  function loadStrategy() {
+    if (window.__CAPITOL_STRATEGY__) return Promise.resolve(window.__CAPITOL_STRATEGY__);
+    var viaFetch = location.protocol === 'file:'
+      ? Promise.reject(new Error('file://'))
+      : fetch('data/strategy.json', { cache: 'no-cache' }).then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        });
+    return viaFetch.catch(function () {
+      return loadScript('data/strategy.js').then(function () { return window.__CAPITOL_STRATEGY__; });
+    }).then(function (s) {
+      return s && typeof s === 'object' && Array.isArray(s.rules) ? s : null;
+    }).catch(function () { return null; });
+  }
+
   function index(d) {
     D = d;
     D.trades = D.trades || []; D.clusters = D.clusters || []; D.prices = D.prices || {}; D.news = D.news || {};
@@ -492,6 +515,66 @@
   function sum(list, k) { return list.reduce(function (a, t) { return a + (t[k] || 0); }, 0); }
 
   // ------------------------------------------------------------------ dashboard
+  // ---- Strategy overlay: the house trading rules + the daily scan (data/strategy.json).
+  // Renders nothing at all when the file is missing, so the app is unchanged without it.
+  var ST_OPPS = 8;
+  function trendWord(t) { return t === 'up' ? 'UPTREND' : t === 'down' ? 'DOWNTREND' : 'RANGE'; }
+  function strategySection() {
+    if (!ST) return '';
+    var rules = ST.rules || [];
+    var opps = (ST.opportunities || []).slice(0, ST_OPPS);
+    var gen = String(ST.generated || '').slice(0, 10);
+    var topoi = ST.thresholds && ST.thresholds.top_oi_per_side ? ST.thresholds.top_oi_per_side : 25;
+    return '<section class="block" id="strategy" aria-labelledby="st-h">' +
+      '<div class="sec-head"><div><div class="micro st-mark">◆ Strategy</div>' +
+        '<h2 id="st-h" class="display">Our current trading strategy.</h2></div>' +
+        '<p>Five house rules, applied by a daily scan across every tracked name — trend read from the ' +
+        'major swing level method, then the cheapest trend-aligned contracts inside the top ' + topoi + ' OI.</p></div>' +
+      '<ol class="st-rules">' + rules.map(stRule).join('') + '</ol>' +
+      '<div class="st-opps-head"><h3 class="display">Today’s scan</h3>' +
+        '<span class="micro">' + (gen ? 'Scanned ' + esc(md(gen)) + ' · ' : '') +
+        plural((ST.counts && ST.counts.candidates) || 0, 'candidate') + '</span></div>' +
+      (opps.length ? '<ol class="st-opps">' + opps.map(stOpp).join('') + '</ol>'
+        : '<p class="empty">No trend-aligned contracts cleared the filters today.</p>') +
+      '<p class="st-caveat">Scan method: ' + esc(ST.method || '') + '. Informational only — not investment advice.</p>' +
+    '</section>';
+  }
+  function stRule(r) {
+    return '<li class="st-rule"><span class="st-num display" aria-hidden="true">' + esc(r.n) + '</span>' +
+      '<div class="st-rule-txt"><b>' + esc(r.title) + '</b><span>' + esc(r.text) + '</span></div></li>';
+  }
+  function stOpp(c) {
+    var kind = c.type === 'put' ? 'put' : 'call';
+    var ink = kind === 'call' ? 'buy-ink' : 'sell-ink';
+    var spot = fnum(c.underlying) ? '$' + (+c.underlying).toFixed(2) : '—';
+    var pr = fnum(c.price) ? '$' + (+c.price).toFixed(2) : '—';
+    var url = safeUrl(c.tv_url);
+    var label = c.ticker + ' ' + optStrike(c.strike) + ' ' + kind + ' expiring ' + mdy(c.expiry);
+    return '<li class="st-opp ' + kind + '">' +
+      '<span class="sr-only">' + esc(label) + ', ' + esc(trendWord(c.trend)) + ', open interest ' +
+        Math.round(c.oi).toLocaleString('en-US') + ', volume ' + Math.round(c.volume).toLocaleString('en-US') +
+        ', price ' + pr + '.</span>' +
+      '<div class="st-l1">' +
+        '<span class="st-tag micro ' + ink + '">' + (kind === 'call' ? '▲ CALL' : '▼ PUT') + '</span>' +
+        '<a class="st-tk display" href="#/stock/' + encodeURIComponent(c.ticker) + '" aria-label="' + esc('Open ' + c.ticker + ' page') + '">' + esc(c.ticker) + '</a>' +
+        '<span class="st-con micro" aria-hidden="true">' + esc(optStrike(c.strike)) + ' · ' + esc(optDate(c.expiry)) + ' · ' + Math.round(c.dte) + 'd</span>' +
+        '<span class="st-trend micro ' + (c.trend === 'up' ? 'buy-ink' : 'sell-ink') + '" aria-hidden="true">' + trendWord(c.trend) + '</span>' +
+      '</div>' +
+      '<div class="st-l2">' +
+        '<span class="st-px"><span class="opt-lab">Mid</span><b>' + pr + '</b></span>' +
+        '<span class="st-px"><span class="opt-lab">Spot</span><b>' + spot + '</b></span>' +
+        '<span class="st-px"><span class="opt-lab">OI</span><b>' + esc(optCount(c.oi)) + '</b></span>' +
+        '<span class="st-px"><span class="opt-lab">Vol</span><b>' + esc(optCount(c.volume)) + '</b></span>' +
+        (url ? '<a class="opt-link" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc('Open ' + label + ' on TradingView, new tab') + '">TradingView ↗</a>' : '') +
+      '</div>' +
+      '<div class="st-why micro">' + esc(c.why || '') + '</div>' +
+    '</li>';
+  }
+  function renderStrategy() {
+    var slot = $('#strategy-slot'); if (!slot) return;
+    slot.innerHTML = strategySection();
+  }
+
   function renderDashboard() {
     destroyChart();
     var T = D.trades;
@@ -519,6 +602,10 @@
           '<div class="stat" role="listitem"><div class="micro">$100K+ trades</div><div class="display">' + large.length + '</div><div class="sub">' + vlarge.length + ' at $500K+</div></div>' +
         '</div>' +
       '</section>' +
+
+      // STRATEGY overlay — the house trading rules + today's scan. Filled by renderStrategy()
+      // once data/strategy.json lands; empty (no block) when it is unavailable.
+      '<div id="strategy-slot"></div>' +
 
       '<section class="block" id="signals" aria-labelledby="sig-h">' +
         '<div class="sec-head"><div><div class="micro">◆ Cluster signals</div><h2 id="sig-h" class="display">Same stock. Many hands.</h2></div>' +
@@ -572,6 +659,7 @@
     fillOIIndex();
     renderLookup();
     renderFeed();
+    renderStrategy();
     document.title = 'Capitol Flow — Politician Trade Signals';
   }
 
@@ -2375,6 +2463,9 @@
     });
     optionsReady().then(function () {
       try { fillOptions(); } catch (e) { /* never break the page */ }
+    });
+    strategyReady().then(function () {
+      try { renderStrategy(); } catch (e) { /* never break the page */ }
     });
     loadData().then(function (d) {
       index(d);

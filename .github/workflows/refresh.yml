@@ -149,7 +149,7 @@ jobs:
       # from it.
       - name: Options read (Yahoo chains)
         continue-on-error: true
-        run: python pipeline/fetch_options.py --max 60 --top 10 --out data/options.json
+        run: python pipeline/fetch_options.py --max 60 --top 25 --out data/options.json
 
       # Broad open-interest index for the "look up a ticker" section.  ~520 names at
       # ~2.5 s each ≈ 22 min, so it is NON-FATAL: a Yahoo rate-limit must never take the
@@ -171,6 +171,14 @@ jobs:
       - name: Fundamentals (SEC EDGAR)
         continue-on-error: true
         run: python pipeline/fundamentals.py --max 120 --out data/fundamentals.json
+
+      # ---- Strategy scan: the house trading rules (TRADING_RULES.md) -------------
+      # Reads app_data.json (prices + top-OI board) and options.json, reads the trend with
+      # the major swing level method, and ranks underpriced trend-aligned contracts inside
+      # the top 25 OI. Powers the app's STRATEGY section and the daily Discord nudge.
+      - name: Strategy scan (swing levels + underpriced options)
+        continue-on-error: true
+        run: python pipeline/strategy.py --app data/app_data.json --options data/options.json --out data/strategy.json
 
       # ---- Publish the data into the static site --------------------------------
       - name: Copy data into the site (JSON + inline fallbacks)
@@ -195,13 +203,18 @@ jobs:
             cp data/oi_history_summary.json web/data/oi_history_summary.json
             { printf 'window.__CAPITOL_OI_HISTORY__ = '; cat data/oi_history_summary.json; printf ';\n'; } > web/data/oi_history_summary.js
           fi
+          # strategy overlay: the house rules + the daily scan (STRATEGY section)
+          if [ -f data/strategy.json ]; then
+            cp data/strategy.json web/data/strategy.json
+            { printf 'window.__CAPITOL_STRATEGY__ = '; cat data/strategy.json; printf ';\n'; } > web/data/strategy.js
+          fi
 
       - name: Commit refreshed data
         id: commit
         run: |
           git config user.name  "capitol-flow-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add data/house_trades.json data/senate_trades.json data/politicians.json data/committees.json data/profiles.json data/app_data.json data/fundamentals.json data/options.json data/oi_lookup.json data/companies.json || true
+          git add data/house_trades.json data/senate_trades.json data/politicians.json data/committees.json data/profiles.json data/app_data.json data/fundamentals.json data/options.json data/oi_lookup.json data/companies.json data/strategy.json || true
           git add data/oi_history/ data/oi_history_summary.json || true
           git add web/data/ || true
           if git diff --quiet --cached; then

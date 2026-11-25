@@ -65,7 +65,7 @@
     oiSort: 'size',
     oiAll: false,
     topAll: false,       // contract leaderboard: top 10 per side (false) or all 100 (true)
-    oix: { q: '', sort: 'total', mode: 't', all: false }, // OI history index: filter, sort, sparkline series, show all
+    oix: { q: '', sort: 'move', all: false }, // put/call ratio index: filter, sort (move|high|low|ticker), show all
     lk: { q: '', tk: '', nudge: false }, // ticker lookup: input text, looked-up ticker, empty-submit nudge
     showAllSignals: false,
     tf: 'daily',
@@ -1504,19 +1504,37 @@
     if (n >= 1e4) return (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'K';
     return Math.round(n).toLocaleString('en-US');
   }
-  // Percent change as a number, or null when the start is zero (no divide-by-zero).
-  function oihChg(a, b) { return a > 0 && fnum(b) ? (b - a) / a * 100 : null; }
-  function oihPctTxt(x) { return (x >= 0 ? '+' : '−') + Math.abs(x).toFixed(1) + '%'; }
-  // Percent change, or '' when the start is zero (no "Infinity%").
-  function oihPct(a, b) {
-    var x = oihChg(a, b);
-    return x == null ? '' : ' (' + oihPctTxt(x) + ')';
+
+  // ---- put/call ratio: put OI / call OI, counted in CONTRACTS (not dollars).
+  // Both history views (stock page and dashboard index) chart this one number. A day with
+  // zero call OI has no ratio and is skipped everywhere -- never Infinity or NaN.
+  function pcRows(tk) {
+    return oihRows(tk).filter(function (r) { return r.c > 0 && fnum(r.p / r.c); }).map(function (r) {
+      return { d: r.d, spot: r.spot, c: r.c, p: r.p, t: r.t, n: r.n, r: r.p / r.c };
+    });
   }
-  // The change figures must compare LIKE WITH LIKE.  Total OI jumps when the set of
-  // tracked expirations changes, so measuring from a 6-expiry day to a 10-expiry day
-  // reported a +144% "increase" that was purely a change in what is counted.  Walk back
-  // from the newest reading while the expiry count holds steady and return the oldest row
-  // of that stretch (the newest row itself when no earlier reading matches).
+  function pcTxt(v) { return fnum(v) ? v.toFixed(2) : '—'; }
+  function pcRound(v) { return Math.round(v * 100) / 100; }
+  // Change in ratio points, signed, two decimals; a move that rounds to zero reads ±0.00.
+  function pcPtsTxt(d) {
+    var x = pcRound(d);
+    return x === 0 ? '±0.00' : (x > 0 ? '+' : '−') + Math.abs(x).toFixed(2);
+  }
+  // Describes the book (counts of open contracts), never a mood or a direction.
+  function pcBook(v) {
+    var x = pcRound(v);
+    return x > 1 ? 'more put contracts open than call contracts'
+      : x < 1 ? 'fewer put contracts open than call contracts'
+      : 'about as many put contracts open as call contracts';
+  }
+  function pcMove(a, b) {
+    var x = pcRound(b - a);
+    return x === 0 ? 'held at ' + pcTxt(b) : (x > 0 ? 'rose' : 'fell') + ' from ' + pcTxt(a) + ' to ' + pcTxt(b);
+  }
+  // The change figures must compare LIKE WITH LIKE.  Totals jump when the set of tracked
+  // expirations changes, and the ratio can shift too (less, but not zero).  Walk back from
+  // the newest reading while the expiry count holds steady and return the oldest row of
+  // that stretch (the newest row itself when no earlier reading matches).
   function oihCmp(rows) {
     var last = rows[rows.length - 1], cmp = last;
     for (var ci = rows.length - 2; ci >= 0; ci--) {
@@ -1525,20 +1543,29 @@
     }
     return cmp;
   }
-  // SVG polyline points for rows[k], x spaced by calendar day across [x0 .. x0+span].
-  function oihPts(rows, k, x0, span, w, h, top) {
+  // Y scale from the data, padded 0.05 each side. withOne stretches it to include 1.00 so
+  // the reference line is always on the chart. hi - lo >= 0.1, so no divide-by-zero.
+  function pcScale(rows, withOne) {
+    var lo = withOne ? 1 : Infinity, hi = withOne ? 1 : -Infinity;
+    rows.forEach(function (r) { lo = Math.min(lo, r.r); hi = Math.max(hi, r.r); });
+    return { lo: Math.max(0, lo - 0.05), hi: hi + 0.05 };
+  }
+  function pcY(v, sc, h) { return h - (v - sc.lo) / (sc.hi - sc.lo) * h; }
+  // SVG polyline points for the ratio, x spaced by calendar day across [x0 .. x0+span].
+  function pcPts(rows, x0, span, w, h, sc) {
     return rows.map(function (r) {
-      return (days(x0, r.d) / span * w).toFixed(1) + ',' + (h - (r[k] / top) * h).toFixed(1);
+      return (days(x0, r.d) / span * w).toFixed(1) + ',' + pcY(r.r, sc, h).toFixed(1);
     }).join(' ');
   }
   // One caveat, shared by the stock page and the dashboard index.
   function oihCaveat() {
-    return '<p class="bm-caveat oih-caveat"><b>Open interest totals jump when the set of expirations we track changes — that is a change in what is counted, not necessarily a change in positioning.</b> ' +
-      'Each day’s total is summed over the expirations tracked that day, so a step up or down may just mean an expiration was added or aged out. ' +
-      'Open interest also has no direction: it counts contracts still open, not whether they were bought or sold.</p>';
+    return '<p class="bm-caveat oih-caveat"><b>The ratio describes the open contracts, not a view on the stock.</b> ' +
+      'Open interest has no direction: it counts contracts still open, not whether they were bought or written. ' +
+      'More put contracts than call contracts can be holders buying protection just as well as sellers writing puts for income. ' +
+      'Each day’s totals are summed over the expirations tracked that day. Because the ratio divides one total by the other, ' +
+      'adding or dropping an expiration moves both sides, so it shifts the ratio less than it shifts the raw totals — ' +
+      'but it can still shift it, since the expiration that came in or aged out can hold a different mix of puts and calls.</p>';
   }
-  function oihPC(r) { return r.c > 0 ? r.p / r.c : null; }
-  function oihPCTxt(r) { var v = oihPC(r); return v == null ? '—' : v.toFixed(2); }
 
   // Fills #oih-slot for the ticker it was rendered for. First call starts the lazy load and
   // re-runs itself when the data lands (if the user is still on that ticker's page).
@@ -1556,72 +1583,65 @@
     var html = '';
     try { html = oiHistoryBlock(tk); } catch (e) { html = ''; }
     slot.innerHTML = html;
-    if (html) { try { wireOIHistory(slot, oihRows(tk)); } catch (e) { /* hover is optional */ } }
+    if (html) { try { wireOIHistory(slot, pcRows(tk)); } catch (e) { /* hover is optional */ } }
   }
 
   var OIH_W = 600, OIH_H = 160;
   function oiHistoryBlock(tk) {
-    var rows = oihRows(tk);
-    if (rows.length < 2) return '';
+    var rows = pcRows(tk);
+    if (rows.length < 2) return '';            // one reading: no chart, no change figure
     var first = rows[0], last = rows[rows.length - 1];
-    // Like-with-like window: see oihCmp().
-    var cmp = oihCmp(rows);
-    var cmpNote = cmp !== rows[0];
+    // Like-with-like window: see oihCmp(). has = there is an earlier comparable reading.
+    var cmp = oihCmp(rows), has = cmp !== last, ci = rows.indexOf(cmp);
     var span = Math.max(1, days(first.d, last.d));
-    var max = rows.reduce(function (m, r) { return Math.max(m, r.c, r.p); }, 0);
-    var top = max > 0 ? max * 1.08 : 1;
-    var line = function (k, cls) {
-      return '<polyline class="oih-ln ' + cls + '" vector-effect="non-scaling-stroke" points="' +
-        oihPts(rows, k, first.d, span, OIH_W, OIH_H, top) + '"/>';
-    };
-    var grid = [0.25, 0.5, 0.75, 1].map(function (f) {
-      var y = (OIH_H - f * max / top * OIH_H).toFixed(1);
-      return '<line class="oih-grid" vector-effect="non-scaling-stroke" x1="0" x2="' + OIH_W + '" y1="' + y + '" y2="' + y + '"/>';
-    }).join('');
-    var nDays = rows.length;
-    var range = md(first.d) + ' to ' + md(last.d);
+    var sc = pcScale(rows, true);
+    var y1 = pcY(1, sc, OIH_H).toFixed(1);
+    var y1Pct = (pcY(1, sc, 1) * 100).toFixed(2) + '%';
 
-    var table = '<table><thead><tr><th scope="col">Date</th><th scope="col">Call OI</th><th scope="col">Put OI</th>' +
-      '<th scope="col">Put/call</th><th scope="col">Price at pull*</th></tr></thead><tbody>' +
+    var table = '<table><thead><tr><th scope="col">Date</th><th scope="col">Put/call</th><th scope="col">Call OI</th>' +
+      '<th scope="col">Put OI</th><th scope="col">Price at pull*</th></tr></thead><tbody>' +
       rows.slice().reverse().map(function (r) {
-        return '<tr><td>' + esc(mdy(r.d)) + '</td><td>' + Math.round(r.c).toLocaleString('en-US') + '</td><td>' +
-          Math.round(r.p).toLocaleString('en-US') + '</td><td>' + oihPCTxt(r) + '</td><td>' +
-          (r.spot == null ? '—' : '$' + px(r.spot)) + '</td></tr>';
+        return '<tr><td>' + esc(mdy(r.d)) + '</td><td><b>' + pcTxt(r.r) + '</b></td><td>' + Math.round(r.c).toLocaleString('en-US') + '</td><td>' +
+          Math.round(r.p).toLocaleString('en-US') + '</td><td>' + (r.spot == null ? '—' : '$' + px(r.spot)) + '</td></tr>';
       }).join('') + '</tbody></table>' +
       '<p class="opt-foot">*Stock price when the data was pulled, around 9:35 a.m. ET — not the closing price.</p>';
 
+    var d = has ? last.r - cmp.r : null;
+    var read = has
+      ? '<p class="oih-delta"><span class="oih-k">Put/call ratio</span> ' + pcTxt(cmp.r) + ' to ' + pcTxt(last.r) +
+          ' <b>(' + pcPtsTxt(d) + ')</b> · ' + esc(md(cmp.d) + ' to ' + md(last.d)) + ', ' + plural(rows.length - ci, 'reading') + '</p>' +
+        '<p class="oih-delta oih-book">The ratio ' + pcMove(cmp.r, last.r) + '. At ' + pcTxt(last.r) + ' there are ' + pcBook(last.r) + '.</p>' +
+        (ci > 0 ? '<p class="oih-delta oih-cmpnote">Change is measured over <b>' + esc(md(cmp.d)) + ' to ' + esc(md(last.d)) +
+          '</b> only — the stretch where the same number of expirations was tracked, so it compares like with like.</p>' : '')
+      : '<p class="oih-delta"><span class="oih-k">Put/call ratio</span> ' + pcTxt(last.r) + ' on ' + esc(md(last.d)) + '</p>' +
+        '<p class="oih-delta oih-book">At ' + pcTxt(last.r) + ' there are ' + pcBook(last.r) + '.</p>' +
+        '<p class="oih-delta oih-cmpnote">No change is shown: the number of expirations tracked changed at the latest reading, so there is no earlier reading to compare like with like.</p>';
+
     return '<section class="block oih" aria-labelledby="oih-h">' +
-      '<div class="micro">Open interest over time</div><h3 id="oih-h" class="display">The history</h3>' +
-      '<p class="note">Total ' + esc(tk) + ' call and put open interest, one reading per day we pulled it.</p>' +
+      '<div class="micro">Put/call ratio over time</div><h3 id="oih-h" class="display">The history</h3>' +
+      '<p class="note">' + esc(tk) + ' put open interest divided by call open interest, counted in contracts, one reading per day we pulled it. ' +
+        'Above 1.00 means more put contracts open than call contracts.</p>' +
       '<div class="oih-legend micro" aria-hidden="true">' +
-        '<span><i class="oih-sw call"></i>Calls <b>' + esc(oihCount(last.c)) + '</b></span>' +
-        '<span><i class="oih-sw put"></i>Puts <b>' + esc(oihCount(last.p)) + '</b></span>' +
+        '<span><i class="oih-sw pc"></i>Put/call ratio <b>' + pcTxt(last.r) + '</b></span>' +
       '</div>' +
       '<div class="oih-plot" aria-hidden="true">' +
-        '<span class="oih-y oih-ymax" style="top:' + ((1 - max / top) * 100).toFixed(2) + '%">' + esc(oihCount(max)) + '</span>' +
-        '<span class="oih-y oih-y0">0</span>' +
+        '<span class="oih-y oih-ymax" style="top:0%">' + pcTxt(sc.hi) + '</span>' +
+        '<span class="oih-y oih-y0">' + pcTxt(sc.lo) + '</span>' +
+        '<span class="oih-reflab" style="top:' + y1Pct + '">1.00 Balanced</span>' +
         '<svg class="oih-svg" viewBox="0 0 ' + OIH_W + ' ' + OIH_H + '" preserveAspectRatio="none" focusable="false">' +
-          grid +
           '<line class="oih-base" vector-effect="non-scaling-stroke" x1="0" x2="' + OIH_W + '" y1="' + OIH_H + '" y2="' + OIH_H + '"/>' +
-          line('c', 'call') + line('p', 'put') +
+          '<line class="oih-ref" vector-effect="non-scaling-stroke" x1="0" x2="' + OIH_W + '" y1="' + y1 + '" y2="' + y1 + '"/>' +
+          '<polyline class="oih-ln pc" vector-effect="non-scaling-stroke" points="' + pcPts(rows, first.d, span, OIH_W, OIH_H, sc) + '"/>' +
         '</svg>' +
-        '<div class="oih-hover" hidden><i class="oih-rule"></i><i class="oih-dot call"></i><i class="oih-dot put"></i>' +
+        '<div class="oih-hover" hidden><i class="oih-rule"></i><i class="oih-dot pc"></i>' +
           '<div class="oih-tip"></div></div>' +
       '</div>' +
       '<div class="oih-x micro" aria-hidden="true"><span>' + esc(md(first.d)) + '</span><span>' + esc(md(last.d)) + '</span></div>' +
-      '<span class="sr-only">Line chart of ' + esc(tk) + ' open interest from ' + esc(mdy(first.d)) + ' to ' + esc(mdy(last.d)) +
-        '. The full readings are in the table below.</span>' +
-      // The change figures never stand alone: they share one box with the expiry-set caveat.
-      '<div class="oih-read">' +
-        '<p class="oih-delta"><span class="oih-k">Calls</span> ' + esc(oihCount(cmp.c)) + ' to ' + esc(oihCount(last.c)) + oihPct(cmp.c, last.c) +
-          ' · <span class="oih-k">Puts</span> ' + esc(oihCount(cmp.p)) + ' to ' + esc(oihCount(last.p)) + oihPct(cmp.p, last.p) +
-          ' · ' + esc(cmpNote ? md(cmp.d) + ' to ' + md(last.d) : range) + ', ' + plural(cmpNote ? rows.slice(rows.indexOf(cmp)).length : nDays, 'reading') + '</p>' +
-        '<p class="oih-delta"><span class="oih-k">Put/call ratio</span> ' + oihPCTxt(last) + ' now, ' + oihPCTxt(cmp) + ' on ' + esc(md(cmp.d)) + '</p>' +
-        (cmpNote ? '<p class="oih-delta oih-cmpnote">Change is measured over <b>' + esc(md(cmp.d)) + ' to ' + esc(md(last.d)) +
-          '</b> only — the stretch where the same number of expirations was tracked, so it compares like with like.</p>' : '') +
-        oihCaveat() +
-      '</div>' +
-      '<details class="table"><summary>VIEW OPEN INTEREST TABLE</summary><div class="scroll">' + table + '</div></details>' +
+      '<span class="sr-only">Line chart of the ' + esc(tk) + ' put/call ratio from ' + esc(mdy(first.d)) + ' to ' + esc(mdy(last.d)) +
+        ', with a reference line at 1.00. The full readings are in the table below.</span>' +
+      // The change figure never stands alone: it shares one box with the caveat.
+      '<div class="oih-read">' + read + oihCaveat() + '</div>' +
+      '<details class="table"><summary>VIEW PUT/CALL TABLE</summary><div class="scroll">' + table + '</div></details>' +
     '</section>';
   }
 
@@ -1630,22 +1650,19 @@
     var plot = slot.querySelector('.oih-plot'), hov = slot.querySelector('.oih-hover');
     if (!plot || !hov || rows.length < 2) return;
     var first = rows[0].d, span = Math.max(1, days(first, rows[rows.length - 1].d));
-    var max = rows.reduce(function (m, r) { return Math.max(m, r.c, r.p); }, 0);
-    var top = max > 0 ? max * 1.08 : 1;
+    var sc = pcScale(rows, true);
     var xs = rows.map(function (r) { return days(first, r.d) / span; });
-    var rule = hov.querySelector('.oih-rule'), dc = hov.querySelector('.oih-dot.call'),
-        dp = hov.querySelector('.oih-dot.put'), tip = hov.querySelector('.oih-tip');
+    var rule = hov.querySelector('.oih-rule'), dot = hov.querySelector('.oih-dot'), tip = hov.querySelector('.oih-tip');
     function show(e) {
       var b = plot.getBoundingClientRect();
       if (!b.width) return;
       var f = (e.clientX - b.left) / b.width, best = 0;
       for (var i = 1; i < xs.length; i++) if (Math.abs(xs[i] - f) < Math.abs(xs[best] - f)) best = i;
       var r = rows[best], left = (xs[best] * 100).toFixed(2) + '%';
-      rule.style.left = dc.style.left = dp.style.left = left;
-      dc.style.top = ((1 - r.c / top) * 100).toFixed(2) + '%';
-      dp.style.top = ((1 - r.p / top) * 100).toFixed(2) + '%';
-      tip.innerHTML = '<b>' + esc(mdy(r.d)) + '</b><span><i class="oih-sw call"></i>Calls ' + esc(oihCount(r.c)) + '</span>' +
-        '<span><i class="oih-sw put"></i>Puts ' + esc(oihCount(r.p)) + '</span><span>Put/call ' + oihPCTxt(r) + '</span>';
+      rule.style.left = dot.style.left = left;
+      dot.style.top = (pcY(r.r, sc, 1) * 100).toFixed(2) + '%';
+      tip.innerHTML = '<b>' + esc(mdy(r.d)) + '</b><span>Put/call <strong>' + pcTxt(r.r) + '</strong></span>' +
+        '<span>Calls ' + esc(oihCount(r.c)) + '</span><span>Puts ' + esc(oihCount(r.p)) + '</span>';
       tip.classList.toggle('flip', xs[best] > 0.55);
       tip.style.left = left;
       hov.hidden = false;
@@ -1655,78 +1672,72 @@
     plot.addEventListener('pointerleave', function () { hov.hidden = true; });
   }
 
-  // ------------------------------------------------------------------ OI history index (dashboard)
-  // Every ticker in oi_history_summary, one row each: sparkline, latest calls/puts/P/C,
-  // days pulled, and the change over the like-for-like window from oihCmp() — the same
-  // figure the stock page shows. No comparable window → no change figure at all.
+  // ------------------------------------------------------------------ put/call ratio index (dashboard)
+  // Every ticker in oi_history_summary, one row each: ratio sparkline, current ratio, days
+  // pulled, and the change in ratio points over the like-for-like window from oihCmp() --
+  // the same figure the stock page shows. No comparable window → no change figure at all.
   var OIX_TOP = 25, OIX_W = 90, OIX_H = 22;
-  var OIX_KEY = { t: 'total', c: 'call', p: 'put' };
   var oixCache = null;
   function oixData() {
     if (oixCache && oixCache.src === OIH) return oixCache.list;
     var list = Object.keys(OIH || {}).map(function (tk) {
-      var rows = oihRows(tk);
+      var rows = pcRows(tk);
       if (!rows.length) return null;
       var last = rows[rows.length - 1], cmp = oihCmp(rows);
       var has = cmp !== last;
-      return {
-        tk: tk, rows: rows, last: last, cmp: has ? cmp : null, ci: rows.indexOf(cmp),
-        chg: { t: has ? oihChg(cmp.t, last.t) : null, c: has ? oihChg(cmp.c, last.c) : null, p: has ? oihChg(cmp.p, last.p) : null }
-      };
+      return { tk: tk, rows: rows, last: last, cmp: has ? cmp : null, ci: rows.indexOf(cmp), chg: has ? last.r - cmp.r : null };
     }).filter(Boolean);
     oixCache = { src: OIH, list: list };
     return list;
   }
   function oixRows() {
-    var q = S.oix.q.trim().toUpperCase(), m = S.oix.mode;
+    var q = S.oix.q.trim().toUpperCase();
     var list = oixData().filter(function (x) { return !q || x.tk.toUpperCase().indexOf(q) !== -1; });
     var byTk = function (a, b) { return a.tk < b.tk ? -1 : a.tk > b.tk ? 1 : 0; };
     if (S.oix.sort === 'ticker') return list.sort(byTk);
-    if (S.oix.sort === 'change') {
-      // Comparable figure only; rows without one go last, never ranked as 0%.
-      return list.sort(function (a, b) {
-        var x = a.chg[m], y = b.chg[m];
-        if (x == null || y == null) return (x == null) - (y == null) || byTk(a, b);
-        return Math.abs(y) - Math.abs(x) || byTk(a, b);
-      });
-    }
-    return list.sort(function (a, b) { return b.last.t - a.last.t || byTk(a, b); });
+    if (S.oix.sort === 'high') return list.sort(function (a, b) { return b.last.r - a.last.r || byTk(a, b); });
+    if (S.oix.sort === 'low') return list.sort(function (a, b) { return a.last.r - b.last.r || byTk(a, b); });
+    // 'move' (default): biggest absolute ratio move. Rows without a comparable figure go
+    // last, never ranked as 0.
+    return list.sort(function (a, b) {
+      var x = a.chg, y = b.chg;
+      if (x == null || y == null) return (x == null) - (y == null) || byTk(a, b);
+      return Math.abs(y) - Math.abs(x) || byTk(a, b);
+    });
   }
-  function oixSpark(x, k) {
-    var rows = x.rows, cls = 'oix-ln ' + OIX_KEY[k];
-    var max = rows.reduce(function (mx, r) { return Math.max(mx, r[k]); }, 0);
-    var top = max > 0 ? max * 1.08 : 1;
-    var svg = '<svg class="oix-svg" width="' + OIX_W + '" height="' + OIX_H + '" viewBox="0 0 ' + OIX_W + ' ' + OIX_H + '" focusable="false" aria-hidden="true">';
-    if (rows.length < 2) {
-      return svg + '<circle class="oix-dot ' + OIX_KEY[k] + '" cx="' + (OIX_W - 2) + '" cy="' + (OIX_H - (rows[0][k] / top) * OIX_H).toFixed(1) + '" r="2"/></svg>';
-    }
+  function oixSpark(x) {
+    var rows = x.rows;
+    if (rows.length < 2) return '';            // one reading: no sparkline
+    var sc = pcScale(rows, false);
     var x0 = rows[0].d, span = Math.max(1, days(x0, x.last.d));
-    var pl = function (rs, c) { return '<polyline class="' + c + '" points="' + oihPts(rs, k, x0, span, OIX_W, OIX_H, top) + '"/>'; };
+    var pl = function (rs, c) { return '<polyline class="' + c + '" points="' + pcPts(rs, x0, span, OIX_W, OIX_H, sc) + '"/>'; };
+    var y1 = pcY(1, sc, OIX_H).toFixed(1);
+    // 1.00 reference (thin, dashed) only when it falls inside this stock's own range; the
+    // sparkline is scaled to the stock so small moves stay visible.
+    var ref = sc.lo <= 1 && sc.hi >= 1 ? '<line class="oix-ref" x1="0" x2="' + OIX_W + '" y1="' + y1 + '" y2="' + y1 + '"/>' : '';
     // Readings before the like-for-like window are drawn muted; the window itself in full ink.
-    return svg + '<line class="oix-base" x1="0" x2="' + OIX_W + '" y1="' + OIX_H + '" y2="' + OIX_H + '"/>' +
-      (x.cmp ? (x.ci > 0 ? pl(rows.slice(0, x.ci + 1), cls + ' pre') : '') + pl(rows.slice(x.ci), cls)
-             : pl(rows, cls + ' pre')) + '</svg>';
+    return '<svg class="oix-svg" width="' + OIX_W + '" height="' + OIX_H + '" viewBox="0 0 ' + OIX_W + ' ' + OIX_H + '" focusable="false" aria-hidden="true">' +
+      ref + (x.cmp ? (x.ci > 0 ? pl(rows.slice(0, x.ci + 1), 'oix-ln pc pre') : '') + pl(rows.slice(x.ci), 'oix-ln pc')
+                   : pl(rows, 'oix-ln pc pre')) + '</svg>';
   }
   function oixRow(x) {
-    var k = S.oix.mode, l = x.last, v = x.chg[k], n = x.rows.length;
+    var l = x.last, v = x.chg, n = x.rows.length;
     var win = !x.cmp ? '' : x.cmp.d.slice(0, 7) === l.d.slice(0, 7) ? md(x.cmp.d) + '–' + (+l.d.slice(8)) : md(x.cmp.d) + '–' + md(l.d);
     var nWin = x.cmp ? n - x.ci : 0;
-    var why = n < 2 ? 'One reading' : !x.cmp ? 'No like-for-like stretch' : 'No base to compare';
-    var what = k === 't' ? 'Total' : k === 'c' ? 'Call' : 'Put';
-    var label = x.tk + ': ' + oihCount(l.c) + ' call and ' + oihCount(l.p) + ' put open interest, put/call ' + oihPCTxt(l) +
-      ', ' + plural(n, 'day') + ' of history. ' +
-      (v != null ? what + ' open interest ' + (v >= 0 ? 'up ' : 'down ') + Math.abs(v).toFixed(1) + '% from ' + mdy(x.cmp.d) + ' to ' + mdy(l.d) +
+    var why = n < 2 ? 'One reading' : 'No like-for-like stretch';
+    var label = x.tk + ': put/call ratio ' + pcTxt(l.r) + ' on ' + mdy(l.d) + ', ' + pcBook(l.r) + '; ' +
+      oihCount(l.c) + ' call and ' + oihCount(l.p) + ' put contracts. ' + plural(n, 'day') + ' of history. ' +
+      (v != null ? 'The ratio ' + pcMove(x.cmp.r, l.r) + ', ' + pcPtsTxt(v) + ' points, from ' + mdy(x.cmp.d) + ' to ' + mdy(l.d) +
         ', ' + plural(nWin, 'reading') + ' with the same expirations tracked.' : why + ', so no change is shown.') +
       ' Open ' + x.tk + ' page.';
     return '<li class="oix-item"><a class="oix-row" href="#/stock/' + encodeURIComponent(x.tk) + '" aria-label="' + esc(label) + '">' +
       '<span class="oix-tk" aria-hidden="true">' + esc(x.tk) + '</span>' +
-      '<span class="oix-sp" aria-hidden="true">' + oixSpark(x, k) + '</span>' +
-      '<span class="oix-n oix-c" aria-hidden="true"><i class="oix-lab">Calls</i>' + esc(oihCount(l.c)) + '</span>' +
-      '<span class="oix-n oix-p" aria-hidden="true"><i class="oix-lab">Puts</i>' + esc(oihCount(l.p)) + '</span>' +
-      '<span class="oix-n oix-pc" aria-hidden="true"><i class="oix-lab">P/C</i>' + oihPCTxt(l) + '</span>' +
+      '<span class="oix-sp" aria-hidden="true">' + oixSpark(x) + '</span>' +
+      '<span class="oix-n oix-pc" aria-hidden="true"><i class="oix-lab">P/C now</i>' + pcTxt(l.r) + '</span>' +
       '<span class="oix-n oix-d" aria-hidden="true"><i class="oix-lab">Days</i>' + n + '</span>' +
       '<span class="oix-chg" aria-hidden="true">' +
-        (v != null ? '<b>' + oihPctTxt(v) + '</b><i class="oix-win">' + esc(win) + ' · ' + esc(plural(nWin, 'reading')) + '</i>'
+        (v != null ? '<b>' + pcPtsTxt(v) + '</b><i class="oix-win">From ' + pcTxt(x.cmp.r) + '</i>' +
+                     '<i class="oix-win">' + esc(win) + '<span class="oix-sep"> · </span><span class="oix-nr">' + esc(plural(nWin, 'reading')) + '</span></i>'
                    : '<i class="oix-none">' + why + '</i>') +
       '</span>' +
     '</a></li>';
@@ -1735,23 +1746,24 @@
     var list = oixData();
     if (!list.length) return '';
     var chip = function (v, t) { return '<button type="button" class="chip" data-action="oix-sort" data-v="' + v + '" aria-pressed="' + (S.oix.sort === v) + '">' + t + '</button>'; };
-    var seg = function (v, t) { return '<button type="button" data-action="oix-mode" data-v="' + v + '" aria-pressed="' + (S.oix.mode === v) + '">' + t + '</button>'; };
     return '<section class="block" id="oi-index" aria-labelledby="oix-h">' +
-      '<div class="sec-head"><div><div class="micro">Open interest history</div><h2 id="oix-h" class="display">Building or unwinding.</h2></div>' +
-      '<p>Every stock with a recorded open interest history — ' + list.length + ' of them — one reading per day we pulled it. Tap a row for its full history.</p></div>' +
+      '<div class="sec-head"><div><div class="micro">Put/call ratio history</div><h2 id="oix-h" class="display">Puts versus calls.</h2></div>' +
+      '<p>Put open interest divided by call open interest, counted in contracts, for every stock with a recorded history — ' + list.length + ' of them. ' +
+        'Above 1.00 means more put contracts open than call contracts. Tap a row for its full history.</p></div>' +
       '<div class="controls oix-controls">' +
         '<div class="search-wrap"><label class="sr-only" for="oix-q">Filter by ticker</label>' +
           '<input id="oix-q" class="search" type="search" placeholder="Filter ticker" autocomplete="off" value="' + esc(S.oix.q) + '"></div>' +
-        '<div class="oix-ctl" role="group" aria-label="Sort stocks by">' + chip('total', 'Total OI') + chip('change', 'Biggest change') + chip('ticker', 'Ticker') + '</div>' +
-        '<div class="seg" role="group" aria-label="Sparkline and change show">' + seg('t', 'Total') + seg('c', 'Calls') + seg('p', 'Puts') + '</div>' +
+        '<div class="oix-ctl" role="group" aria-label="Sort stocks by">' + chip('move', 'Biggest move') + chip('high', 'Highest P/C') +
+          chip('low', 'Lowest P/C') + chip('ticker', 'Ticker') + '</div>' +
       '</div>' +
       '<div class="micro result-count" id="oix-count" aria-live="polite"></div>' +
-      '<div class="oix-legend micro" aria-hidden="true"><span>Ticker</span><span class="oix-sp">Trend</span><span class="oix-n">Calls</span><span class="oix-n">Puts</span>' +
-        '<span class="oix-n">P/C</span><span class="oix-n">Days</span><span class="oix-chg">Change</span></div>' +
+      '<div class="oix-legend micro" aria-hidden="true"><span>Ticker</span><span class="oix-sp">Ratio trend</span>' +
+        '<span class="oix-n">P/C now</span><span class="oix-n">Days</span><span class="oix-chg">Change (pts)</span></div>' +
       '<ol class="oix-rows" id="oix-rows"></ol>' +
       '<div class="bm-more" id="oix-more"></div>' +
-      '<p class="bm-caveat"><b>Change is measured only over each stock’s latest stretch with the same number of expirations tracked</b> (dates and number of readings shown under it), the same figure as on the stock page; a stock with no such stretch shows no change. ' +
-        'In the trend line, that stretch is drawn bright and earlier readings grey. Calls are solid, puts dashed.</p>' +
+      '<p class="bm-caveat"><b>Change is the move in the ratio, in ratio points (0.84 to 0.96 is +0.12), measured only over each stock’s latest stretch with the same number of expirations tracked</b> ' +
+        '(starting ratio, dates and number of readings shown under it), the same figure as on the stock page. A stock with one reading, or with no such stretch, shows no change. ' +
+        'In the trend line, that stretch is drawn bright and earlier readings grey; the thin dashed line, where it fits, is 1.00.</p>' +
       oihCaveat() +
     '</section>';
   }
@@ -1762,7 +1774,6 @@
       : '<li class="empty">No ticker matches “' + esc(q) + '”.</li>';
     $('#oix-count').textContent = q ? rows.length + ' of ' + oixData().length + ' match' : '';
     document.querySelectorAll('[data-action="oix-sort"]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === S.oix.sort)); });
-    document.querySelectorAll('[data-action="oix-mode"]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === S.oix.mode)); });
     $('#oix-more').innerHTML = rows.length > OIX_TOP
       ? '<button type="button" class="btn-ghost" data-action="oix-all" aria-expanded="' + !!S.oix.all + '">' +
           (S.oix.all ? 'Show top ' + OIX_TOP : 'Show all ' + rows.length + ' stocks') + '</button>'
@@ -2323,10 +2334,9 @@
       var tb = $('#top-more button'); if (tb) tb.focus();
       if (!S.topAll) { var te = $('#top-oi'); if (te && te.getBoundingClientRect().top < 0) te.scrollIntoView(); }
     }
-    else if (act === 'oix-sort' || act === 'oix-mode') {
-      var ok = act === 'oix-sort' ? 'sort' : 'mode';
-      if (S.oix[ok] === a.dataset.v) return;
-      S.oix[ok] = a.dataset.v; renderOix();
+    else if (act === 'oix-sort') {
+      if (S.oix.sort === a.dataset.v) return;
+      S.oix.sort = a.dataset.v; renderOix();
     }
     else if (act === 'oix-all') {
       S.oix.all = !S.oix.all; renderOix();

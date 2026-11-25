@@ -705,17 +705,13 @@ section[id] { scroll-margin-top: 64px; }
 .d-cols.d-cols-opt > .oih-slot { grid-area: auto; }
 .oih-legend { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 4px 0 10px; }
 .oih-legend b { color: var(--ink); font-weight: 800; margin-left: 4px; font-variant-numeric: tabular-nums; }
-/* Swatch carries identity: calls solid, puts dashed (secondary encoding, not colour alone). */
-.oih-sw { display: inline-block; width: 18px; height: 0; border-top: 2px solid var(--buy); vertical-align: middle; margin-right: 6px; }
-.oih-sw.put { border-top: 2px dashed var(--sell); }
+.oih-sw { display: inline-block; width: 18px; height: 0; vertical-align: middle; margin-right: 6px; }
 .oih-plot { position: relative; height: 160px; border-left: 1px solid var(--line); touch-action: pan-y; }
 @media (max-width: 480px) { .oih-plot { height: 128px; } }
 .oih-svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .oih-grid { stroke: var(--line); stroke-width: 1; }
 .oih-base { stroke: var(--line-2); stroke-width: 1; }
 .oih-ln { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
-.oih-ln.call { stroke: var(--buy); }
-.oih-ln.put { stroke: var(--sell); stroke-dasharray: 6 4; }
 .oih-y { position: absolute; left: 6px; font-size: 10px; font-weight: 700; letter-spacing: .08em; color: var(--muted); font-variant-numeric: tabular-nums; pointer-events: none; }
 .oih-ymax { transform: translateY(-100%); padding-bottom: 2px; }
 .oih-y0 { bottom: 4px; }
@@ -724,8 +720,6 @@ section[id] { scroll-margin-top: 64px; }
 .oih-hover[hidden] { display: none; }
 .oih-rule { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--ink-2); transform: translateX(-.5px); }
 .oih-dot { position: absolute; width: 8px; height: 8px; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 0 2px var(--bg); }
-.oih-dot.call { background: var(--buy); }
-.oih-dot.put { background: var(--sell); }
 .oih-tip { position: absolute; top: 4px; margin-left: 10px; display: flex; flex-direction: column; gap: 3px; padding: 8px 10px;
   background: var(--card-2); border: 1px solid var(--line-2); border-radius: var(--radius); font-size: 12px; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .oih-tip.flip { margin-left: 0; transform: translateX(calc(-100% - 10px)); }
@@ -738,14 +732,14 @@ section[id] { scroll-margin-top: 64px; }
 .oih-cmpnote b { color: var(--ink); }
 
 /* ---------- dashboard: open interest history index (#oi-index, from oi_history_summary) ---------- */
-/* One compact row per ticker. Calls solid green, puts dashed orange, total solid white —
-   line style carries identity as well as colour. Readings before the like-for-like window are grey. */
+/* One compact row per ticker: put/call ratio sparkline (solid), 1.00 reference (thin dashed)
+   where it fits. Readings before the like-for-like window are grey. */
 .oix-slot:empty { display: none; }
 .oix-ctl { display: flex; flex-wrap: wrap; gap: 8px; }
 .oix-legend, .oix-row {
   display: grid; align-items: center; gap: 4px 16px;
-  grid-template-columns: 76px 90px 72px 72px 52px 44px minmax(150px, 180px);
-  grid-template-areas: "tk sp c p pc d chg"; justify-content: space-between;
+  grid-template-columns: 76px 90px 72px 44px minmax(150px, 180px);
+  grid-template-areas: "tk sp pc d chg"; justify-content: space-between;
 }
 .oix-legend { padding: 0 14px 8px; font-size: 10px; }
 .oix-legend .oix-n, .oix-legend .oix-chg { text-align: right; font: inherit; letter-spacing: inherit; color: inherit; }
@@ -764,15 +758,9 @@ section[id] { scroll-margin-top: 64px; }
 .oix-svg { display: block; width: 90px; height: 22px; overflow: visible; }
 .oix-base { stroke: var(--line-2); stroke-width: 1; }
 .oix-ln { fill: none; stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
-.oix-ln.total { stroke: var(--ink); }
-.oix-ln.call { stroke: var(--buy); }
-.oix-ln.put { stroke: var(--sell); stroke-dasharray: 3 2; }
 .oix-ln.pre { stroke: var(--line-2); }
-.oix-dot { fill: var(--ink); }
-.oix-dot.call { fill: var(--buy); }
-.oix-dot.put { fill: var(--sell); }
 .oix-n { font-size: 13px; font-weight: 700; color: var(--ink-2); text-align: right; }
-.oix-c { grid-area: c; } .oix-p { grid-area: p; } .oix-pc { grid-area: pc; } .oix-d { grid-area: d; }
+.oix-pc { grid-area: pc; } .oix-d { grid-area: d; }
 .oix-lab { display: none; font-style: normal; font-family: var(--body); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
 .oix-chg { grid-area: chg; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; min-width: 0; text-align: right; }
 .oix-chg b { font-size: 15px; font-weight: 800; color: var(--ink); }
@@ -780,14 +768,37 @@ section[id] { scroll-margin-top: 64px; }
 .oix-none { white-space: normal; }
 .oix-rows .empty { list-style: none; }
 @media (max-width: 640px) {
-  /* phone: ticker / trend / change on top, the four figures labelled underneath */
+  /* phone: ticker / trend / change on top, ratio and days labelled underneath; the change
+     column spans both lines so its window text has room */
   .oix-legend { display: none; }
   .oix-row {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 90px minmax(0, 1.3fr); gap: 6px 10px; padding: 10px 12px;
-    grid-template-areas: "tk tk sp chg" "c p pc d"; justify-content: stretch;
+    grid-template-columns: minmax(0, 1fr) 90px minmax(0, 1.2fr); gap: 6px 10px; padding: 10px 12px;
+    grid-template-areas: "tk sp chg" "pc d chg"; justify-content: stretch;
   }
   .oix-n { display: flex; flex-direction: column; gap: 2px; text-align: left; font-size: 12px; }
-  .oix-d { align-items: flex-end; text-align: right; }
   .oix-lab { display: block; margin: 0; font-size: 9px; }
   .oix-win { white-space: normal; }
+}
+
+/* ---------- put/call ratio history (#oih-slot stock page, #oi-index dashboard) ---------- */
+/* One series: the ratio, a heavy solid white line. The 1.00 reference is thin and dashed in
+   grey, so the two differ by weight AND dash, not by colour alone. No buy/sell colours: the
+   ratio has no direction. */
+.oih-ln.pc { stroke: var(--ink); stroke-width: 2.5; }
+.oih-ref { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 5 5; }
+.oih-sw.pc { border-top: 3px solid var(--ink); }
+.oih-dot.pc { background: var(--ink); }
+.oih-reflab { position: absolute; right: 4px; transform: translateY(-100%); padding-bottom: 2px; pointer-events: none;
+  font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; }
+.oih-tip strong { font-weight: 800; }
+.oih-book { font-size: 13px; color: var(--ink-2); }
+.oih-delta b { font-weight: 800; }
+.oix-ln.pc { stroke: var(--ink); stroke-width: 1.75; }
+.oix-ln.pc.pre { stroke: var(--line-2); }
+.oix-ref { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 3; }
+.oix-pc { color: var(--ink); font-weight: 800; }
+@media (max-width: 640px) {
+  .oix-chg { align-self: start; }
+  .oix-sep { display: none; }
+  .oix-nr { display: block; }
 }

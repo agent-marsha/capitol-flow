@@ -71,6 +71,12 @@
 "sic": "2836",
 "industry": "Biological Products, (No Diagnostic Substances)"
 },
+"AMP": {
+"name": "AMERIPRISE FINANCIAL INC",
+"sector": "Financial Services",
+"sic": "6282",
+"industry": "Investment Advice"
+},
 "AMZN": {
 "name": "AMAZON COM INC",
 "sector": "Consumer Cyclical",
@@ -113,35 +119,11 @@
 "sic": "3559",
 "industry": "Special Industry Machinery, NEC"
 },
-"ATRC": {
-"name": "AtriCure, Inc.",
-"sector": "Healthcare",
-"sic": "3841",
-"industry": "Surgical & Medical Instruments & Apparatus"
-},
 "AVGO": {
 "name": "Broadcom Inc.",
 "sector": "Technology",
 "sic": "3674",
 "industry": "Semiconductors & Related Devices"
-},
-"AZN": {
-"name": "ASTRAZENECA PLC",
-"sector": "Healthcare",
-"sic": "2834",
-"industry": "Pharmaceutical Preparations"
-},
-"AZO": {
-"name": "AUTOZONE INC",
-"sector": "Consumer Cyclical",
-"sic": "5531",
-"industry": "Retail-Auto & Home Supply Stores"
-},
-"BA": {
-"name": "BOEING CO",
-"sector": "Industrials",
-"sic": "3721",
-"industry": "Aircraft"
 },
 "BAC": {
 "name": "BANK OF AMERICA CORP /DE/",
@@ -154,18 +136,6 @@
 "sector": "Healthcare",
 "sic": "2834",
 "industry": "Pharmaceutical Preparations"
-},
-"BCPC": {
-"name": "BALCHEM CORP",
-"sector": "Basic Materials",
-"sic": "2800",
-"industry": "Chemicals & Allied Products"
-},
-"BEP": {
-"name": "Brookfield Renewable Partners L.P.",
-"sector": "Utilities",
-"sic": "4911",
-"industry": "Electric Services"
 },
 "BHE": {
 "name": "BENCHMARK ELECTRONICS INC",
@@ -184,6 +154,12 @@
 "sector": "Financial Services",
 "sic": "6331",
 "industry": "Fire, Marine & Casualty Insurance"
+},
+"CMCSA": {
+"name": "COMCAST CORP",
+"sector": "Communication Services",
+"sic": "4841",
+"industry": "Cable & Other Pay Television Services"
 },
 "CMG": {
 "name": "CHIPOTLE MEXICAN GRILL INC",
@@ -220,6 +196,12 @@
 "sector": "Technology",
 "sic": "7372",
 "industry": "Services-Prepackaged Software"
+},
+"DIS": {
+"name": "Walt Disney Co",
+"sector": "Consumer Cyclical",
+"sic": "7990",
+"industry": "Services-Miscellaneous Amusement & Recreation"
 },
 "DVN": {
 "name": "DEVON ENERGY CORP/DE",
@@ -341,6 +323,24 @@
 "sic": "6021",
 "industry": "National Commercial Banks"
 },
+"KO": {
+"name": "COCA COLA CO",
+"sector": "Consumer Defensive",
+"sic": "2080",
+"industry": "Beverages"
+},
+"KR": {
+"name": "KROGER CO",
+"sector": "Consumer Cyclical",
+"sic": "5411",
+"industry": "Retail-Grocery Stores"
+},
+"LITE": {
+"name": "Lumentum Holdings Inc.",
+"sector": "Technology",
+"sic": "3669",
+"industry": "Communications Equipment, NEC"
+},
 "AAL": {
 "name": "American Airlines Group Inc.",
 "sector": "Industrials",
@@ -383,6 +383,12 @@
 "sic": "6199",
 "industry": "Finance Services"
 },
+"BA": {
+"name": "BOEING CO",
+"sector": "Industrials",
+"sic": "3721",
+"industry": "Aircraft"
+},
 "CAT": {
 "name": "CATERPILLAR INC",
 "sector": "Industrials",
@@ -394,12 +400,6 @@
 "sector": "Industrials",
 "sic": "4400",
 "industry": "Water Transportation"
-},
-"CMCSA": {
-"name": "COMCAST CORP",
-"sector": "Communication Services",
-"sic": "4841",
-"industry": "Cable & Other Pay Television Services"
 },
 "COIN": {
 "name": "Coinbase Global, Inc.",
@@ -430,12 +430,6 @@
 "sector": null,
 "sic": "",
 "industry": ""
-},
-"DIS": {
-"name": "Walt Disney Co",
-"sector": "Consumer Cyclical",
-"sic": "7990",
-"industry": "Services-Miscellaneous Amusement & Recreation"
 },
 "DKNG": {
 "name": "DraftKings Inc.",
@@ -472,12 +466,6 @@
 "sector": "Technology",
 "sic": "7373",
 "industry": "Services-Computer Integrated Systems Design"
-},
-"KO": {
-"name": "COCA COLA CO",
-"sector": "Consumer Defensive",
-"sic": "2080",
-"industry": "Beverages"
 },
 "LCID": {
 "name": "Lucid Group, Inc.",

@@ -339,6 +339,16 @@
   "chamber": "House",
   "official_full": "Robert E. Latta"
  },
+ "Hon. Robert For Onder": {
+  "bioguide": "O000177",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/O000177.jpg",
+  "state": "MO",
+  "state_name": "Missouri",
+  "party": "Republican",
+  "district": 3,
+  "chamber": "House",
+  "official_full": "Robert F. Onder, Jr."
+ },
  "Hon. Rudy C. Yakym III": {
   "bioguide": "Y000067",
   "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/Y000067.jpg",
@@ -548,6 +558,16 @@
   "district": null,
   "chamber": "Senate",
   "official_full": "Ted Cruz"
+ },
+ "Sen. Rand Paul": {
+  "bioguide": "P000603",
+  "photo": "https://raw.githubusercontent.com/unitedstates/images/gh-pages/congress/225x275/P000603.jpg",
+  "state": "KY",
+  "state_name": "Kentucky",
+  "party": "Republican",
+  "district": null,
+  "chamber": "Senate",
+  "official_full": "Rand Paul"
  },
  "Sen. Richard Blumenthal": {
   "bioguide": "B001277",

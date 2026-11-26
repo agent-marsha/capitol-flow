@@ -2723,5 +2723,68 @@
 "industry": "Railroads",
 "sic": "4011",
 "source": "sec+yahoo"
+},
+"ACLLY": {
+"ticker": "ACLLY",
+"name": "Accelleron Industries AG",
+"description": "Accelleron Industries AG designs, manufactures, sells, and services turbochargers, fuel injection equipment, and digital solutions for heavy-duty applications. The company operates in two segments, Medium & Low Speed and High Speed.",
+"sector": "Industrials",
+"industry": "Specialty Industrial Machinery",
+"sic": null,
+"source": "yahoo"
+},
+"AMP": {
+"ticker": "AMP",
+"name": "Ameriprise Financial, Inc.",
+"description": "Ameriprise Financial, Inc., together with its subsidiaries, operates as a diversified financial services company in the United States and internationally. The company offers financial planning and advice services to individual and institutional clients.",
+"sector": "Financial Services",
+"industry": "Asset Management",
+"sic": "6282",
+"source": "sec+yahoo"
+},
+"CMI": {
+"ticker": "CMI",
+"name": "Cummins Inc.",
+"description": "Cummins Inc. offers various power solutions worldwide. The company operates through five segments: Engine, Distribution, Components, Power Systems, and Accelera.",
+"sector": "Industrials",
+"industry": "Specialty Industrial Machinery",
+"sic": "3510",
+"source": "sec+yahoo"
+},
+"DUK": {
+"ticker": "DUK",
+"name": "Duke Energy Corporation",
+"description": "Duke Energy Corporation, through its subsidiaries, operates as an energy company in the United States. The company operates through two segments: Electric Utilities and Infrastructure (EU&I); and Gas Utilities and Infrastructure (GU&I).",
+"sector": "Utilities",
+"industry": "Utilities - Regulated Electric",
+"sic": "4931",
+"source": "sec+yahoo"
+},
+"HPQ": {
+"ticker": "HPQ",
+"name": "HP Inc.",
+"description": "HP Inc. provides personal computing, printing, 3D printing, hybrid work, gaming, and other related technologies in the United States and internationally. The company operates through three segments: Personal Systems, Printing, and Corporate Investments.",
+"sector": "Technology",
+"industry": "Computer Hardware",
+"sic": "3570",
+"source": "sec+yahoo"
+},
+"MDT": {
+"ticker": "MDT",
+"name": "Medtronic plc",
+"description": "Medtronic plc develops, manufactures, and sells device-based medical therapies to healthcare systems, physicians, clinicians, and patients in the United States, Ireland, and internationally.",
+"sector": "Healthcare",
+"industry": "Medical Devices",
+"sic": "3845",
+"source": "sec+yahoo"
+},
+"PSX": {
+"ticker": "PSX",
+"name": "Phillips 66",
+"description": "Phillips 66 operates as an integrated downstream energy provider in the United States, the United Kingdom, Germany, and internationally. It operates through five segments: Midstream, Chemicals, Refining, Marketing and Specialties (M&S), and Renewable Fuels.",
+"sector": "Energy",
+"industry": "Oil & Gas Refining & Marketing",
+"sic": "2911",
+"source": "sec+yahoo"
 }
 }

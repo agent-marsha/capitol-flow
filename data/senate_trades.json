@@ -1,8 +1,8 @@
 {
- "generated": "2026-11-27T14:37:08.546606Z",
+ "generated": "2026-11-28T16:50:51.941628Z",
  "source": "US Senate \u2014 Periodic Transaction Reports (via matr-co/senate-ptr mirror of efdsearch.senate.gov)",
- "mirror_updated": "2026-11-27T08:21:36+00:00",
- "count": 310,
+ "mirror_updated": "2026-11-28T12:56:21+00:00",
+ "count": 308,
  "transactions": [
   {
    "owner": "Spouse",
@@ -5855,44 +5855,6 @@
    "ticker": null,
    "source_url": "https://efdsearch.senate.gov/search/view/ptr/047c4167-e0a9-44d4-a2bf-5477eb6b20ab/",
    "asset_type": "Municipal Security"
-  },
-  {
-   "owner": "Spouse",
-   "asset_raw": "PHILADELPHIA PA AUTH FOR INDL REV",
-   "txn_type": "P",
-   "txn_type_label": "Purchase",
-   "txn_date": "2026-06-30",
-   "notification_date": null,
-   "amount_low": 100001,
-   "amount_high": 250000,
-   "amount_label": "$100,001 - $250,000",
-   "politician": "Sen. David H McCormick",
-   "chamber": "Senate",
-   "state_district": null,
-   "filed_date": "2026-07-29",
-   "doc_id": "19fb5a84-b9f8-4847-841e-84c67a0edfe0",
-   "ticker": null,
-   "source_url": "https://efdsearch.senate.gov/search/view/ptr/19fb5a84-b9f8-4847-841e-84c67a0edfe0/",
-   "asset_type": "Municipal Security"
-  },
-  {
-   "owner": "Self",
-   "asset_raw": "NVIDIA Corporation - Common Stock (NVDA)",
-   "txn_type": "S",
-   "txn_type_label": "Sale (Partial)",
-   "txn_date": "2026-06-30",
-   "notification_date": null,
-   "amount_low": 15001,
-   "amount_high": 50000,
-   "amount_label": "$15,001 - $50,000",
-   "politician": "Sen. Sheldon Whitehouse",
-   "chamber": "Senate",
-   "state_district": null,
-   "filed_date": "2026-07-08",
-   "doc_id": "5d9b1b8e-2ae1-442b-860c-e79b8a701dc6",
-   "ticker": "NVDA",
-   "source_url": "https://efdsearch.senate.gov/search/view/ptr/5d9b1b8e-2ae1-442b-860c-e79b8a701dc6/",
-   "asset_type": "Stock"
   }
  ]
 }

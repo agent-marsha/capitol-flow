@@ -389,12 +389,45 @@ def main() -> int:
                 and not is_fund(r["ticker"])
                 and r.get("price") is not None
                 and r["price"] >= MIN_PRICE]
-        rows.sort(key=lambda r: (-r["oi"], r["ticker"], r["strike"]))
+        # WEIGHT BY CONTRACT VALUE (user, 2026-11-27): "the volume is high however the contract
+        # value is low ... lets add a weight for contract value so that we are actually
+        # evaluating the amount of money is at risk not just a contract count".
+        #
+        # notional = contracts x 100 shares x price = the dollars of open interest.  Ranked by
+        # this, NVDA's 70,830 x $0.39 ($2.8M) drops out of the top and QQQ's $750 put at
+        # $109.53 x 38,526 ($422M) — 13x the money, previously invisible — comes in.
+        #
+        # CAVEAT carried on every row: a notional ranking favours deep-ITM contracts, which are
+        # often synthetic stock rather than a directional bet (the GOOG $75 call case).  So the
+        # row keeps `oi` too, and carries `moneyness` = strike / underlying so the UI can show
+        # which is which instead of letting the dollar figure imply a conviction it may not be.
+        for r in rows:
+            r["notional"] = int(round(r["oi"] * 100 * r["price"]))
+            u = r.get("underlying")
+            r["moneyness"] = round(r["strike"] / u, 4) if (u and u > 0) else None
+        rows.sort(key=lambda r: (-r["notional"], r["ticker"], r["strike"]))
         return rows[:n]
 
     dropped_cheap = sum(1 for r in ledger
                         if not is_fund(r["ticker"])
                         and (r.get("price") is None or r["price"] < MIN_PRICE))
+    # Per-ticker NOTIONAL totals, accumulated from the ledger so they use the same price the
+    # leaderboard does instead of a second, divergent quote rule.  Feeds the OI board so it can
+    # rank by money rather than contract count (user request, 2026-11-27).
+    for r in ledger:
+        rec = out.get(r["ticker"])
+        if not isinstance(rec, dict) or r.get("price") is None:
+            continue
+        key = "call_notional" if r["type"] == "call" else "put_notional"
+        rec[key] = int(rec.get(key, 0)) + int(round(r["oi"] * 100 * r["price"]))
+    for k, rec in out.items():
+        if not isinstance(rec, dict):
+            continue
+        cn, pn = int(rec.get("call_notional", 0)), int(rec.get("put_notional", 0))
+        rec["total_notional"] = cn + pn
+        priced = cn + pn
+        rec["notional_priced"] = priced > 0
+
     calls50, puts50 = _topN("call"), _topN("put")
     funds_seen = sorted({r["ticker"] for r in ledger if is_fund(r["ticker"])})
     n_exp = 10

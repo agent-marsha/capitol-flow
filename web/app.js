@@ -884,7 +884,8 @@
         return (y - x) || (b.total_oi - a.total_oi);
       });
     }
-    return rows.slice().sort(function (a, b) { return b.total_oi - a.total_oi; });
+    // "By size": the pipeline's order (total_notional desc, ties by total_oi) — no re-sort.
+    return rows;
   }
   function oiFmt(n) {
     if (n >= 1e6 || Math.round(n / 1e3) >= 1000) return (n / 1e6).toFixed(1) + 'M';
@@ -902,12 +903,13 @@
         '<button type="button" class="chip" data-action="oi-sort" data-v="size" aria-pressed="' + (S.oiSort === 'size') + '">By size</button>' +
         '<button type="button" class="chip" data-action="oi-sort" data-v="loading" aria-pressed="' + (S.oiSort === 'loading') + '">By loading</button>' +
       '</div>' +
-      '<p class="oi-why">By size favours the megacaps; by loading shows which stocks are unusually option-heavy for how much they trade.</p>' +
+      '<p class="oi-why">By size ranks by <b>$ open</b>, the dollar value of open contracts, and favours the megacaps; by loading shows which stocks are unusually option-heavy for how much they trade.</p>' +
       '<ol class="oi-rows" id="oi-rows"></ol>' +
       '<div class="bm-more" id="oi-more"></div>' +
       '<p class="bm-caveat"><b>Open interest is positioning, not a prediction.</b> It counts option contracts still open; it says nothing about which way a stock will move. ' +
         'Totals are summed across the next few expirations, and the put/call ratio uses those same totals. ' +
         '“Days of volume” is open contracts × 100 shares ÷ the stock’s 30-day average daily share volume. ' +
+        '<b>$ open</b> is contracts × 100 × price, summed across calls and puts and both sides of each contract — an amount, not a view; deep in-the-money contracts, often stock substitutes, weigh heavily in it. — means no contract in the book was quoted. ' +
         '<span class="oi-pol-key">⚑︎</span> marks stocks members of Congress have also traded. ' +
         'Every row opens that stock’s page here, with its call and put strikes.</p>' +
     '</section>';
@@ -917,7 +919,8 @@
     var cp = c + p ? c / (c + p) * 100 : 0;
     var hasPc = isNum(r.pc_ratio), hasDays = isNum(r.oi_days_of_volume);
     var nPol = +r.n_politicians || 0, nTr = +r.n_trades || 0;
-    var label = r.ticker + ': ' + oiFmt(r.total_oi) + ' open option contracts' +
+    var usd = r.notional_priced === true ? notionalFmt(r.total_notional) : '—';
+    var label = r.ticker + ': ' + (usd !== '—' ? usd + ' open, ' : '') + oiFmt(r.total_oi) + ' open option contracts' +
       (c + p ? ', ' + Math.round(cp) + '% calls, ' + Math.round(100 - cp) + '% puts' : '') +
       (hasPc ? '. Put/call ratio ' + r.pc_ratio.toFixed(2) + ', ' + pcRead(r.pc_ratio) : '') +
       (hasDays ? '. ' + r.oi_days_of_volume.toFixed(1) + ' days of average volume' : '') +
@@ -936,6 +939,7 @@
     return '<li class="oi-item"><a class="oi-row' + (nPol ? ' pol' : '') + '" href=' + href + ' aria-label="' + esc(label) + '">' +
       '<div class="oi-tk"><div class="display">' + esc(r.ticker) + '</div>' +
         (r.sector ? '<div class="bm-meta oi-sec" aria-hidden="true">' + esc(r.sector) + '</div>' : '') + '</div>' +
+      '<div class="oi-cell oi-usd" aria-hidden="true"><span class="display">' + esc(usd) + '</span><span class="oi-lab">$ open</span></div>' +
       '<div class="oi-cell oi-tot" aria-hidden="true"><span class="display">' + oiFmt(r.total_oi) + '</span><span class="oi-lab">Contracts</span></div>' +
       '<div class="oi-split" aria-hidden="true">' +
         (c + p ? '<div class="oi-bar">' + segs + '</div>' +
@@ -965,17 +969,34 @@
   // bundle — no fetch). Missing/null top_oi (older data) → the section renders nothing.
   var TOP_SHORT = 10;
   var topCache = null;
+  // Notional value of open contracts ($ OPEN): $1.60B, $744.6M, $2.8M. Unknown → '—', never $0.
+  function notionalFmt(n) {
+    if (!fnum(n) || n < 0) return '—';
+    if (n >= 1e12) return '$' + (n / 1e12).toFixed(2) + 'T';
+    if (n >= 1e9) return '$' + (n / 1e9).toFixed(2) + 'B';
+    if (n >= 1e6) return '$' + (n / 1e6).toFixed(1) + 'M';
+    if (n >= 1e3) return '$' + (n / 1e3).toFixed(1) + 'K';
+    return '$' + Math.round(n);
+  }
+  // Where the strike sits against the stock (moneyness = strike / underlying). Descriptive only.
+  function moneyPos(kind, m) {
+    if (!fnum(m) || m <= 0) return null;
+    if (kind === 'put') return m >= 1.10 ? 'deep itm' : m >= 1.02 ? 'itm' : m >= 0.98 ? 'atm' : 'otm';
+    return m <= 0.90 ? 'deep itm' : m <= 0.98 ? 'itm' : m <= 1.02 ? 'atm' : 'otm';
+  }
+  var POS_SAY = { 'deep itm': 'deep in the money', itm: 'in the money', atm: 'at the money', otm: 'out of the money' };
   function topData() {
     if (topCache) return topCache;
     var t = D && D.top_oi;
     if (!t || typeof t !== 'object') return (topCache = { calls: [], puts: [], meta: null });
     var floor = fnum(t.min_dte) ? t.min_dte : 30;
     function clean(list) {
-      // Defensive: drop malformed rows and anything inside the one-month floor, keep OI order.
+      // Defensive: drop malformed rows and anything inside the one-month floor. Keep the
+      // pipeline's order (notional value descending) — no client-side re-sort.
       return (Array.isArray(list) ? list : []).filter(function (c) {
         return c && c.ticker && fnum(c.strike) && fnum(c.oi) && c.oi >= 0 && validDate(c.expiry) &&
           fnum(c.dte) && c.dte >= floor;
-      }).sort(function (a, b) { return b.oi - a.oi; }).slice(0, fnum(t.n) ? t.n : 50);
+      }).slice(0, fnum(t.n) ? t.n : 50);
     }
     topCache = { calls: clean(t.calls), puts: clean(t.puts), meta: t, floor: floor };
     var all = topCache.calls.concat(topCache.puts);
@@ -990,14 +1011,17 @@
       (fnum(m.contracts_scanned) ? ', ' + Math.round(m.contracts_scanned).toLocaleString('en-US') + ' contracts scanned' : '');
     return '<section class="block" id="top-oi" aria-labelledby="top-h">' +
       '<div class="sec-head"><div><div class="micro top-mark">◆ Contract leaderboard</div><h2 id="top-h" class="display">Where the biggest bets sit.</h2></div>' +
-      '<p>The ' + d.calls.length + ' calls and ' + d.puts.length + ' puts with the most open interest, across every stock this app tracks — one month out or further' +
+      '<p>The ' + d.calls.length + ' calls and ' + d.puts.length + ' puts with the largest dollar value of open contracts, across every stock this app tracks — one month out or further' +
         (fnum(m.min_price) ? ', and priced at $' + (+m.min_price).toFixed(2) + ' or more' : '') + '.</p></div>' +
-      '<p class="oi-why">The board above ranks <b>stocks</b> by total open interest. This one ranks <b>single contracts</b> — one ticker, one strike, one expiry — so it answers “which single bet is the biggest”, not “which stock is most optioned”.</p>' +
+      '<p class="oi-why">The board above ranks <b>stocks</b>. This one ranks <b>single contracts</b> — one ticker, one strike, one expiry — by <b>$ open</b>, so a huge count of cheap contracts no longer outranks a smaller count of expensive ones. The contract count stays on every row.</p>' +
       '<div class="opt-cols top-cols">' + topCol('call', d.calls) + topCol('put', d.puts) + '</div>' +
       '<div class="bm-more" id="top-more"></div>' +
       '<p class="bm-caveat"><b>Open interest has no direction.</b> It counts contracts still open; it can’t tell you whether they were bought or sold, and a huge pile is as likely to be a position someone wrote as one someone bought. ' +
         'Contracts ' + d.floor + '+ days out only, across the next ' + (fnum(m.expirations) ? m.expirations : 10) + ' expirations of ' + esc(scope) + '. ' +
         'Price is the bid/ask midpoint for one contract, quoted per share (one contract covers 100 shares); — means no two-sided quote. Snapshot from the last data refresh.</p>' +
+      '<p class="bm-caveat top-note"><b>$ open is an amount, not a view:</b> contracts × 100 × price, counting both sides of every open contract — the holder and the writer. ' +
+        'Ranking by dollars favours deep in-the-money contracts, which are often stock substitutes (a way to hold or short the shares with less capital) rather than a view on direction;' +
+        '<b>pos</b> shows where each strike sits against the stock price (itm / atm / otm).</p>' +
     '</section>';
   }
   // ---- Unusual volume in Elder uptrends: a bare screener table. Precomputed by the
@@ -1075,9 +1099,9 @@
     return '<div class="opt-col ' + side + '" role="group" aria-labelledby="' + id + '">' +
       '<div class="opt-col-head ' + (isCall ? 'buy-ink' : 'sell-ink') + '">' +
         '<h3 id="' + id + '" class="display">' + (isCall ? 'Calls' : 'Puts') + '</h3>' +
-        '<span class="micro">Top ' + list.length + ' by open interest</span>' +
+        '<span class="micro">Top ' + list.length + ' by $ open</span>' +
       '</div>' +
-      '<div class="opt-legend micro" aria-hidden="true"><span>Contract</span><span>Open interest</span></div>' +
+      '<div class="opt-legend micro" aria-hidden="true"><span>Contract</span><span>$ open</span></div>' +
       (list.length ? '<ol class="opt-rows" id="top-' + side + '-rows"></ol>'
         : '<p class="empty">No ' + (isCall ? 'calls' : 'puts') + ' in this window.</p>') +
     '</div>';
@@ -1089,17 +1113,23 @@
     var oiFull = Math.round(c.oi).toLocaleString('en-US');
     var url = safeUrl(c.tv_url);
     var label = c.ticker + ' ' + optStrike(c.strike) + ' ' + kind + ' expiring ' + mdy(c.expiry);
+    var usd = notionalFmt(c.notional);
+    var pos = moneyPos(kind, c.moneyness);
     return '<li class="opt-row top-row ' + kind + '">' +
-      '<span class="sr-only">Rank ' + (i + 1) + ': ' + esc(label) + ', open interest ' + oiFull +
+      '<span class="sr-only">Rank ' + (i + 1) + ': ' + esc(label) +
+        (usd !== '—' ? ', ' + usd + ' open' : ', dollar value unknown') + ', open interest ' + oiFull + ' contracts' +
+        (pos ? ', ' + POS_SAY[pos] : '') +
         (fnum(c.volume) ? ', volume ' + Math.round(c.volume).toLocaleString('en-US') : '') +
         (pr !== '—' ? ', price ' + pr : ', no price') + '.</span>' +
       '<div class="top-l1">' +
         '<span class="top-rank" aria-hidden="true">' + rank + '</span>' +
         '<a class="top-tk" href="#/stock/' + encodeURIComponent(c.ticker) + '" aria-label="' + esc('Open ' + c.ticker + ' page') + '">' + esc(c.ticker) + '</a>' +
         '<span class="top-k" aria-hidden="true">' + esc(optStrike(c.strike)) + ' · ' + esc(optDate(c.expiry)) + '</span>' +
-        '<span class="opt-oi top-oi display" aria-hidden="true" title="' + esc(oiFull) + ' open contracts">' + esc(optCount(c.oi)) + '</span>' +
+        '<span class="opt-oi top-oi top-usd display" aria-hidden="true" title="Notional value of open contracts: contracts × 100 × price">' + esc(usd) + '</span>' +
       '</div>' +
       '<div class="opt-l2 top-l2">' +
+        '<span class="opt-px" aria-hidden="true" title="' + esc(oiFull) + ' open contracts"><span class="opt-lab">OI</span><b class="top-cnt">' + esc(optCount(c.oi)) + '</b></span>' +
+        '<span class="opt-px top-pos-w" aria-hidden="true" title="Strike vs. stock price"><span class="opt-lab">Pos</span><b class="top-pos">' + (pos ? esc(pos) : '—') + '</b></span>' +
         '<span class="opt-lab top-dte" aria-hidden="true" title="Days to expiry">' + Math.round(c.dte) + ' days</span>' +
         '<span class="opt-px" aria-hidden="true"><span class="opt-lab">Vol</span><b class="top-q">' + (fnum(c.volume) ? esc(optCount(c.volume)) : '—') + '</b></span>' +
         '<span class="opt-px" aria-hidden="true"><span class="opt-lab">Mid</span><b class="top-q">' + esc(pr) + '</b></span>' +

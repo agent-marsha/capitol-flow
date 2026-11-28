@@ -293,12 +293,27 @@ def build_oi_board(tickers: list[str], options: dict, prices: dict,
             adv = sum(vols) / len(vols) if vols else 0
         # contracts control 100 shares each; compare to average daily share volume
         days = round((total * 100) / adv, 1) if adv > 0 else None
+        # Dollars of open interest, summed in fetch_options from the same ledger the
+        # leaderboard uses.  A contract count ties a $0.39 strike to a $1,344 one; the
+        # notional figure separates them (user request, 2026-11-27).
+        #
+        # NOTE ON FRAMING: this is the NOTIONAL VALUE OF OPEN CONTRACTS, both sides, and open
+        # interest is directionless -- it cannot say whether contracts were bought or written.
+        # So do not describe it as "money at risk", "positioning" or "conviction"; that would
+        # claim a directional read the number does not contain.  Describe the amount only.
+        cn = int(o.get("call_notional") or 0)
+        pn = int(o.get("put_notional") or 0)
+        notional = cn + pn
         board.append({
             "ticker": tk,
             "sector": (sectors.get(tk) or {}).get("sector"),
             "call_oi": call,
             "put_oi": put,
             "total_oi": total,
+            "call_notional": cn,
+            "put_notional": pn,
+            "total_notional": notional,
+            "notional_priced": bool(o.get("notional_priced")),
             "pc_ratio": round(put / call, 2) if call else None,
             "expiry": o.get("expiry"),
             "dte": o.get("dte"),
@@ -309,7 +324,10 @@ def build_oi_board(tickers: list[str], options: dict, prices: dict,
             # does this app have a stock page for it (i.e. did Congress trade it)?
             "tracked": tk in prices,
         })
-    board.sort(key=lambda r: -r["total_oi"])
+    # Rank by MONEY, not contracts -- a $0.13 call with a huge count is not a big bet.
+    # Rows whose book never quoted carry notional 0 and fall to the bottom, where they
+    # belong, rather than being dropped (the contract view is still on the row).
+    board.sort(key=lambda r: (-r["total_notional"], -r["total_oi"]))
     return board
 
 

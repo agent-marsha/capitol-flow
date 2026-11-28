@@ -834,3 +834,30 @@ section[id] { scroll-margin-top: 64px; }
   .st-num { width: 30px; font-size: 24px; }
   .st-trend { margin-left: 0; }
 }
+
+/* ---------- Unusual volume screener (#unusual-vol) — bare, monochrome, dense ---------- */
+.uv-scroll { overflow-x: auto; border-top: 1px solid var(--line-2); }
+.uv-table { font-size: 13px; }
+.uv-table th, .uv-table td { padding: 8px 10px; }
+.uv-table th:first-child, .uv-table td:first-child { padding-left: 0; }
+.uv-table th:last-child, .uv-table td:last-child { padding-right: 0; }
+.uv-table td { color: var(--ink-2); }
+.uv-table th.uv-sec, .uv-table td.uv-sec { text-align: left; }
+.uv-table td.uv-sec { max-width: 22ch; overflow: hidden; text-overflow: ellipsis; color: var(--muted); }
+.uv-tk { font-weight: 800; color: var(--ink); text-decoration: none; letter-spacing: .02em; }
+.uv-tk:hover { text-decoration: underline; }
+.uv-table td.uv-rvol { color: var(--ink); font-weight: 800; }
+.uv-table td.uv-dir { font-size: 11px; font-weight: 700; letter-spacing: .1em; }
+.uv-table tbody tr:hover td { background: var(--card); }
+@media (max-width: 640px) {
+  .uv-table .uv-sec { display: none; }
+}
+@media (max-width: 480px) {
+  .uv-table .uv-opt { display: none; }
+  .uv-table th, .uv-table td { padding: 8px 6px; }
+}
+
+/* Date column added when the screener window spans several sessions -- without it every row
+   looked like it came from `recent_date`. Dropped first on narrow screens. */
+.uv-dt { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 760px) { .uv-dt { display: none; } }

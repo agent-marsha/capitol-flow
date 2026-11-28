@@ -65,6 +65,7 @@
     oiSort: 'size',
     oiAll: false,
     topAll: false,       // contract leaderboard: top 10 per side (false) or all 100 (true)
+    uvAll: false,        // unusual-volume screener: top 25 (false) or every row (true)
     oix: { q: '', sort: 'move', all: false }, // put/call ratio index: filter, sort (move|high|low|ticker), show all
     lk: { q: '', tk: '', nudge: false }, // ticker lookup: input text, looked-up ticker, empty-submit nudge
     showAllSignals: false,
@@ -629,6 +630,7 @@
 
       oiSection() +
       topSection() +
+      uvSection() +
       '<div id="oix-slot" class="oix-slot"></div>' +
       lookupSection() +
 
@@ -656,6 +658,7 @@
     renderBigChart();
     renderOi();
     renderTop();
+    renderUv();
     fillOIIndex();
     renderLookup();
     renderFeed();
@@ -997,6 +1000,75 @@
         'Price is the bid/ask midpoint for one contract, quoted per share (one contract covers 100 shares); — means no two-sided quote. Snapshot from the last data refresh.</p>' +
     '</section>';
   }
+  // ---- Unusual volume in Elder uptrends: a bare screener table. Precomputed by the
+  // pipeline into D.unusual_volume (boot bundle — no fetch). Only `recent` is rendered;
+  // null key / missing / empty `recent` → the section renders nothing at all.
+  // Volume is directionless: DAY describes that session's price move, nothing more.
+  var UV_TOP = 25;
+  var uvCache = null;
+  function uvData() {
+    if (uvCache) return uvCache;
+    var u = D && D.unusual_volume;
+    if (!u || typeof u !== 'object' || !Array.isArray(u.recent)) return (uvCache = { rows: [], meta: null });
+    var rows = u.recent.filter(function (r) {
+      return r && typeof r.ticker === 'string' && r.ticker && fnum(r.rvol) && r.rvol > 0;
+    }).sort(function (a, b) { return b.rvol - a.rvol; });
+    return (uvCache = { rows: rows, meta: u });
+  }
+  function uvCompact(n) {
+    if (!fnum(n) || n <= 0) return '—';
+    if (n >= 1e12) return (n / 1e12).toFixed(1) + 'T';
+    if (n >= 1e9) return (n / 1e9).toFixed(1) + 'B';
+    if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+    if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+    return String(Math.round(n));
+  }
+  function uvSection() {
+    var d = uvData();
+    if (!d.meta || !d.rows.length) return '';
+    var p = d.meta.params || {};
+    var rmin = fnum(p.rvol_min) ? p.rvol_min : 2;
+    var dmin = fnum(p.dollar_min) ? p.dollar_min : 2e7;
+    var day = validDate(d.meta.recent_date) ? mdy(d.meta.recent_date) : (validDate(d.rows[0].date) ? mdy(d.rows[0].date) : '');
+    return '<section class="block" id="unusual-vol" aria-labelledby="uv-h">' +
+      '<div class="sec-head"><div><div class="micro">Unusual volume · Elder uptrend</div><h2 id="uv-h" class="display">Where the volume is.</h2></div></div>' +
+      '<p class="note">Stocks whose daily Elder Impulse is green (EMA13 rising, MACD histogram rising) that traded at least ' +
+        (+rmin).toFixed(rmin % 1 ? 1 : 0) + '× their 20-day average volume with ' + esc(bigMoney(dmin).replace(/\.0(?=[A-Z])/, '')) + '+ turnover' +
+        (day ? '. Window: the last ' + ((fnum(d.meta.recent_days) && d.meta.recent_days > 1) ? d.meta.recent_days + ' sessions' : 'session') + ', most recent ' + esc(day) + '.' : '.') + '</p>' +
+      '<div class="uv-scroll"><table class="uv-table">' +
+        '<thead><tr><th scope="col">Ticker</th><th scope="col" class="uv-sec">Sector</th><th scope="col" class="uv-dt">Date</th><th scope="col">RVOL</th>' +
+        '<th scope="col" class="uv-opt">Volume</th><th scope="col" class="uv-opt">20D avg</th><th scope="col" class="uv-opt">$ Volume</th>' +
+        '<th scope="col">Chg</th><th scope="col">Day</th></tr></thead>' +
+        '<tbody id="uv-rows"></tbody></table></div>' +
+      '<div class="bm-more" id="uv-more"></div>' +
+    '</section>';
+  }
+  function uvRow(r) {
+    var chg = fnum(r.chg) ? (r.chg > 0 ? '+' : r.chg < 0 ? '−' : '') + Math.abs(r.chg).toFixed(1) + '%' : '—';
+    var dir = r.vol_dir === 'up' ? 'UP' : r.vol_dir === 'down' ? 'DOWN' : '—';
+    var dv = uvCompact(r.dollar_vol);
+    return '<tr>' +
+      '<td><a class="uv-tk" href="#/stock/' + encodeURIComponent(r.ticker) + '">' + esc(r.ticker) + '</a></td>' +
+      '<td class="uv-sec">' + esc(r.sector || '—') + '</td>' +
+      '<td class="uv-dt">' + (validDate(r.date) ? esc(md(r.date)) : '—') + '</td>' +
+      '<td class="uv-rvol">' + r.rvol.toFixed(1) + '×</td>' +
+      '<td class="uv-opt">' + uvCompact(r.volume) + '</td>' +
+      '<td class="uv-opt">' + uvCompact(r.avg20) + '</td>' +
+      '<td class="uv-opt">' + (dv === '—' ? dv : '$' + dv) + '</td>' +
+      '<td>' + chg + '</td>' +
+      '<td class="uv-dir">' + dir + '</td>' +
+    '</tr>';
+  }
+  function renderUv() {
+    var tb = $('#uv-rows'); if (!tb) return;
+    var rows = uvData().rows;
+    tb.innerHTML = (S.uvAll ? rows : rows.slice(0, UV_TOP)).map(uvRow).join('');
+    $('#uv-more').innerHTML = rows.length > UV_TOP
+      ? '<button type="button" class="btn-ghost" data-action="uv-all" aria-expanded="' + !!S.uvAll + '">' +
+          (S.uvAll ? 'Show top ' + UV_TOP : 'Show all ' + rows.length) + '</button>'
+      : '';
+  }
+
   function topCol(side, list) {
     var isCall = side === 'call';
     var id = 'top-' + side + '-h';
@@ -2421,6 +2493,11 @@
       S.topAll = !S.topAll; renderTop();
       var tb = $('#top-more button'); if (tb) tb.focus();
       if (!S.topAll) { var te = $('#top-oi'); if (te && te.getBoundingClientRect().top < 0) te.scrollIntoView(); }
+    }
+    else if (act === 'uv-all') {
+      S.uvAll = !S.uvAll; renderUv();
+      var ub = $('#uv-more button'); if (ub) ub.focus();
+      if (!S.uvAll) { var ue = $('#unusual-vol'); if (ue && ue.getBoundingClientRect().top < 0) ue.scrollIntoView(); }
     }
     else if (act === 'oix-sort') {
       if (S.oix.sort === a.dataset.v) return;

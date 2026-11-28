@@ -320,6 +320,8 @@ def main() -> int:
     ap.add_argument("--window", type=int, default=14)
     ap.add_argument("--days", type=int, default=120, help="keep trades within N days")
     ap.add_argument("--max-tickers", type=int, default=120)
+    ap.add_argument("--no-unusual", action="store_true",
+                    help="skip the S&P 500 unusual-volume screen (saves ~1-2 min per run)")
     ap.add_argument("--also", nargs="*", default=["data/senate_trades.json"],
                     help="extra transaction files to merge (e.g. the Senate)")
     a = ap.parse_args()
@@ -461,6 +463,22 @@ def main() -> int:
         named = sum(1 for v in companies.values() if v.get("name"))
         print(f"[enrich] companies: {len(companies)} tickers, {named} named", file=sys.stderr)
 
+    # Unusual volume inside an Elder-confirmed uptrend, across the S&P 500 (2026-11-27 request).
+    # Runs its OWN batched daily fetch of ~500 tickers, so it is non-fatal and skippable -- a
+    # screen failure must never cost the day's app data.  Only the flagged rows are persisted;
+    # the 500 raw series are used and discarded to keep the deploy small.
+    unusual = None
+    if not getattr(a, "no_unusual", False):
+        try:
+            import unusual_volume as uvmod
+            unusual = uvmod.run()
+            rc = unusual.get("coverage", {})
+            print(f"[enrich] unusual volume: {len(unusual.get('recent') or [])} in the latest "
+                  f"session ({unusual.get('recent_date')}), {len(unusual.get('fires') or [])} over the year, "
+                  f"screened {rc.get('screened')}/{rc.get('universe')}", file=sys.stderr)
+        except Exception as e:
+            print(f"[enrich] unusual volume FAILED ({type(e).__name__}: {e}) — continuing", file=sys.stderr)
+
     bundle = {
         "generated": datetime.utcnow().isoformat() + "Z",
         "source": " · ".join(s for s in sources if s),
@@ -487,6 +505,8 @@ def main() -> int:
         "companies": companies,
         "prices": prices,
         "news": news,
+        # unusual volume in an Elder uptrend, S&P 500 (unusual_volume.py)
+        "unusual_volume": unusual,
     }
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     json.dump(bundle, open(a.out, "w"))
